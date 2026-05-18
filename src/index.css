@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cor_fundo: #222222;
+  --cor_destaque: #af8615;
+  --cor_paragrafo: #808080;
+
+  --fonte_padrao: "Nunito", "sans-serif";
+  --fonte_paragrafo: "Oxanium", "sans-serif";
+  --fonte_destaque: "Sansation", "sans-serif";
+
+  --tamanho_h1: 2rem;
+  --tamanho_h2: 1.5rem;
+  --tamanho_p: 1.2rem;
+
+  --layout_responsivo: 320px;
+}
+
+html, body, #root {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  background-color: #e7e7e7;
+}
