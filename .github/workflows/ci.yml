@@ -1,0 +1,39 @@
+name: Pipeline de CI e QA - Costs
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  qa-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar Dependências do Projeto
+        run: npm ci
+
+      - name: Instalar Dependências do Sistema para o Playwright
+        run: npx playwright install --with-deps
+
+      - name: Validar Build do Projeto
+        run: npm run build
+
+      - name: Executar Testes Unitários e Integração (Vitest)
+        run: npm run test:run
+
+      - name: Executar Testes End-to-End (Playwright)
+        run: npx playwright test
+
+      - name: Conclusão da Automação de QA
+        run: |
+          echo "✅ Validação automatizada concluída com sucesso!"
+          echo "🚀 O deploy de Preview da Vercel está liberado para o Smoke Test Manual de 3 dias."
