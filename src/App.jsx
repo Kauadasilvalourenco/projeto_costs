@@ -5,15 +5,15 @@ import Navbar from "./components/_navbar/Navbar";
 import Footer from "./components/_footer/Footer";
 // import components;
 
+import styleApp from "./App.module.css";
+
 function App() {
   return(
-    <div className="App">
+    <div className={styleApp.App}>
 
-      <header>
-        <Navbar />
-      </header>
+      <Navbar />
 
-      <main className="conteiner_principal">
+      <main className={styleApp.conteiner_principal}>
 
         <Routes>
 
