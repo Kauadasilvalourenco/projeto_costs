@@ -23,7 +23,9 @@
   --tamanho_p: 1.3rem;
   --tamanho_menus: 1.3rem;
 
-  --layout_responsivo: 320px;
+  --layout_celular: 320px;
+  --layout_tablet: 768px;
+  --layout_desktop: 1280px;
 }
 
 html, body, #root {

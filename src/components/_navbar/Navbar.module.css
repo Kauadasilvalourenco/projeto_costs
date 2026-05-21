@@ -48,6 +48,8 @@
     text-decoration: none;
     color: #ffffff;
     margin-bottom: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .icones_menu {
@@ -65,8 +67,10 @@
 .logo {
     order: 2;
     width: 100%;
-    max-width: 4rem;
+    max-width: 3.5rem;
     height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @media screen and (min-width: 1280px) {
