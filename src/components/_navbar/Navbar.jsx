@@ -24,9 +24,16 @@ function Navbar() {
 
                 {
                     menuAtivo ? (
-                        <MdClose className={styleNavbar.fechar_menu} onClick={toogleMenu}/>
+                        <MdClose 
+                            className={styleNavbar.fechar_menu}        onClick={toogleMenu}
+                            data-testid="botao-fechar"
+                        />
                     ) : (
-                        <MdMenu className={styleNavbar.abrir_menu} onClick={toogleMenu}/>
+                        <MdMenu 
+                            className={styleNavbar.abrir_menu} 
+                            onClick={toogleMenu}
+                            data-testid="botao-abrir"
+                        />
                     )
                 }
 
