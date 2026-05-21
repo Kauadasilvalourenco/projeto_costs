@@ -31,10 +31,10 @@ function Navbar() {
                 }
 
             <ul className={`${styleNavbar.lista_itens_menu} ${menuAtivo ? styleNavbar.menu_ativo : ""}`}>
-                <li><Link to={"/"} className={styleNavbar.itens_menu}>{<MdHome />} Home</Link></li>
-                <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>{<MdAssignment />} Projetos</Link></li>
-                <li><Link to={"/contato"} className={styleNavbar.itens_menu}>{<MdContacts />} Contato</Link></li>
-                <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>{<MdBusiness />} Empresa</Link></li>
+                <li><Link to={"/"} className={styleNavbar.itens_menu}>{<MdHome className={styleNavbar.icone_menu}/>} Home</Link></li>
+                <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>{<MdAssignment className={styleNavbar.icone_menu}/>} Projetos</Link></li>
+                <li><Link to={"/contato"} className={styleNavbar.itens_menu}>{<MdContacts className={styleNavbar.icone_menu}/>} Contato</Link></li>
+                <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>{<MdBusiness className={styleNavbar.icone_menu}/>} Empresa</Link></li>
             </ul>
 
             </div>

@@ -33,7 +33,9 @@
 }
 
 .itens_menu {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 
     font-family: var(--fonte_padrao);
     font-size: var(--tamanho_menus);
@@ -42,6 +44,10 @@
     text-decoration: none;
     color: #ffffff;
     margin-bottom: 10px;
+}
+
+.icones_menu {
+    font-size: 1.3rem;
 }
 
 .menu_ativo {
@@ -81,6 +87,11 @@
 
     .itens_menu {
         font-size: 1.5rem;
+        gap: 8px;
+    }
+
+    .icone_menu {
+        font-size: 1.5rem;
     }
 
     .itens_menu:active {
@@ -91,7 +102,7 @@
         text-decoration: underline;
         text-decoration-color: var(--cor_destaque);
         cursor: pointer;
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     .logo {
