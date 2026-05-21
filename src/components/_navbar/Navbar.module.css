@@ -58,3 +58,44 @@
     max-width: 4rem;
     height: auto;
 }
+
+@media screen and (min-width: 1280px) {
+
+    .conteiner_menu {
+        order: 2;
+    }
+
+    .abrir_menu {
+        display: none;
+    }
+
+    .fechar_menu {
+        display: none;
+    }
+
+    .lista_itens_menu {
+        display: flex;
+        gap: 15px;
+        margin-right: 10px;
+    }
+
+    .itens_menu {
+        font-size: 1.5rem;
+    }
+
+    .itens_menu:active {
+        color: #ffffff;
+    }
+
+    .itens_menu:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--cor_destaque);
+        cursor: pointer;
+        transform: scale(1.2);
+    }
+
+    .logo {
+        order: 1;
+        max-width: 5rem;
+    }
+}

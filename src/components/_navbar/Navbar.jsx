@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/costs_logo.png";
 // import assets;
 
-import { MdMenu, MdClose } from "react-icons/md";
+import { MdMenu, MdClose, MdHome, MdAssignment, MdContacts, MdBusiness} from "react-icons/md";
 // import icons;
 
 import styleNavbar from "./Navbar.module.css";
@@ -31,10 +31,10 @@ function Navbar() {
                 }
 
             <ul className={`${styleNavbar.lista_itens_menu} ${menuAtivo ? styleNavbar.menu_ativo : ""}`}>
-                <li><Link to={"/"} className={styleNavbar.itens_menu}>Home</Link></li>
-                <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>Projetos</Link></li>
-                <li><Link to={"/contato"} className={styleNavbar.itens_menu}>Contato</Link></li>
-                <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>Empresa</Link></li>
+                <li><Link to={"/"} className={styleNavbar.itens_menu}>{<MdHome />} Home</Link></li>
+                <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>{<MdAssignment />} Projetos</Link></li>
+                <li><Link to={"/contato"} className={styleNavbar.itens_menu}>{<MdContacts />} Contato</Link></li>
+                <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>{<MdBusiness />} Empresa</Link></li>
             </ul>
 
             </div>
