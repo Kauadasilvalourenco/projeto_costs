@@ -11,6 +11,10 @@
     background-color: var(--cor_fundo);
 }
 
+.conteiner_menu {
+    order: 1;
+}
+
 .abrir_menu {
     font-size: 2rem;
     color: #ffffff;
@@ -24,8 +28,8 @@
 }
 
 .lista_itens_menu {
+    display: none;
     list-style: none;
-    order: 1;
 }
 
 .itens_menu {
@@ -38,6 +42,10 @@
     text-decoration: none;
     color: #ffffff;
     margin-bottom: 10px;
+}
+
+.menu_ativo {
+    display: block;
 }
 
 .itens_menu:active {

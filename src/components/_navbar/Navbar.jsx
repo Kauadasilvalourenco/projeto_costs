@@ -20,7 +20,7 @@ function Navbar() {
     return(
         <nav className={styleNavbar.Nav}>
 
-            <div className="conteiner_menu">
+            <div className={styleNavbar.conteiner_menu}>
 
                 {
                     menuAtivo ? (
@@ -30,18 +30,12 @@ function Navbar() {
                     )
                 }
 
-                {
-                    menuAtivo ? (
-                        <ul className={styleNavbar.lista_itens_menu}>
-                            <li><Link to={"/"} className={styleNavbar.itens_menu}>Home</Link></li>
-                            <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>Projetos</Link></li>
-                            <li><Link to={"/contato"} className={styleNavbar.itens_menu}>Contato</Link></li>
-                            <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>Empresa</Link></li>
-                        </ul>
-                    ) : (
-                        <p></p>
-                    )
-                }
+            <ul className={`${styleNavbar.lista_itens_menu} ${menuAtivo ? styleNavbar.menu_ativo : ""}`}>
+                <li><Link to={"/"} className={styleNavbar.itens_menu}>Home</Link></li>
+                <li><Link to={"/projetos"} className={styleNavbar.itens_menu}>Projetos</Link></li>
+                <li><Link to={"/contato"} className={styleNavbar.itens_menu}>Contato</Link></li>
+                <li><Link to={"/empresa"} className={styleNavbar.itens_menu}>Empresa</Link></li>
+            </ul>
 
             </div>
 
