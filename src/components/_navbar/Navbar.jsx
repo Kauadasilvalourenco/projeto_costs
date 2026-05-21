@@ -25,7 +25,8 @@ function Navbar() {
                 {
                     menuAtivo ? (
                         <MdClose 
-                            className={styleNavbar.fechar_menu}        onClick={toogleMenu}
+                            className={styleNavbar.fechar_menu}
+                            onClick={toogleMenu}
                             data-testid="botao-fechar"
                         />
                     ) : (

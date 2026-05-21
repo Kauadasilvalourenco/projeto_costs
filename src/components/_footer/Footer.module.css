@@ -14,12 +14,14 @@
 
 .conteiner_icones {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
 .icones {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #ffffff;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .Footer p {
@@ -40,7 +42,7 @@
     }
 
     .icones {
-        font-size: 2.2rem;
+        font-size: 1.7rem;
     }
 
     .Footer p {
