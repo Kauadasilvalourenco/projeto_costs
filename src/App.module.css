@@ -1,0 +1,27 @@
+.App {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.conteiner_principal {
+    width: 100%;
+    max-width: var(--layout_celular);
+}
+
+@media screen and (min-width: 768px) {
+    .conteiner_principal {
+        max-width: var(--layout_tablet);
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .conteiner_principal {
+        max-width: var(--layout_desktop);
+    }
+}

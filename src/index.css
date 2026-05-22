@@ -1,3 +1,6 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oxanium:wght@200..800&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +11,8 @@
   --cor_fundo: #222222;
   --cor_destaque: #af8615;
   --cor_paragrafo: #808080;
+  --cor_sucesso: darkgreen;
+  --cor_erro-fechar: darkred;
 
   --fonte_padrao: "Nunito", "sans-serif";
   --fonte_paragrafo: "Oxanium", "sans-serif";
@@ -15,9 +20,12 @@
 
   --tamanho_h1: 2rem;
   --tamanho_h2: 1.5rem;
-  --tamanho_p: 1.2rem;
+  --tamanho_p: 1.3rem;
+  --tamanho_menus: 1.3rem;
 
-  --layout_responsivo: 320px;
+  --layout_celular: 320px;
+  --layout_tablet: 768px;
+  --layout_desktop: 1280px;
 }
 
 html, body, #root {
