@@ -20,4 +20,6 @@
     font-weight: bold;
     color: var(--cor_destaque);
     background-color: var(--cor_fundo);
+    padding: 5px;
+    border-radius: 5px;
 }

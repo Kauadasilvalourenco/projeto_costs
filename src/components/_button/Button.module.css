@@ -1,0 +1,16 @@
+.button {
+    background-color: var(--cor_fundo);
+    color: #ffffff;
+    font-family: var(--fonte_padrao);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 2px 2px 5px #0000009c;
+}
+
+.button:active {
+    background-color: var(--cor_destaque);
+    color: var(--cor_fundo);
+}
