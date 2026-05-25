@@ -1,0 +1,23 @@
+.h1 {
+    font-family: var(--fonte_padrao);
+    font-size: var(--tamanho_h1);
+}
+
+.h2 {
+    font-family: var(--fonte_padrao);
+    font-size: var(--tamanho_h2);
+}
+
+.p {
+    font-family: var(--fonte_paragrafo);
+    font-size: var(--tamanho_p);
+    color: var(--cor_paragrafo);
+}
+
+.span {
+    font-family: var(--fonte_destaque);
+    font-size: var(--tamanho_span);
+    font-weight: bold;
+    color: var(--cor_destaque);
+    background-color: var(--cor_fundo);
+}
