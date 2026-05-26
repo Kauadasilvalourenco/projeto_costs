@@ -14,3 +14,21 @@
     background-color: var(--cor_destaque);
     color: var(--cor_fundo);
 }
+
+@media screen and (min-width: 1280px) {
+    .button {
+        font-size: 1.4rem;
+        box-shadow: 5px 5px 8px #0000009c;
+    }
+
+    .button:active {
+        background-color: none;
+        color: none;
+    }
+
+    .button:hover {
+        background-color: var(--cor_destaque);
+        color: var(--cor_fundo);
+        cursor: pointer;
+    }
+}
