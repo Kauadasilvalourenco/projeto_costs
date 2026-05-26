@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 // import router;
 
 import Home from "./pages/home/Home";
+import CriarProjeto from "./pages/criar-projeto/CriarProjeto";
 // import pages;
 
 import Navbar from "./components/_navbar/Navbar";
@@ -24,6 +25,11 @@ function App() {
           <Route 
             path="/"
             element={<Home />}
+          />
+
+          <Route 
+            path="/criarProjeto"
+            element={<CriarProjeto />}
           />
           
           <Route 

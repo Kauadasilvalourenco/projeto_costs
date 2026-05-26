@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+// import router;
+
 import Button from "../../components/_button/Button";
 import Typography from "../../components/_typography/Typography";
 // import components;
@@ -12,6 +15,12 @@ import styleTypography from "../../components/_typography/Typography.module.css"
 // import css;
 
 function Home() {
+    const navigate = useNavigate();
+
+    function criarProjeto() {
+        navigate("/criarProjeto")
+    }
+
     return(
         <div className={styleHome.Home}>
 
@@ -28,7 +37,9 @@ function Home() {
                 Comece a gerenciar os seus projetos agora mesmo!
             </Typography>
 
-            <Button>
+            <Button
+                onClick={criarProjeto}
+            >
                 Criar Projeto
             </Button>
 
