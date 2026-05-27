@@ -43,11 +43,11 @@ export default defineConfig({
     },
   ],
 
-  /* 🚀 SOLUÇÃO DO PIPELINE: Sobe a aplicação automaticamente se ela estiver desligada */
+  /* SOLUÇÃO DO PIPELINE: Sobe a aplicação automaticamente se ela estiver desligada */
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:5173',
-    reuseExistingServer: false, // 👈 Direto ao ponto: Sem variáveis de ambiente ou erros no VS Code
+    reuseExistingServer: false, 
     timeout: 120 * 1000,
   },
 });
