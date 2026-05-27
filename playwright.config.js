@@ -6,7 +6,6 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   
-  // Se você rodar em ambiente local, ignora o erro do process.env
   forbidOnly: false,
   retries: 0,
   workers: undefined,
@@ -14,7 +13,7 @@ export default defineConfig({
   reporter: 'html',
   
   use: {
-    // 🎯 Define a URL padrão do seu Vite local (ajuste se a sua for diferente de 5173)
+    // 🎯 Define a URL padrão do seu Vite local
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
   },
@@ -32,7 +31,6 @@ export default defineConfig({
       name: 'tablet',
       use: { 
         ...devices['iPad Mini'], 
-        // 📟 Aqui a tela encolhe e sua sidebar deve ocupar 10% da largura
         viewport: { width: 768, height: 1024 } 
       },
     },
@@ -44,4 +42,12 @@ export default defineConfig({
       },
     },
   ],
+
+  /* 🚀 SOLUÇÃO DO PIPELINE: Sobe a aplicação automaticamente se ela estiver desligada */
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:5173',
+    reuseExistingServer: false, // 👈 Direto ao ponto: Sem variáveis de ambiente ou erros no VS Code
+    timeout: 120 * 1000,
+  },
 });
