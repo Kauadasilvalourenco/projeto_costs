@@ -21,6 +21,6 @@ test.describe('Fluxo da Página Home', () => {
     await expect(page).toHaveURL(/\/criarProjeto/);
 
     // ✅ CORREÇÃO: Evita locator('div') genérico que também pode falhar por strict mode futuros
-    await expect(page.getByText('Página Criação Projetos')).toBeVisible();
+    await expect(page.locator('h1')).toContainText('Criar Projeto');
   });
 });
