@@ -1,5 +1,5 @@
 .label {
-    font-family: var(--fonte_paragrafo);
+    font-family: var(--fonte_padrao);
     font-size: var(--tamanho_p);
     font-weight: bold;
     color: var(--cor_label);
