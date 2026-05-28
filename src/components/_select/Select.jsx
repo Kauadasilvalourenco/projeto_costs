@@ -14,7 +14,11 @@ function Select({name, id, options, onChange, style}) {
                 <option hidden>Escolha uma Categoria</option>
 
                 {options.map((option) => (
-                    <option key={option.id} value={option.nome} className={styleSelect.option}>
+                    <option 
+                        key={option.id} 
+                        value={option.nome} 
+                        className={styleSelect.option}
+                    >
                         {option.nome}
                     </option>
                 ))}

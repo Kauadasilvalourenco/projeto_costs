@@ -5,7 +5,11 @@ import Typography from "../../components/_typography/Typography";
 import Label from "../../components/_label/Label";
 import Input from "../../components/_input/Input";
 import Select from "../../components/_select/Select";
+import Button from "../../components/_button/Button";
 // import components;
+
+import styleCriarProjeto from "./CriarProjeto.module.css";
+// import css;
 
 function CriarProjeto() {
     const categorias = [
@@ -17,8 +21,12 @@ function CriarProjeto() {
 
     const ID = useId();
 
+    function criarProjeto(e) {
+        e.preventDefault();
+    }
+
     return(
-        <div>
+        <div className={styleCriarProjeto.CriarProjeto}>
 
             <Typography
                 tag={"h1"}
@@ -34,7 +42,7 @@ function CriarProjeto() {
 
             <form>
 
-                <div className="conteiner_nome_projeto">
+                <div className={styleCriarProjeto.conteiner_nome_projeto}>
                     <Label
                         htmlFor={`${ID}-nome_projeto`}
                     >
@@ -48,7 +56,7 @@ function CriarProjeto() {
                     />
                 </div>
 
-                <div className="conteiner_orcamento_projeto">
+                <div className={styleCriarProjeto.conteiner_orcamento_projeto}>
                     <Label
                         htmlFor={`${ID}-orcamento_projeto`}
                     >
@@ -62,7 +70,7 @@ function CriarProjeto() {
                     />
                 </div>
 
-                <div className="conteiner_categorias_projeto">
+                <div className={styleCriarProjeto.conteiner_categorias_projeto}>
                     <Label
                         htmlFor={`${ID}-categorias_projeto`}
                     >
@@ -74,6 +82,12 @@ function CriarProjeto() {
                         options={categorias}
                     />
                 </div>
+
+                <Button
+                    type={"submit"}
+                    onClick={criarProjeto}
+                    children={"Criar Projeto"}
+                />
 
             </form>
 
