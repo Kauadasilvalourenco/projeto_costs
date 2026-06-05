@@ -1,20 +1,23 @@
+import { forwardRef } from "react";
+// import RHF;
+
 import styleInput from "./Input.module.css";
 // import css;
 
-function Input({type, name, id, placeholder, onChange, style}) {
-    return(
+const Input = forwardRef(({type, name, id, placeholder, style, ...rest}, ref) => {
+    return (
         <div>
             <input
                 type={type}
                 name={name} 
                 id={id} 
                 placeholder={placeholder}
-                onChange={onChange}
                 className={`${styleInput.input} ${style}`}
-                required
+                ref={ref}
+                {...rest}
             />
         </div>
     )
-}
+});
 
 export default Input;

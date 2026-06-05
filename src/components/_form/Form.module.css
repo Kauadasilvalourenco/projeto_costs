@@ -7,6 +7,16 @@
 
 .conteiner_fields {
     margin-bottom: 20px;
+    text-align: center;
+}
+
+.error_message {
+    text-align: center;
+    color: var(--cor_erro-fechar);
+    font-family: var(--fonte_destaque);
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .button {

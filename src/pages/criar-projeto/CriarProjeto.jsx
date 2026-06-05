@@ -1,3 +1,6 @@
+import z from "zod/v3";
+// import zod;
+
 import Typography from "../../components/_typography/Typography";
 import Input from "../../components/_input/Input";
 import Select from "../../components/_select/Select";
@@ -8,12 +11,25 @@ import styleCriarProjeto from "./CriarProjeto.module.css";
 // import css;
 
 function CriarProjeto() {
-    const categorys = [
+    const categoriess = [
         {id: 1, nome: "Infra"},
         {id: 2, nome: "Planejamento"},
         {id: 3, nome: "Desenvolvimento"},
         {id: 4, nome: "Design"}
     ];
+
+    const validationProject = z.object({
+        nome_projeto: z.string()
+        .min(1, "O campo não pode ser nulo!")
+        .max(30),
+
+        orcamento_projeto: z.coerce.number()
+        .min(1, "O campo não pode ser nulo!")
+        .max(1000000, "O valor máximo de Orçamento foi exedido"),
+
+        categoria_projeto: z.string()
+        .min(1, "É preciso selecionar uma categoria!")
+    });
 
     const projectForm = [
         {
@@ -57,7 +73,7 @@ function CriarProjeto() {
                     type: Select
                 },
                 props: {
-                    name: "categoria_projeto", options: categorys
+                    name: "categoria_projeto", options: categoriess
                 }
             }
         }
@@ -81,6 +97,7 @@ function CriarProjeto() {
             <Form 
                 fieldsConfig={projectForm}
                 btnText={"Criar Projeto"}
+                schemaZod={validationProject}
             />
 
         </div>
