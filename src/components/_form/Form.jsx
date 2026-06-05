@@ -1,0 +1,73 @@
+import { useId } from "react";
+// import ID;
+
+import { useForm } from "react-hook-form";
+// import RHF;
+
+import { zodResolver } from "@hookform/resolvers/zod";
+// import Zod;
+
+import { formSchema } from "./_schema/formSchema";
+// import Schema;
+
+import Button from "../_button/Button";
+// import components;
+
+import styleForm from "./Form.module.css";
+// import css;
+
+function Form({fieldsConfig, btnText, schemaZod}) {
+    const ID = useId();
+    const fieldsList = formSchema(fieldsConfig, ID);
+
+    const { register, handleSubmit, formState: {errors} } = useForm({
+        resolver: zodResolver(schemaZod)
+    });
+
+    function handleOnSubmit() {
+        console.log("Dados do formulário prontos e validados");
+    }
+
+    return(
+        <div>
+            <form onSubmit={handleSubmit(handleOnSubmit)} className={styleForm.Form}>
+                {
+                    fieldsList.map((item, index) => {
+                        const TagLabel = item.label.component;
+                        const TagField = item.field.component;
+                        const fieldName = item.field.props.name;
+
+                        return (
+                            <div key={index} className={styleForm.conteiner_fields}>
+                                <TagLabel 
+                                    {...item.label.props}
+                                />
+                                <TagField 
+                                    {...item.field.props}
+                                    {...register(fieldName)}
+                                />
+                                
+                                {errors[fieldName] && (
+                                    <span className={styleForm.error_message}>
+                                        {errors[fieldName].message}
+                                    </span>
+                                )}
+
+                            </div>
+                        )
+                    })
+                }
+
+                <Button
+                   type={"submit"}
+                   style={styleForm.button}
+                >
+                    {btnText}
+                </Button>
+
+            </form>
+        </div>
+    )
+}
+
+export default Form;

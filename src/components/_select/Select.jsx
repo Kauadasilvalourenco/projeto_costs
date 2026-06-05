@@ -1,17 +1,20 @@
+import { forwardRef } from "react";
+// import RHF;
+
 import styleSelect from "./Select.module.css";
 // import css;
 
-function Select({name, id, options, onChange, style}) {
-    return(
+const Select = forwardRef(({name, id, style, options, ...rest}, ref) => {
+    return (
         <div>
             <select 
                 name={name}
                 id={id}
-                onChange={onChange}
                 className={`${styleSelect.select} ${style}`}
-                required
+                ref={ref}
+                {...rest}
             >
-                <option hidden>Escolha uma Categoria</option>
+                <option value="" hidden>Escolha uma Categoria</option>
 
                 {options.map((option) => (
                     <option 
@@ -25,6 +28,6 @@ function Select({name, id, options, onChange, style}) {
             </select>
         </div>
     )
-}
+});
 
 export default Select;
