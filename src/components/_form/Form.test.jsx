@@ -57,13 +57,14 @@ describe("Componente Form", () => {
         await user.click(buttonElement);
 
         await waitFor(() => {
-            expect(screen.getByText("O campo não pode estar vazio"));
+            expect(screen.getByText("O campo não pode estar vazio")).toBeInTheDocument();
         });
 
         await user.type(inputElement, "Alguma Coisa");
+        await user.click(buttonElement);
 
         await waitFor(() => {
-            expect(screen.getByText("O campo não pode estar vazio")).not.toBeInTheDocument();
+            expect(screen.qyeryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
             expect(logSpy).toHaveBeenCalledWith("Dados do formulário prontos e validados")
         });
 
