@@ -5,10 +5,16 @@ import Select from "./Select";
 
 describe("Componente Select", () => {
     it("deve renderizar o select na tela e receber as props", () => {
+        const mockOptions = [
+            {id: "opt01", name: "opt01"},
+            {id: "opt02", name: "opt02"}
+        ];
+
         render(
             <Select
                 name="select_component"
                 id="id_unico"
+                options={mockOptions}
             >
             </Select>
         );
@@ -22,12 +28,15 @@ describe("Componente Select", () => {
 
     it("deve renderizar o select e verificar o valor das options", async() => {
         const user = userEvent.setup();
+        const mockOptions = [
+            {id: "opt01", nome: "opt01"},
+            {id: "opt02", nome: "opt02"}
+        ];
         
         render(
-            <Select>
-                <option value="opt01">opt01</option>
-                <option value="opt02">opt02</option>
-            </Select>
+            <Select 
+                options={mockOptions}
+            />
         );
 
         const selectElemnt = screen.getByRole("combobox");

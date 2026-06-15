@@ -6,17 +6,14 @@ import Form from "./Form";
 
 describe("Componente Form", () => {
     it("deve renderizar o form na tela, verificar se as validações do zod estão funcionando corretamente e verificar se com os dados corretos o form é enviado", async() => {
-        const idMock = "::;!?";
         const user = userEvent.setup();
         const logSpy = vi.spyOn(console, "log")
 
         const mockSchema = [
             {
                 label: {
-                    component: "label",
                     props: {
                         children: "Texto Label",
-                        htmlFor: idMock
                     }
                 },
                 field: {
@@ -24,7 +21,7 @@ describe("Componente Form", () => {
                         type: "input"
                     },
                     props: {
-                        name: "nome_input", placeholder: "Digite algo", id: idMock
+                        name: "nome_input", placeholder: "Digite algo"
                     }
                 }
             }
@@ -64,7 +61,7 @@ describe("Componente Form", () => {
         await user.click(buttonElement);
 
         await waitFor(() => {
-            expect(screen.qyeryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
+            expect(screen.queryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
             expect(logSpy).toHaveBeenCalledWith("Dados do formulário prontos e validados")
         });
 
