@@ -32,18 +32,14 @@ describe("Componente Navbar", () => {
   it("deve alternar os ícones de menu hambúrguer ao clicar", () => {
     renderNavbar();
 
-    // 1. Busca o ícone de abrir de forma infalível pelo id de teste
     const iconeAbrir = screen.getByTestId("botao-abrir");
     expect(iconeAbrir).toBeInTheDocument();
 
-    // 2. Simula o clique para abrir o menu
     fireEvent.click(iconeAbrir);
 
-    // 3. Após o clique, o botão de fechar deve aparecer na tela
     const iconeFechar = screen.getByTestId("botao-fechar");
     expect(iconeFechar).toBeInTheDocument();
 
-    // 4. Garante que o de abrir sumiu de fato
     expect(screen.queryByTestId("botao-abrir")).not.toBeInTheDocument();
   });
 

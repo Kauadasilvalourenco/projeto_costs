@@ -1,11 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 // import router;
 
+import Home from "./pages/home/Home";
+import CriarProjeto from "./pages/criar-projeto/CriarProjeto";
+// import pages;
+
 import Navbar from "./components/_navbar/Navbar";
 import Footer from "./components/_footer/Footer";
 // import components;
 
 import styleApp from "./App.module.css";
+// import css;
 
 function App() {
   return(
@@ -19,6 +24,12 @@ function App() {
 
           <Route 
             path="/"
+            element={<Home />}
+          />
+
+          <Route 
+            path="/criarProjeto"
+            element={<CriarProjeto />}
           />
           
           <Route 

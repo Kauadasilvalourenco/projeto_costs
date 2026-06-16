@@ -1,0 +1,7 @@
+.label {
+    font-family: var(--fonte_padrao);
+    font-size: var(--tamanho_p);
+    font-weight: bold;
+    color: var(--cor_label);
+    font-style: italic;
+}
