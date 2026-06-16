@@ -21,11 +21,11 @@ function CriarProjeto() {
     const validationProject = z.object({
         nome_projeto: z.string()
         .min(1, "O campo não pode ser nulo!")
-        .max(30),
+        .max(30)
+        .regex(/^(?!\d+$).+$/, "O nome do projeto não pode ser composto somente por números"),
 
         orcamento_projeto: z.coerce.number()
-        .min(1, "O campo não pode ser nulo!")
-        .max(1000000, "O valor máximo de Orçamento foi exedido"),
+        .min(1, "O campo não pode ser nulo!"),
 
         categoria_projeto: z.string()
         .min(1, "É preciso selecionar uma categoria!")
