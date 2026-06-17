@@ -11,13 +11,6 @@ import styleCriarProjeto from "./CriarProjeto.module.css";
 // import css;
 
 function CriarProjeto() {
-    const categoriess = [
-        {id: 1, nome: "Infra"},
-        {id: 2, nome: "Planejamento"},
-        {id: 3, nome: "Desenvolvimento"},
-        {id: 4, nome: "Design"}
-    ];
-
     const validationProject = z.object({
         nome_projeto: z.string()
         .min(1, "O campo não pode ser nulo!")
@@ -73,7 +66,7 @@ function CriarProjeto() {
                     type: Select
                 },
                 props: {
-                    name: "categoria_projeto", options: categoriess
+                    name: "categoria_projeto",
                 }
             }
         }
