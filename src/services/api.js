@@ -4,7 +4,7 @@ async function request(endpoint, options = {}) {
     const response = await fetch(`${baseURL}${endpoint}`, {
         ...options,
 
-        header: {
+        headers: {
             "Content-Type": "application/json",
             ...options.header
         }

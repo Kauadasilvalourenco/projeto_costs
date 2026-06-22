@@ -29,7 +29,7 @@ function Form({fieldsConfig, btnText, schemaZod}) {
 
         fetchData();
 
-    }, [])
+    }, []);
 
     const fieldsList = formSchema(fieldsConfig, ID, categories);
 
