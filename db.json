@@ -4,5 +4,7 @@
         {"id": 2, "name": "Desenvolvimento"},
         {"id": 3, "name": "Planejamento"},
         {"id": 4, "name": "Design"}
-    ]
+    ],
+
+    "projects": []
 }

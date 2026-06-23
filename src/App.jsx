@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/home/Home";
 import CriarProjeto from "./pages/criar-projeto/CriarProjeto";
+import Projects from "./pages/projects/Projects";
 // import pages;
 
 import Navbar from "./components/_navbar/Navbar";
@@ -34,6 +35,7 @@ function App() {
           
           <Route 
             path="/projetos"
+            element={<Projects />}
           />
 
           <Route 

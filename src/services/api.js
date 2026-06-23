@@ -21,4 +21,12 @@ async function request(endpoint, options = {}) {
 
 export function getCategories() {
     return request("/categories");
+};
+
+//POST
+export function createProject(data) {
+    return request("/projects", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
 }
