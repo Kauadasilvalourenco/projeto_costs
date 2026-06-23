@@ -6,7 +6,7 @@ async function request(endpoint, options = {}) {
 
         headers: {
             "Content-Type": "application/json",
-            ...options.header
+            ...options.headers
         }
     });
 
