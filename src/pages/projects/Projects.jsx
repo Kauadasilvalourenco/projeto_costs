@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { getProjects } from "../../services/api";
 // import js;
 
+import Card from "../../components/_card/Card";
+// import components;
+
 function Projects() {
     const [projects, setProjects] = useState([]);
 
@@ -25,8 +28,12 @@ function Projects() {
                     <p>Você não tem projetos criados!</p>
                 ): (
                     projects.map((project) => (
-                        <div>
-                            {project.nome_projeto}
+                        <div
+                            key={project.id}
+                        >
+                            <Card 
+                                project={project}
+                            />
                         </div>
                     ))
                 )

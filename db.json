@@ -17,5 +17,13 @@
       "name": "Design"
     }
   ],
-  "projects": []
+  "projects": [
+    {
+      "nome_projeto": "Teste",
+      "orcamento_projeto": 2500,
+      "categoria_projeto": "Desenvolvimento",
+      "id": "fZMjOtIZyhw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
