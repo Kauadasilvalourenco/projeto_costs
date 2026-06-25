@@ -17,7 +17,7 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
-function Form({fieldsConfig, btnText, schemaZod}) {
+function Form({fieldsConfig, btnText, schemaZod, onSubmit}) {
     const [categories, setCategories] = useState([]);
     const ID = useId();
 
@@ -37,8 +37,8 @@ function Form({fieldsConfig, btnText, schemaZod}) {
         resolver: zodResolver(schemaZod)
     });
 
-    function handleOnSubmit() {
-        console.log("Dados do formulário prontos e validados");
+    function handleOnSubmit(project) {
+        onSubmit(project)
     }
 
     return(

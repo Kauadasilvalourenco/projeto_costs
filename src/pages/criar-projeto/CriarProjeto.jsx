@@ -7,10 +7,22 @@ import Select from "../../components/_select/Select";
 import Form from "../../components/_form/Form";
 // import components;
 
+import { createProject } from "../../services/api";
+// import js;
+
 import styleCriarProjeto from "./CriarProjeto.module.css";
 // import css;
 
 function CriarProjeto() {
+    async function handleCreateProject(project) {
+        try {
+            await createProject(project);
+            console.log("Projeto criado com sucesso!");
+        } catch (error) {
+            console.error(`Erro ao criar projeto: ${error}`);
+        }
+    }
+
     const validationProject = z.object({
         nome_projeto: z.string()
         .min(1, "O campo não pode ser nulo!")
@@ -91,6 +103,7 @@ function CriarProjeto() {
                 fieldsConfig={projectForm}
                 btnText={"Criar Projeto"}
                 schemaZod={validationProject}
+                onSubmit={handleCreateProject}
             />
 
         </div>
