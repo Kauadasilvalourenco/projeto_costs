@@ -1,6 +1,9 @@
 import { useState, useEffect, useId } from "react";
 // import hooks;
 
+import { useNavigate } from "react-router-dom";
+// import router;
+
 import { useForm } from "react-hook-form";
 // import RHF;
 
@@ -20,6 +23,7 @@ import styleForm from "./Form.module.css";
 function Form({fieldsConfig, btnText, schemaZod, onSubmit}) {
     const [categories, setCategories] = useState([]);
     const ID = useId();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -38,7 +42,8 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit}) {
     });
 
     function handleOnSubmit(project) {
-        onSubmit(project)
+        onSubmit(project);
+        navigate("/projetos")
     }
 
     return(

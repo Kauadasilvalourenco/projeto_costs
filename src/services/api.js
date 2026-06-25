@@ -18,10 +18,13 @@ async function request(endpoint, options = {}) {
 };
 
 //GET
-
 export function getCategories() {
     return request("/categories");
 };
+
+export function getProjects() {
+    return request("/projects");
+}
 
 //POST
 export function createProject(data) {

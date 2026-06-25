@@ -17,25 +17,5 @@
       "name": "Design"
     }
   ],
-  "projects": [
-    {
-      "nome_projeto": "Teste",
-      "orcamento_projeto": 4500,
-      "categoria_projeto": "Design",
-      "id": "tQotTs8qD9Y"
-    },
-    {
-      "nome_projeto": "Teste",
-      "orcamento_projeto": 2200,
-      "categoria_projeto": "Design",
-      "id": "qPbNmUJhqZk"
-    },
-    {
-      "nome_projeto": "Teste",
-      "orcamento_projeto": 2200,
-      "categoria_projeto": "Desenvolvimento",
-      "id": "3hSXyfdqhpQ"
-    }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  "projects": []
 }
