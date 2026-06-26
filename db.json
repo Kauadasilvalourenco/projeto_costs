@@ -35,6 +35,18 @@
       "orcamento_projeto": 50000,
       "categoria_projeto": "Desenvolvimento",
       "id": "Gm54zRIUqM8"
+    },
+    {
+      "nome_projeto": "Teste01",
+      "orcamento_projeto": 3000,
+      "categoria_projeto": "Desenvolvimento",
+      "id": "EgBm1ghpXqY"
+    },
+    {
+      "nome_projeto": "Teste02",
+      "orcamento_projeto": 4500,
+      "categoria_projeto": "Infraestrutura",
+      "id": "KwUKDkogKjQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
