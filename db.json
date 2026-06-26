@@ -23,6 +23,12 @@
       "orcamento_projeto": 2500,
       "categoria_projeto": "Desenvolvimento",
       "id": "fZMjOtIZyhw"
+    },
+    {
+      "nome_projeto": "Landing Page",
+      "orcamento_projeto": 5000,
+      "categoria_projeto": "Desenvolvimento",
+      "id": "yT6qMXYqUz0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
