@@ -5,6 +5,9 @@ import Typography from "../_typography/Typography";
 import styleCard from "./Card.module.css";
 // import css;
 
+import { MdEdit, MdDelete } from "react-icons/md";
+
+
 function Card({project}) {
     return(
         <div className={styleCard.Card}>
@@ -31,12 +34,21 @@ function Card({project}) {
             </Typography>
 
             <div className={styleCard.conteiner_button}>
-                <Button>
+
+                <Button
+                    style={styleCard.button}
+                >
+                    <MdEdit className={styleCard.button_icons}/>
                     Editar
                 </Button>
-                <Button>
+
+                <Button
+                    style={styleCard.button}
+                >
+                    <MdDelete className={styleCard.button_icons}/>
                     Deletar
                 </Button>
+
             </div>
         </div>
     )

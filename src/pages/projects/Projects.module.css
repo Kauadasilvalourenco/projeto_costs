@@ -1,0 +1,10 @@
+.page_projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.conteiner_cards {
+    margin-bottom: 50px;
+}

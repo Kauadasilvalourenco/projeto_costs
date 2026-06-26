@@ -7,6 +7,9 @@ import { getProjects } from "../../services/api";
 import Card from "../../components/_card/Card";
 // import components;
 
+import styleProjects from "./Projects.module.css";
+// import css;
+
 function Projects() {
     const [projects, setProjects] = useState([]);
 
@@ -22,7 +25,7 @@ function Projects() {
     }, []);
 
     return(
-        <div>
+        <div className={styleProjects.page_projects}>
             {
                 projects.length === 0 ? (
                     <p>Você não tem projetos criados!</p>
@@ -30,6 +33,7 @@ function Projects() {
                     projects.map((project) => (
                         <div
                             key={project.id}
+                            className={styleProjects.conteiner_cards}
                         >
                             <Card 
                                 project={project}

@@ -29,6 +29,12 @@
       "orcamento_projeto": 5000,
       "categoria_projeto": "Desenvolvimento",
       "id": "yT6qMXYqUz0"
+    },
+    {
+      "nome_projeto": "TesteInveçãoMac3000MegaBlasterFockingMaster",
+      "orcamento_projeto": 50000,
+      "categoria_projeto": "Desenvolvimento",
+      "id": "Gm54zRIUqM8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -4,10 +4,10 @@
     align-items: center;
     flex-direction: column;
 
-    max-width: 320px;
-    min-height: 250px;
+    width: 320px;
+    height: 300px;
     max-height: 350px;
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
 }
@@ -20,6 +20,7 @@
     margin-top: -15px;
     border-radius: 5px;
     padding: 5px;
+    word-break: break-all;
 }
 
 .orcamento,
@@ -30,4 +31,15 @@
 .conteiner_button {
     display: flex;
     gap: 40px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.button_icons {
+    font-size: 1.2rem;
 }
