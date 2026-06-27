@@ -4,10 +4,15 @@ import userEvent from "@testing-library/user-event";
 import z from "zod/v3";
 import Form from "./Form";
 
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => vi.fn(),
+}));
+
+const mockOnSubmit = vi.fn();
+
 describe("Componente Form", () => {
     it("deve renderizar o form na tela, verificar se as validações do zod estão funcionando corretamente e verificar se com os dados corretos o form é enviado", async() => {
         const user = userEvent.setup();
-        const logSpy = vi.spyOn(console, "log")
 
         const mockSchema = [
             {
@@ -39,6 +44,7 @@ describe("Componente Form", () => {
                 fieldsConfig={mockSchema}
                 schemaZod={zodMock}
                 btnText={"Enviar"}
+                onSubmit={mockOnSubmit}
             />
         );
 
@@ -62,9 +68,7 @@ describe("Componente Form", () => {
 
         await waitFor(() => {
             expect(screen.queryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
-            expect(logSpy).toHaveBeenCalledWith("Dados do formulário prontos e validados")
+            expect(mockOnSubmit).toHaveBeenCalled();
         });
-
-        logSpy.mockRestore();
     });
 });

@@ -24,6 +24,11 @@ Quando solicitado a criar testes (**Unitários, Integração ou E2E**), siga rig
 3. **Simplicidade Máxima:** Escreva casos de teste limpos, focados, fáceis de ler e que sirvam de exemplo pedagógico, evitando padrões excessivamente complexos ou difíceis de rastrear.
 4. **Explicação Linha por Linha:** Como o usuário está aprendendo sobre testes, você deve **explicar didaticamente o porquê de cada linha de código adicionada** nos arquivos de teste (ex: detalhando o papel de comandos como `describe`, `test`, `expect`, seletores, asserções, ações do Playwright ou mocks do MSW).
 
+# DIRETRIZES DE ARQUITETURA DE TESTES
+1. **Evite Redundância:** Ao criar testes de integração para páginas (ex: `CriarProjeto.jsx`), foque estritamente no fluxo principal de sucesso (preenchimento válido, chamada de API e navegação).
+2. **Separação de Conceitos:** Não repita testes de validação de esquemas do Zod ou mensagens de erro de inputs que já pertencem ao escopo de testes unitários do componente `Form`.
+3. **Se necessário:** Peça para o usuário mostrar os testes existentes antes de gerar novos, para garantir que não haverá sobreposição de lógica.
+
 # DIRETRIZES TÉCNICAS (ECOSSISTEMA JAVASCRIPT)
 1. **JavaScript Moderno (ES6+):** Ensine e use sempre as features modernas da linguagem (Arrow functions, Destructuring, Spread operator, Async/Await, ES Modules com import/export). Nunca ensine ou use padrões legados como `var` ou `require`.
 2. **Mentalidade Funcional e Imutabilidade:** Incentive boas práticas como evitar mutação direta de estados/dados (especialmente para React) e preferir métodos puros de array (`.map()`, `.filter()`, `.reduce()`).

@@ -35,8 +35,8 @@ describe("getCategories()", () => {
         });
         vi.stubGlobal("fetch", fetchMock);
 
-        expect(getCategories()).rejects.toThrow("Erro na API: 404");
-        expect(fetchMock).toHaveBeenCalledWit("http:localhost:5000/categories", {
+        await expect(getCategories()).rejects.toThrow("Erro na API: 404");
+        expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/categories", {
             headers: {
                 "Content-Type": "application/json"
             }
