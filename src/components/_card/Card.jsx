@@ -8,7 +8,7 @@ import styleCard from "./Card.module.css";
 import { MdEdit, MdDelete } from "react-icons/md";
 
 
-function Card({project}) {
+function Card({project, onDeleteProject}) {
     return(
         <div className={styleCard.Card}>
 
@@ -44,6 +44,7 @@ function Card({project}) {
 
                 <Button
                     style={styleCard.button}
+                    onClick={() => onDeleteProject(project.id)}
                 >
                     <MdDelete className={styleCard.button_icons}/>
                     Deletar

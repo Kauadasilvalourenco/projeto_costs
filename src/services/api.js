@@ -31,5 +31,12 @@ export function createProject(data) {
     return request("/projects", {
         method: "POST",
         body: JSON.stringify(data)
-    })
+    });
+}
+
+//DELETE
+export function deleteProject(id) {
+    return request(`/projects/${id}`, {
+        method: "DELETE"
+    });
 }
