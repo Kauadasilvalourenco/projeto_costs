@@ -1,5 +1,5 @@
-import z from "zod/v3";
-// import zod;
+import { useState, useEffect } from "react";
+// import hooks;
 
 import Typography from "../../components/_typography/Typography";
 import Input from "../../components/_input/Input";
@@ -7,21 +7,31 @@ import Select from "../../components/_select/Select";
 import Form from "../../components/_form/Form";
 // import components;
 
-import { createProject } from "../../services/api";
+import z from "zod/v3";
+// import zod;
+
+import { getCategories, createProject } from "../../services/api";
 // import js;
 
 import styleCriarProjeto from "./CriarProjeto.module.css";
 // import css;
 
 function CriarProjeto() {
-    async function handleCreateProject(project) {
-        try {
-            await createProject(project);
-            console.log("Projeto criado com sucesso!");
-        } catch (error) {
-            console.error(`Erro ao criar projeto: ${error}`);
-        }
-    }
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getCategories();
+                setCategories(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+
+    }, []);
 
     const validationProject = z.object({
         nome_projeto: z.string()
@@ -83,6 +93,15 @@ function CriarProjeto() {
         }
     ]
 
+    async function handleCreateProject(project) {
+        try {
+            await createProject(project);
+            console.log("Projeto criado com sucesso!");
+        } catch (error) {
+            console.error(`Erro ao criar projeto: ${error}`);
+        }
+    }
+
     return(
         <div className={styleCriarProjeto.CriarProjeto}>
 
@@ -103,6 +122,7 @@ function CriarProjeto() {
                 btnText={"Criar Projeto"}
                 schemaZod={validationProject}
                 onSubmit={handleCreateProject}
+                onCategories={categories}
             />
 
         </div>

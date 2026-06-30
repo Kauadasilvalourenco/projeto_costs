@@ -1,4 +1,4 @@
-import { useState, useEffect, useId } from "react";
+import { useId } from "react";
 // import hooks;
 
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // import Zod;
 
 import { formSchema } from "./_schema/formSchema";
-import { getCategories } from "../../services/api";
 // import js;
 
 import Button from "../_button/Button";
@@ -20,22 +19,11 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
-function Form({fieldsConfig, btnText, schemaZod, onSubmit}) {
-    const [categories, setCategories] = useState([]);
+function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories}) {
     const ID = useId();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function fetchData() {
-            const data = await getCategories();
-            setCategories(data);
-        }
-
-        fetchData();
-
-    }, []);
-
-    const fieldsList = formSchema(fieldsConfig, ID, categories);
+    const fieldsList = formSchema(fieldsConfig, ID, onCategories);
 
     const { register, handleSubmit, formState: {errors} } = useForm({
         resolver: zodResolver(schemaZod)
