@@ -1,0 +1,23 @@
+.page_edit_project {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.page_edit_project hr {
+    border-color: #000000;
+}
+
+.page_edit_project button {
+    margin-top: 30px;
+}
+
+.section_edit_project, 
+.section_add_service,
+.section_services {
+    text-align: center;
+}

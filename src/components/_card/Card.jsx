@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+// import router;
+
 import Button from "../_button/Button";
 import Typography from "../_typography/Typography";
 // import components;
@@ -9,6 +12,8 @@ import { MdEdit, MdDelete } from "react-icons/md";
 
 
 function Card({project, onDeleteProject}) {
+    const navigate = useNavigate();
+
     return(
         <div className={styleCard.Card}>
 
@@ -37,6 +42,7 @@ function Card({project, onDeleteProject}) {
 
                 <Button
                     style={styleCard.button}
+                    onClick={() => navigate(`/editar-projeto/${project.id}`)}
                 >
                     <MdEdit className={styleCard.button_icons}/>
                     Editar

@@ -17,6 +17,25 @@
       "name": "Design"
     }
   ],
-  "projects": [],
+  "projects": [
+    {
+      "nome_projeto": "Teste",
+      "orcamento_projeto": 5000,
+      "categoria_projeto": "Desenvolvimento",
+      "id": "ck7c0G_dOX0"
+    },
+    {
+      "nome_projeto": "Teste01",
+      "orcamento_projeto": 3000,
+      "categoria_projeto": "Infraestrutura",
+      "id": "Lb884nscyME"
+    },
+    {
+      "nome_projeto": "Teste02",
+      "orcamento_projeto": 2500,
+      "categoria_projeto": "Design",
+      "id": "SFGDPHvW8Uk"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

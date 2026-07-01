@@ -26,6 +26,10 @@ export function getProjects() {
     return request("/projects");
 }
 
+export function getProject(id) {
+    return request(`/projects/${id}`)
+}
+
 //POST
 export function createProject(data) {
     return request("/projects", {
