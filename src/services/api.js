@@ -24,11 +24,11 @@ export function getCategories() {
 
 export function getProjects() {
     return request("/projects");
-}
+};
 
 export function getProject(id) {
     return request(`/projects/${id}`)
-}
+};
 
 //POST
 export function createProject(data) {
@@ -36,11 +36,19 @@ export function createProject(data) {
         method: "POST",
         body: JSON.stringify(data)
     });
-}
+};
+
+//PUT
+export function editProject(id, data) {
+    return request(`/projects/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data)
+    });
+};
 
 //DELETE
 export function deleteProject(id) {
     return request(`/projects/${id}`, {
         method: "DELETE"
     });
-}
+};

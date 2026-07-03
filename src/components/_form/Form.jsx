@@ -19,14 +19,15 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
-function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories}) {
+function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
     const ID = useId();
     const navigate = useNavigate();
 
     const fieldsList = formSchema(fieldsConfig, ID, onCategories);
 
     const { register, handleSubmit, formState: {errors} } = useForm({
-        resolver: zodResolver(schemaZod)
+        resolver: zodResolver(schemaZod),
+        defaultValues: formData || {}
     });
 
     function handleOnSubmit(project) {
