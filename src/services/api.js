@@ -30,11 +30,25 @@ export function getProject(id) {
     return request(`/projects/${id}`)
 };
 
+export function getServices(projectID) {
+    return request(`/services?projectID=${projectID}`);
+};
+
 //POST
 export function createProject(data) {
     return request("/projects", {
         method: "POST",
         body: JSON.stringify(data)
+    });
+};
+
+export function createServices(projectID, data) {
+    return request("/services", {
+        method: "POST",
+        body: JSON.stringify({
+            ...data,
+            projectID: projectID
+        })
     });
 };
 

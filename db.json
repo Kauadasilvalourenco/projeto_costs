@@ -35,6 +35,26 @@
       "orcamento_projeto": 2500,
       "categoria_projeto": "Design",
       "id": "SFGDPHvW8Uk"
+    },
+    {
+      "nome_projeto": "Teste03",
+      "orcamento_projeto": 2450,
+      "categoria_projeto": "Infraestrutura",
+      "id": "2yptY7UcGNQ"
+    },
+    {
+      "nome_projeto": "Teste03.1",
+      "orcamento_projeto": 1500,
+      "categoria_projeto": "Infraestrutura",
+      "id": "fpInkAfx9oA"
+    }
+  ],
+  "services": [
+    {
+      "nome_servico": "Contratar Dev Front-end",
+      "custo_servico": 5000,
+      "projectID": "ck7c0G_dOX0",
+      "id": "8Zdv6PLBzkc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

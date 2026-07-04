@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 // import hooks;
 
+import { useNavigate } from "react-router-dom";
+// import router;
+
 import Typography from "../../components/_typography/Typography";
 import Input from "../../components/_input/Input";
 import Select from "../../components/_select/Select";
@@ -18,6 +21,7 @@ import styleCriarProjeto from "./CriarProjeto.module.css";
 
 function CriarProjeto() {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -97,6 +101,7 @@ function CriarProjeto() {
         try {
             await createProject(project);
             console.log("Projeto criado com sucesso!");
+            navigate("/projetos")
         } catch (error) {
             console.error(`Erro ao criar projeto: ${error}`);
         }

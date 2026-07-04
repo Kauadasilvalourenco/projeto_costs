@@ -1,9 +1,6 @@
 import { useId } from "react";
 // import hooks;
 
-import { useNavigate } from "react-router-dom";
-// import router;
-
 import { useForm } from "react-hook-form";
 // import RHF;
 
@@ -21,7 +18,6 @@ import styleForm from "./Form.module.css";
 
 function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
     const ID = useId();
-    const navigate = useNavigate();
 
     const fieldsList = formSchema(fieldsConfig, ID, onCategories);
 
@@ -32,7 +28,6 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
 
     function handleOnSubmit(project) {
         onSubmit(project);
-        navigate("/projetos")
     }
 
     return(

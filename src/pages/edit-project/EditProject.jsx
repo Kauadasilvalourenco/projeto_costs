@@ -9,12 +9,13 @@ import Form from "../../components/_form/Form";
 import Input from "../../components/_input/Input";
 import Select from "../../components/_select/Select";
 import Button from "../../components/_button/Button";
+import Card from "../../components/_card/Card";
 // import components;
 
 import z from "zod/v3";
 // import zod;
 
-import { getProject, getCategories, editProject } from "../../services/api";
+import { getProject, getCategories, getServices, createServices, editProject } from "../../services/api";
 // import js;
 
 import styleEditProject from "./EditProject.module.css";
@@ -23,10 +24,14 @@ import styleEditProject from "./EditProject.module.css";
 function EditProject() {
     const [project, setProject] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [services, setServices] = useState([]);
+
     const [projectVisable, setProjectVisable] = useState(true);
     const [serviceVisabel, setServiceVisable] = useState(false);
+
     const [totalUtilizado, setTotalUtilizado] = useState(0);
     const { id } = useParams();
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -56,6 +61,21 @@ function EditProject() {
 
     }, []);
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getServices(id);
+                setServices(data);
+                console.log(data);
+            } catch (error) {
+                console.error(`Erro ao acessar os serviços: ${error}`);
+            }
+        };
+
+        fetchData();
+
+    }, [id])
+
     async function handleEditProject(dataProject) {
         try {
             await editProject(project.id, dataProject);
@@ -63,20 +83,30 @@ function EditProject() {
         } catch (error) {
             console.error(`Erro ao editar o projeto: ${error}`);
         }
+    };
+
+    async function handleCreateServices(service) {
+        try {
+            await createServices(project.id, service);
+            setServiceVisable(!serviceVisabel);
+            console.log("Serviço criado com sucesso!");
+        } catch (error) {
+            console.error(`Erro ao criar o serviço: ${error} `);
+        }
     }
 
     function toogleForm() {
         setProjectVisable(!projectVisable);
-    }
+    };
 
     function toogleService() {
         setServiceVisable(!serviceVisabel);
-    }
+    };
 
     
     if (project === null) {
         return "Carregando..."
-    }
+    };
 
     const editFields = [
         {
@@ -253,6 +283,7 @@ function EditProject() {
                         fieldsConfig={addServices}
                         schemaZod={validationAddService}
                         btnText={"Criar Serviço"}
+                        onSubmit={handleCreateServices}
                     />
                 )
             }
@@ -265,6 +296,24 @@ function EditProject() {
                 >
                     Serviços:
                 </Typography>
+
+                {
+                    services.length === 0 ? (
+                        <Typography
+                            tag={"p"}
+                        >
+                            Não existem serviçõs criados!
+                        </Typography>
+                    ) : (
+                        services.map((service) => (
+                            <div key={service.id}>
+                                <Card 
+                                    project={service}
+                                />
+                            </div>
+                        ))
+                    )
+                }
             </section>
         </div>
     )

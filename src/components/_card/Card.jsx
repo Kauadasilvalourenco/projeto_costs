@@ -11,7 +11,7 @@ import styleCard from "./Card.module.css";
 import { MdEdit, MdDelete } from "react-icons/md";
 
 
-function Card({project, onDeleteProject}) {
+function Card({project, onDeleteProject,}) {
     const navigate = useNavigate();
 
     return(
@@ -21,22 +21,39 @@ function Card({project, onDeleteProject}) {
                 tag={"h2"}
                 style={styleCard.titulo}
             >
-                {project.nome_projeto}
+                {project.nome_projeto || project.nome_servico}
             </Typography>
 
-            <Typography
-                tag={"p"}
-                style={styleCard.orcamento}
-            >
-                Orçamento: R${project.orcamento_projeto},00
-            </Typography>
+            {
+                project.orcamento_projeto !== undefined ? (
+                    <Typography
+                        tag={"p"}
+                        style={styleCard.orcamento}
+                    >
+                        Orçamento: R${project.orcamento_projeto},00
+                    </Typography>
+                ) : (
+                    <Typography
+                        tag={"p"}
+                        style={styleCard.orcamento}
+                    >
+                        Custo: R${project.custo_servico},00
+                    </Typography>
+                )
+            }
 
-            <Typography
-                tag={"p"}
-                style={styleCard.categoria}
-            >
-                Categoria: {project.categoria_projeto}
-            </Typography>
+            {
+                project.categoria_projeto !== undefined ? (
+                    <Typography
+                        tag={"p"}
+                        style={styleCard.categoria}
+                    >
+                        Categoria: {project.categoria_projeto}
+                    </Typography>
+                ) : (
+                    ""
+                )
+            }
 
             <div className={styleCard.conteiner_button}>
 
