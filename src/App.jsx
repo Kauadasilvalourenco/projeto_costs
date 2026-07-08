@@ -39,6 +39,11 @@ function App() {
             element={<Projects />}
           />
 
+          <Route
+            path="/editar-projeto/:id"
+            element={<EditProject />}
+          />
+
           <Route 
             path="/editar-projeto/:id"
             element={<EditProject />}

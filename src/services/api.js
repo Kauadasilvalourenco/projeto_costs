@@ -27,7 +27,7 @@ export function getProjects() {
 };
 
 export function getProject(id) {
-    return request(`/projects/${id}`)
+    return request(`/projects/${id}`);
 };
 
 export function getServices(projectID) {
@@ -42,19 +42,19 @@ export function createProject(data) {
     });
 };
 
-export function createServices(projectID, data) {
-    return request("/services", {
+export function createService(projectID, data) {
+    return request(`/services`, {
         method: "POST",
         body: JSON.stringify({
-            ...data,
-            projectID: projectID
+            projectID: projectID,
+            ...data
         })
     });
 };
 
 //PUT
-export function editProject(id, data) {
-    return request(`/projects/${id}`, {
+export function editProject(projectID, data) {
+    return request(`/projects/${projectID}`, {
         method: "PUT",
         body: JSON.stringify(data)
     });

@@ -22,40 +22,20 @@
       "nome_projeto": "Teste",
       "orcamento_projeto": 5000,
       "categoria_projeto": "Desenvolvimento",
-      "id": "ck7c0G_dOX0"
-    },
-    {
-      "nome_projeto": "Teste01",
-      "orcamento_projeto": 3000,
-      "categoria_projeto": "Infraestrutura",
-      "id": "Lb884nscyME"
+      "id": "EKasz-ACmWw"
     },
     {
       "nome_projeto": "Teste02",
-      "orcamento_projeto": 2500,
-      "categoria_projeto": "Design",
-      "id": "SFGDPHvW8Uk"
+      "orcamento_projeto": 3500,
+      "categoria_projeto": "Infraestrutura",
+      "id": "dG5mTXS4Huk"
     },
     {
       "nome_projeto": "Teste03",
-      "orcamento_projeto": 2450,
-      "categoria_projeto": "Infraestrutura",
-      "id": "2yptY7UcGNQ"
-    },
-    {
-      "nome_projeto": "Teste03.1",
       "orcamento_projeto": 1500,
-      "categoria_projeto": "Infraestrutura",
-      "id": "fpInkAfx9oA"
+      "categoria_projeto": "Design",
+      "id": "INdqVsJS-P4"
     }
   ],
-  "services": [
-    {
-      "nome_servico": "Contratar Dev Front-end",
-      "custo_servico": 5000,
-      "projectID": "ck7c0G_dOX0",
-      "id": "8Zdv6PLBzkc"
-    }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  "services": []
 }

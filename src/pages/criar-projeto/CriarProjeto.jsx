@@ -100,6 +100,7 @@ function CriarProjeto() {
     async function handleCreateProject(project) {
         try {
             await createProject(project);
+            navigate("/projetos")
             console.log("Projeto criado com sucesso!");
             navigate("/projetos")
         } catch (error) {

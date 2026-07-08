@@ -16,6 +16,9 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
+import { FaSave } from "react-icons/fa";
+// import icons;
+
 function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
     const ID = useId();
 
@@ -60,12 +63,15 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                     })
                 }
 
-                <Button
-                   type={"submit"}
-                   style={styleForm.button}
-                >
-                    {btnText}
-                </Button>
+                <div className={styleForm.conteiner_button}>
+                    <Button
+                       type={"submit"}
+                       style={styleForm.button}
+                    >
+                        <FaSave />
+                        {btnText}
+                    </Button>
+                </div>
 
             </form>
         </div>
