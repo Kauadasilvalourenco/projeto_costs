@@ -29,6 +29,7 @@ function EditProject() {
     const [project, setProject] = useState(null);
     const [categories, setCategories] = useState([]);
     const [services, setServices] = useState([]);
+    const [totalServiceCost, setTotalServiceCost] = useState(0);
 
     const { id } = useParams();
 
@@ -67,7 +68,11 @@ function EditProject() {
             try {
                 const data = await getServices(id);
                 setServices(data);
-                console.log("Serviços acessados com sucesso!");
+
+                const totalCost = data.reduce((acc, service) => {
+                    return acc + Number(service.custo_servico || 0);
+                }, 0)
+                setTotalServiceCost(totalCost);
             } catch (error) {
                 console.error(`Erro ao acessar os serviços: ${error} `);
             }
@@ -90,9 +95,15 @@ function EditProject() {
 
     async function handleCreateService(data) {
         try {
-            await createService(id, data);
-            setServiceVisible(!serviceVisible);
-            console.log("Serviço criado com sucesso!");
+            if (totalServiceCost + data.custo_servico <= project.orcamento_projeto && data.custo_servico <= project.orcamento_projeto) {
+                const newService = await createService(id, data);
+                setServices((prevService) => [...prevService, newService]);
+                setTotalServiceCost((prevServiceCost) => prevServiceCost + data.custo_servico);
+                setServiceVisible(!serviceVisible);
+                console.log("Serviço criado com sucesso!");
+            } else {
+                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior ou igual ao orçamento do projeto!");
+            }
         } catch (error) {
             console.error(`Erro ao criar o serviço: ${error}`);
         }
@@ -238,6 +249,10 @@ function EditProject() {
                             tag={"p"}
                         >
                             Orçamento: R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}
+                        </Typography>
+
+                        <Typography>
+                            Total Utilizado: R${Number(totalServiceCost).toFixed(2).replace(".", ",")}
                         </Typography>
 
                         <div className={styleEditProject.conteiner_button}>
