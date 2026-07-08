@@ -24,7 +24,15 @@ export function getCategories() {
 
 export function getProjects() {
     return request("/projects");
-}
+};
+
+export function getProject(id) {
+    return request(`/projects/${id}`);
+};
+
+export function getServices(projectID) {
+    return request(`/services?projectID=${projectID}`);
+};
 
 //POST
 export function createProject(data) {
@@ -32,11 +40,29 @@ export function createProject(data) {
         method: "POST",
         body: JSON.stringify(data)
     });
-}
+};
+
+export function createService(projectID, data) {
+    return request(`/services`, {
+        method: "POST",
+        body: JSON.stringify({
+            projectID: projectID,
+            ...data
+        })
+    });
+};
+
+//PUT
+export function editProject(projectID, data) {
+    return request(`/projects/${projectID}`, {
+        method: "PUT",
+        body: JSON.stringify(data)
+    });
+};
 
 //DELETE
 export function deleteProject(id) {
     return request(`/projects/${id}`, {
         method: "DELETE"
     });
-}
+};

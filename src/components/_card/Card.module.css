@@ -23,8 +23,9 @@
     word-break: break-all;
 }
 
-.orcamento,
-.categoria {
+.orcamento_projeto,
+.categoria_projeto,
+.custo_servico {
     color: #000000;
 }
 
@@ -38,7 +39,6 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    padding: 10px;
 }
 
 .button_icons {

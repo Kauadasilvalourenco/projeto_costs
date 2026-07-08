@@ -1,9 +1,6 @@
 import { useId } from "react";
 // import hooks;
 
-import { useNavigate } from "react-router-dom";
-// import router;
-
 import { useForm } from "react-hook-form";
 // import RHF;
 
@@ -19,19 +16,21 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
-function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories}) {
+import { FaSave } from "react-icons/fa";
+// import icons;
+
+function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
     const ID = useId();
-    const navigate = useNavigate();
 
     const fieldsList = formSchema(fieldsConfig, ID, onCategories);
 
     const { register, handleSubmit, formState: {errors} } = useForm({
-        resolver: zodResolver(schemaZod)
+        resolver: zodResolver(schemaZod),
+        defaultValues: formData || {}
     });
 
     function handleOnSubmit(project) {
         onSubmit(project);
-        navigate("/projetos")
     }
 
     return(
@@ -64,12 +63,15 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories}) {
                     })
                 }
 
-                <Button
-                   type={"submit"}
-                   style={styleForm.button}
-                >
-                    {btnText}
-                </Button>
+                <div className={styleForm.conteiner_button}>
+                    <Button
+                       type={"submit"}
+                       style={styleForm.button}
+                    >
+                        <FaSave />
+                        {btnText}
+                    </Button>
+                </div>
 
             </form>
         </div>
