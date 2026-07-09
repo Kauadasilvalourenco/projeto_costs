@@ -30,7 +30,7 @@ function App() {
           />
 
           <Route 
-            path="/criarProjeto"
+            path="/criar-projeto"
             element={<CriarProjeto />}
           />
           

@@ -20,22 +20,19 @@
   "projects": [
     {
       "nome_projeto": "Teste",
-      "orcamento_projeto": 5000,
-      "categoria_projeto": "Desenvolvimento",
-      "id": "EKasz-ACmWw"
-    },
-    {
-      "nome_projeto": "Teste02",
-      "orcamento_projeto": 3500,
+      "orcamento_projeto": 8000,
       "categoria_projeto": "Infraestrutura",
-      "id": "dG5mTXS4Huk"
-    },
-    {
-      "nome_projeto": "Teste03",
-      "orcamento_projeto": 1500,
-      "categoria_projeto": "Design",
-      "id": "INdqVsJS-P4"
+      "id": "kKOWqmao9u4"
     }
   ],
-  "services": []
+  "services": [
+    {
+      "projectID": "kKOWqmao9u4",
+      "status": "Concluído",
+      "nome_servico": "Contratar Dev Front-end",
+      "custo_servico": 3500,
+      "id": "YfAe7QcEAR0"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

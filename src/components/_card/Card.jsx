@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // import router;
 
 import Button from "../_button/Button";
@@ -13,14 +13,17 @@ import { FaCheck } from "react-icons/fa";
 // import icons;
 
 
-function Card({project, onDeleteProject}) {
+function Card({project, onDeleteProject, service, finishService}) {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const pageProject = location.pathname === "/projetos";
 
     return(
         <div className={styleCard.Card}>
 
             {
-                project.nome_projeto !== undefined ? (
+                pageProject === true ? (
                     <Typography
                         tag={"h2"}
                         style={styleCard.titulo}
@@ -32,13 +35,13 @@ function Card({project, onDeleteProject}) {
                         tag={"h2"}
                         style={styleCard.titulo}
                     >
-                        {project.nome_servico}
+                        {service.nome_servico}
                     </Typography>
                 )
             }
 
             {
-                project.orcamento_projeto !== undefined ? (
+                pageProject === true ? (
                     <Typography
                         tag={"p"}
                         style={styleCard.orcamento_projeto}
@@ -50,13 +53,13 @@ function Card({project, onDeleteProject}) {
                         tag={"p"}
                         style={styleCard.custo_servico}
                     >
-                        Custo: R${Number(project.custo_servico).toFixed(2).replace(".", ",")}
+                        Custo: R${Number(service.custo_servico).toFixed(2).replace(".", ",")}
                     </Typography>
                 )
             }
 
             {
-                project.categoria_projeto !== undefined ? (
+                pageProject === true ? (
                     <Typography
                         tag={"p"}
                         style={styleCard.categoria_projeto}
@@ -64,12 +67,14 @@ function Card({project, onDeleteProject}) {
                         Categoria: {project.categoria_projeto}
                     </Typography>
                 ) : (
-                    ""
+                    <Typography>
+                        Status: {service.status}
+                    </Typography>
                 )
             }
 
             {
-                project.nome_projeto !== undefined ? (
+                pageProject === true ? (
                     <div className={styleCard.conteiner_button}>
 
                         <Button
@@ -89,15 +94,18 @@ function Card({project, onDeleteProject}) {
                         </Button>
 
                     </div>
-                ) : (
+                ) : service.status === "Pendente" ? (
                     <div className={styleCard.conteiner_button}>
                         <Button
+                            onClick={() => finishService(service.id)}
                             style={styleCard.button}
                         >
                             <FaCheck className={styleCard.button_icons}/>
                             Concluir Serviço
                         </Button>
                     </div>
+                ) : (
+                    ""
                 )
             }
 

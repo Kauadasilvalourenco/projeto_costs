@@ -1,6 +1,9 @@
 import { useId } from "react";
 // import hooks;
 
+import { useLocation } from "react-router-dom";
+// import router;
+
 import { useForm } from "react-hook-form";
 // import RHF;
 
@@ -17,12 +20,15 @@ import styleForm from "./Form.module.css";
 // import css;
 
 import { FaSave } from "react-icons/fa";
+import { IoMdAddCircleOutline } from "react-icons/io";
 // import icons;
 
 function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
     const ID = useId();
+    const location = useLocation();
 
     const fieldsList = formSchema(fieldsConfig, ID, onCategories);
+    const createProjectPage = location.pathname === "/criar-projeto";
 
     const { register, handleSubmit, formState: {errors} } = useForm({
         resolver: zodResolver(schemaZod),
@@ -31,7 +37,7 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
 
     function handleOnSubmit(project) {
         onSubmit(project);
-    }
+    };
 
     return(
         <div>
@@ -64,13 +70,25 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                 }
 
                 <div className={styleForm.conteiner_button}>
-                    <Button
-                       type={"submit"}
-                       style={styleForm.button}
-                    >
-                        <FaSave />
-                        {btnText}
-                    </Button>
+                    {
+                        createProjectPage === true ? (
+                            <Button
+                                type={"submit"}
+                                style={styleForm.button}
+                            >
+                                <IoMdAddCircleOutline className={styleForm.create_icon}/>
+                                {btnText}
+                            </Button>
+                        ) : (
+                            <Button
+                                type={"submit"}
+                                style={styleForm.button}
+                            >
+                                <FaSave className={styleForm.save_icon}/>
+                                {btnText}
+                            </Button>
+                        )
+                    }
                 </div>
 
             </form>

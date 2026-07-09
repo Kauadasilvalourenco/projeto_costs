@@ -47,16 +47,26 @@ export function createService(projectID, data) {
         method: "POST",
         body: JSON.stringify({
             projectID: projectID,
+            status: "Pendente",
             ...data
         })
     });
 };
 
-//PUT
+//PUT & PATCH
 export function editProject(projectID, data) {
     return request(`/projects/${projectID}`, {
         method: "PUT",
         body: JSON.stringify(data)
+    });
+};
+
+export function editStatusService(serviceID) {
+    return request(`/services/${serviceID}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+            status: "Concluído"
+        })
     });
 };
 

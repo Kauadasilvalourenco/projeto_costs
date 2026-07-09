@@ -15,7 +15,7 @@ import Select from "../../components/_select/Select";
 import Card from "../../components/_card/Card";
 // import components;
 
-import { getCategories, getProject, getServices, createService,  editProject } from "../../services/api";
+import { getCategories, getProject, editProject, getServices, createService, editStatusService } from "../../services/api";
 // import js;
 
 import styleEditProject from "./EditProject.module.css";
@@ -108,6 +108,18 @@ function EditProject() {
             console.error(`Erro ao criar o serviço: ${error}`);
         }
     };
+
+    async function finishService(serviceID) {
+        try {
+            const status = await editStatusService(serviceID);
+            setServices((prevServices) => {
+                return prevServices.map((service) => service.id === serviceID ? status : service )
+            })
+            console.log("Serviço editado com sucesso!");
+        } catch (error) {
+            console.error(`Erro ao editar o status do serviço: ${error}`);
+        }
+    }
 
     if (project === null) {
         return "Carregando...";
@@ -220,7 +232,7 @@ function EditProject() {
     const createServiceValidation = z.object({
         nome_servico: z.string()
         .min(1, "O campo não pode ser nulo!")
-        .regex(/^(?!\d+$).+$/, "O nome do projeto não pode ser composto somente por números"),
+        .regex(/^(?!\d+$).+$/, "O nome do serviço não pode ser composto somente por números"),
 
         custo_servico: z.coerce.number()
         .min(1, "O campo não pode ser nulo!")
@@ -319,7 +331,8 @@ function EditProject() {
                     services.map((service) => (
                         <div key={service.id}>
                             <Card 
-                                project={service}
+                                service={service}
+                                finishService={finishService}
                             />
                         </div>
                     ))
