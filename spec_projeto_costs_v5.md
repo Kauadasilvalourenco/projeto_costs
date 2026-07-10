@@ -13,7 +13,6 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 * **Backend Simulado:** JSON-Server (executado na porta 5000)
 
 ## 3. Estrutura do Projeto (Diretórios)
-- `env/`: Pasta fora do `src`, na raiz do projeto, onde estará o arquivo que define as API KEYS para autenticação.
 - `src/assets`: Armazenamento de imagens (ex: `loading.svg`), logótipos e fontes estáticas.
 - `src/components`: Componentes de UI reutilizáveis (Input, Select, Button, Navbar, Footer).
 - `src/pages`: Componentes de página (Home, Projetos, Novo Projeto, Projeto [Edição], Empresa, Contacto).
@@ -30,7 +29,7 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
     * **Exclusão:** A remoção de um projeto deve eliminar todos os dados associados, incluindo a lista de serviços.
 
 ### 4.2. Serviços (Sub-recursos)
-* **Campos:** Nome do serviço, Custo do serviço e Techlead responsável.
+* **Campos:** Nome do serviço, Custo do serviço
 * **Validação de Orçamento:**
     * O sistema deve calcular a soma dos custos de todos os serviços já adicionados.
     * Um novo serviço só é aceite se: `Custo do Serviço + Custo Total Atual <= Orçamento do Projeto`.

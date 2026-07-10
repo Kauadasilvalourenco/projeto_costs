@@ -1,6 +1,6 @@
 .Card {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     flex-direction: column;
 
@@ -25,7 +25,8 @@
 
 .orcamento_projeto,
 .categoria_projeto,
-.custo_servico {
+.custo_servico,
+.status_servico {
     color: #000000;
 }
 
@@ -49,6 +50,6 @@
     .Card {
         width: 340px;
         height: 340px;
-        max-height: 350px;
+        max-width: 350px;
     }
 }

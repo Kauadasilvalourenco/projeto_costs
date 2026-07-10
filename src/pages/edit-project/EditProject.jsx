@@ -19,6 +19,7 @@ import { getCategories, getProject, editProject, getServices, createService, edi
 // import js;
 
 import styleEditProject from "./EditProject.module.css";
+import styleTypography from "../../components/_typography/Typography.module.css";
 // import css;
 
 import { MdEdit } from "react-icons/md";
@@ -84,10 +85,14 @@ function EditProject() {
 
     async function handleEditProject(updateProject) {
         try {
-            await editProject(id, updateProject);
-            setProject(updateProject);
-            setProjectVisible(!projectVisible);
-            console.log("Projeto editado com sucesso!");
+            if (totalServiceCost <= updateProject.orcamento_projeto) {
+                await editProject(id, updateProject);
+                setProject(updateProject);
+                setProjectVisible(!projectVisible);
+                console.log("Projeto editado com sucesso!");
+            } else {
+                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços");
+            }
         } catch (error) {
             console.error(`Erro ao editar o projeto: ${error}`);
         }
@@ -248,23 +253,25 @@ function EditProject() {
                         <Typography
                             tag={"h2"}
                         >
-                            Projeto: {project.nome_projeto}
+                            Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
                         </Typography>
 
                         <Typography
-                            tag={"p"}
+                            tag={"h2"}
                         >
-                            Categoria: {project.categoria_projeto}
+                            Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
                         </Typography>
 
                         <Typography
-                            tag={"p"}
+                            tag={"h2"}
                         >
-                            Orçamento: R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}
+                            Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
                         </Typography>
 
-                        <Typography>
-                            Total Utilizado: R${Number(totalServiceCost).toFixed(2).replace(".", ",")}
+                        <Typography
+                            tag={"h2"}
+                        >
+                            Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
                         </Typography>
 
                         <div className={styleEditProject.conteiner_button}>
@@ -329,7 +336,10 @@ function EditProject() {
                     </Typography>
                 ) : (
                     services.map((service) => (
-                        <div key={service.id}>
+                        <div 
+                            key={service.id}
+                            className={styleEditProject.conteiner_card}
+                        >
                             <Card 
                                 service={service}
                                 finishService={finishService}

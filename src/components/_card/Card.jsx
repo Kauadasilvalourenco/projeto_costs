@@ -67,7 +67,10 @@ function Card({project, onDeleteProject, service, finishService}) {
                         Categoria: {project.categoria_projeto}
                     </Typography>
                 ) : (
-                    <Typography>
+                    <Typography
+                        tag={"p"}
+                        style={styleCard.status_servico}
+                    >
                         Status: {service.status}
                     </Typography>
                 )

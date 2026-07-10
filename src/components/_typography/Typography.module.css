@@ -24,3 +24,8 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+.span_destaque {
+    font-family: var(--fonte_paragrafo);
+    font-weight: 600;
+}
