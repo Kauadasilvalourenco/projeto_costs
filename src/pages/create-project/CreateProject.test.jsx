@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import CriarProjeto from './CriarProjeto';
+import CreateProject from './CreateProject';
 import { createProject } from '../../services/api';
 import { getCategories } from '../../services/api';
 
@@ -31,7 +31,7 @@ describe('Página Criar Projeto - Teste de Integração', () => {
   });
 
   it('deve integrar corretamente todos os componentes da página', () => {
-    render(<CriarProjeto />);
+    render(<CreateProject />);
 
     // Verificar se o título principal é renderizado
     expect(screen.getByRole('heading', { level: 1, name: /criar projeto/i })).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('Página Criar Projeto - Teste de Integração', () => {
 
   it('deve chamar createProject e navegar após submissão válida', async () => {
     const user = userEvent.setup();
-    render(<CriarProjeto />);
+    render(<CreateProject />);
 
     // Preencher o formulário com dados válidos
     await user.type(screen.getByLabelText(/nome do projeto:/i), 'Projeto Teste');

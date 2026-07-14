@@ -16,7 +16,7 @@ import z from "zod/v3";
 import { getCategories, createProject } from "../../services/api";
 // import js;
 
-import styleCriarProjeto from "./CriarProjeto.module.css";
+import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
 
 function CriarProjeto() {

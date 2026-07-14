@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 // import router;
 
 import Home from "./pages/home/Home";
-import CriarProjeto from "./pages/criar-projeto/CriarProjeto";
+import CreateProject from "./pages/create-project/CreateProject";
 import Projects from "./pages/projects/Projects";
 import EditProject from "./pages/edit-project/EditProject";
 // import pages;
@@ -31,7 +31,7 @@ function App() {
 
           <Route 
             path="/criar-projeto"
-            element={<CriarProjeto />}
+            element={<CreateProject />}
           />
           
           <Route 
