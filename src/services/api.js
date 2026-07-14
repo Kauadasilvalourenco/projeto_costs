@@ -76,3 +76,9 @@ export function deleteProject(id) {
         method: "DELETE"
     });
 };
+
+export function deleteService(serviceID) {
+    return request(`/services/${serviceID}`, {
+        method: "DELETE",
+    });
+};

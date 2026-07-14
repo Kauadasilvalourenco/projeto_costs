@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 // import hooks;
 
-import { getProjects } from "../../services/api";
-import { deleteProject } from "../../services/api";
+import { getProjects, getServices, deleteProject, deleteService } from "../../services/api";
 // import js;
 
 import Card from "../../components/_card/Card";
@@ -28,6 +27,17 @@ function Projects() {
 
     async function handleDeleteProject(id) {
         try {
+            const servicesProject = await getServices(id);
+
+            if (servicesProject.length > 0) {
+                const serviceOfProject = servicesProject.filter((service) => service.projectID === id);
+
+                const deletePromiseService = serviceOfProject.map((service) => deleteService(service.id));
+
+                await Promise.all(deletePromiseService);
+                console.log("Serviço deletado com sucesso!");
+            };
+
             await deleteProject(id);
             setProjects(projects.filter((project) => project.id !== id))
             console.log("Projeto deletado com sucesso!");

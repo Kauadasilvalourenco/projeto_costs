@@ -17,34 +17,7 @@
       "name": "Design"
     }
   ],
-  "projects": [
-    {
-      "nome_projeto": "Test",
-      "orcamento_projeto": 5000,
-      "categoria_projeto": "Infraestrutura",
-      "id": "kKOWqmao9u4"
-    },
-    {
-      "nome_projeto": "Teste03",
-      "orcamento_projeto": 3800,
-      "categoria_projeto": "Design",
-      "id": "BNwiWZA5lWA"
-    },
-    {
-      "nome_projeto": "Teste03.1",
-      "orcamento_projeto": 3000,
-      "categoria_projeto": "Planejamento",
-      "id": "xKVKVePQ6vg"
-    }
-  ],
-  "services": [
-    {
-      "projectID": "kKOWqmao9u4",
-      "status": "Concluído",
-      "nome_servico": "Contratar Dev Front-end",
-      "custo_servico": 4500,
-      "id": "MUCykR5MnTM"
-    }
-  ],
+  "projects": [],
+  "services": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
