@@ -6,6 +6,12 @@ import Form from "./Form";
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
+  useLocation: () => ({
+    pathname: '/',
+    search: '',
+    hash: '',
+    state: null,
+  }),
 }));
 
 const mockOnSubmit = vi.fn();

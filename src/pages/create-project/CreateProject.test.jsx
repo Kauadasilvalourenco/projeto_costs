@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import CreateProject from './CreateProject';
 import { createProject } from '../../services/api';
 import { getCategories } from '../../services/api';
+import { MemoryRouter } from 'react-router-dom';
 
 // Mock do serviço de API
 vi.mock('../../services/api');
@@ -31,7 +32,11 @@ describe('Página Criar Projeto - Teste de Integração', () => {
   });
 
   it('deve integrar corretamente todos os componentes da página', () => {
-    render(<CreateProject />);
+    render(
+      <MemoryRouter>
+        <CreateProject />
+      </MemoryRouter>
+    );
 
     // Verificar se o título principal é renderizado
     expect(screen.getByRole('heading', { level: 1, name: /criar projeto/i })).toBeInTheDocument();
@@ -50,7 +55,11 @@ describe('Página Criar Projeto - Teste de Integração', () => {
 
   it('deve chamar createProject e navegar após submissão válida', async () => {
     const user = userEvent.setup();
-    render(<CreateProject />);
+    render(
+      <MemoryRouter>
+        <CreateProject />
+      </MemoryRouter>
+    );
 
     // Preencher o formulário com dados válidos
     await user.type(screen.getByLabelText(/nome do projeto:/i), 'Projeto Teste');

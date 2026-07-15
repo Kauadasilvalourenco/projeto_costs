@@ -4,6 +4,10 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import Card from "./Card";
 
+const mockOnDeleteProject = vi.fn();
+const mockFinishService = vi.fn();
+const mockNavigate = vi.fn();
+
 describe("Componente Card", () => {
     const mockProject = {
         id: "proj01",
@@ -19,12 +23,8 @@ describe("Componente Card", () => {
         status: "Pendente",
     };
 
-    const mockOnDeleteProject = vi.fn();
-    const mockFinishService = vi.fn();
-    const mockNavigate = vi.fn();
-
     vi.mock("react-router-dom", async () => {
-    const actual = await vi.importActual("react-router-dom");
+        const actual = await vi.importActual("react-router-dom");
         return {
             ...actual,
             useNavigate: () => mockNavigate,
