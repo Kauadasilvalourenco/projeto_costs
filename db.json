@@ -17,14 +17,7 @@
       "name": "Design"
     }
   ],
-  "projects": [
-    {
-      "nome_projeto": "Teste",
-      "orcamento_projeto": 5000,
-      "categoria_projeto": "Desenvolvimento",
-      "id": "NTQo-iGv7kI"
-    }
-  ],
+  "projects": [],
   "services": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
