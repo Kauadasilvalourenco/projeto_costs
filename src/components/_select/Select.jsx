@@ -19,10 +19,10 @@ const Select = forwardRef(({name, id, style, options, ...rest}, ref) => {
                 {options.map((option) => (
                     <option 
                         key={option.id} 
-                        value={option.nome} 
+                        value={option.name} 
                         className={styleSelect.option}
                     >
-                        {option.nome}
+                        {option.name}
                     </option>
                 ))}
             </select>

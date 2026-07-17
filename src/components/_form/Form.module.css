@@ -19,6 +19,21 @@
     font-style: italic;
 }
 
+.conteiner_button {
+    margin-bottom: 20px;
+}
+
 .button {
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.create_icon {
+    font-size: 1.5rem;
+}
+
+.save_icon {
+    font-size: 1.2rem;
 }

@@ -29,8 +29,8 @@ describe("Componente Select", () => {
     it("deve renderizar o select e verificar o valor das options", async() => {
         const user = userEvent.setup();
         const mockOptions = [
-            {id: "opt01", nome: "opt01"},
-            {id: "opt02", nome: "opt02"}
+            {id: "opt01", name: "opt01"},
+            {id: "opt02", name: "opt02"}
         ];
         
         render(

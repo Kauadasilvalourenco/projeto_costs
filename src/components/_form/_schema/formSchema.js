@@ -1,6 +1,6 @@
 import Label from "../../_label/Label";
 
-export const formSchema = (fieldsConfig = [], ID) => {
+export const formSchema = (fieldsConfig = [], ID, categories) => {
     return fieldsConfig.map((obj) => {
         const finallyID = `${ID}-${obj.field.props.name}`;
 
@@ -16,7 +16,8 @@ export const formSchema = (fieldsConfig = [], ID) => {
                 component: obj.field.component.type,
                 props: {
                     ...obj.field.props,
-                    id: `${finallyID}`
+                    id: `${finallyID}`,
+                    options: categories
                 }
             }
         };

@@ -27,7 +27,7 @@ describe('Página Home (Vitest)', () => {
     expect(screen.getByAltText('imagem_fundo_costs')).toBeInTheDocument();
   });
 
-  it('deve chamar a navegação para /criarProjeto ao clicar no botão', () => {
+  it('deve chamar a navegação para /criar-projeto ao clicar no botão', () => {
     render(
       <BrowserRouter>
         <Home />
@@ -38,6 +38,6 @@ describe('Página Home (Vitest)', () => {
     fireEvent.click(botao);
 
     // Garante que a função de navegação foi chamada com a rota certa
-    expect(mockNavigate).toHaveBeenCalledWith('/criarProjeto');
+    expect(mockNavigate).toHaveBeenCalledWith('/criar-projeto');
   });
 });

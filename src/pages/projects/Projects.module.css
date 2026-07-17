@@ -1,0 +1,16 @@
+.page_projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.conteiner_cards {
+    margin: 0px 0px 50px 0px;
+}
+
+@media screen and (min-width: 768px) {
+    .conteiner_cards {
+        margin: 0px 15px 25px 15px;
+    }
+}

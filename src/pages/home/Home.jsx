@@ -18,7 +18,7 @@ function Home() {
     const navigate = useNavigate();
 
     function criarProjeto() {
-        navigate("/criarProjeto")
+        navigate("/criar-projeto")
     }
 
     return(

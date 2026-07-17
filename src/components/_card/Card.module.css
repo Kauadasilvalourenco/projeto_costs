@@ -1,0 +1,55 @@
+.Card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+    width: 300px;
+    height: 300px;
+    max-height: 300px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.titulo {
+    width: 100%;
+    background-color: var(--cor_fundo);
+    text-align: center;
+    color: var(--cor_destaque);
+    margin-top: -15px;
+    border-radius: 5px;
+    padding: 5px;
+    word-break: break-all;
+}
+
+.orcamento_projeto,
+.categoria_projeto,
+.custo_servico,
+.status_servico {
+    color: #000000;
+}
+
+.conteiner_button {
+    display: flex;
+    gap: 40px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.button_icons {
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 768px) {
+    .Card {
+        width: 340px;
+        height: 340px;
+        max-width: 350px;
+    }
+}
