@@ -2,7 +2,9 @@ import { Routes, Route } from "react-router-dom";
 // import router;
 
 import Home from "./pages/home/Home";
-import CriarProjeto from "./pages/criar-projeto/CriarProjeto";
+import CreateProject from "./pages/create-project/CreateProject";
+import Projects from "./pages/projects/Projects";
+import EditProject from "./pages/edit-project/EditProject";
 // import pages;
 
 import Navbar from "./components/_navbar/Navbar";
@@ -28,12 +30,23 @@ function App() {
           />
 
           <Route 
-            path="/criarProjeto"
-            element={<CriarProjeto />}
+            path="/criar-projeto"
+            element={<CreateProject />}
           />
           
           <Route 
             path="/projetos"
+            element={<Projects />}
+          />
+
+          <Route
+            path="/editar-projeto/:id"
+            element={<EditProject />}
+          />
+
+          <Route 
+            path="/editar-projeto/:id"
+            element={<EditProject />}
           />
 
           <Route 

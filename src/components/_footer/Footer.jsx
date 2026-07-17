@@ -13,7 +13,7 @@ function Footer() {
                 <FaLinkedinIn className={styleFooter.icones}/>
             </div>
 
-            <p><span className={styleFooter.destaque}>Costs</span> &copy; 2021</p>
+            <p><span className={styleFooter.destaque}>Costs</span> &copy; 2026</p>
 
         </footer>
     )

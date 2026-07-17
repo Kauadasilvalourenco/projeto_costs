@@ -1,5 +1,8 @@
-import z from "zod/v3";
-// import zod;
+import { useState, useEffect } from "react";
+// import hooks;
+
+import { useNavigate } from "react-router-dom";
+// import router;
 
 import Typography from "../../components/_typography/Typography";
 import Input from "../../components/_input/Input";
@@ -7,21 +10,36 @@ import Select from "../../components/_select/Select";
 import Form from "../../components/_form/Form";
 // import components;
 
-import styleCriarProjeto from "./CriarProjeto.module.css";
+import z from "zod/v3";
+// import zod;
+
+import { getCategories, createProject } from "../../services/api";
+// import js;
+
+import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
 
 function CriarProjeto() {
-    const categoriess = [
-        {id: 1, nome: "Infra"},
-        {id: 2, nome: "Planejamento"},
-        {id: 3, nome: "Desenvolvimento"},
-        {id: 4, nome: "Design"}
-    ];
+    const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getCategories();
+                setCategories(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+
+    }, []);
 
     const validationProject = z.object({
         nome_projeto: z.string()
         .min(1, "O campo não pode ser nulo!")
-        .max(30)
         .regex(/^(?!\d+$).+$/, "O nome do projeto não pode ser composto somente por números"),
 
         orcamento_projeto: z.coerce.number()
@@ -73,11 +91,22 @@ function CriarProjeto() {
                     type: Select
                 },
                 props: {
-                    name: "categoria_projeto", options: categoriess
+                    name: "categoria_projeto",
                 }
             }
         }
     ]
+
+    async function handleCreateProject(project) {
+        try {
+            await createProject(project);
+            navigate("/projetos")
+            console.log("Projeto criado com sucesso!");
+            navigate("/projetos")
+        } catch (error) {
+            console.error(`Erro ao criar projeto: ${error}`);
+        }
+    }
 
     return(
         <div className={styleCriarProjeto.CriarProjeto}>
@@ -98,6 +127,8 @@ function CriarProjeto() {
                 fieldsConfig={projectForm}
                 btnText={"Criar Projeto"}
                 schemaZod={validationProject}
+                onSubmit={handleCreateProject}
+                onCategories={categories}
             />
 
         </div>

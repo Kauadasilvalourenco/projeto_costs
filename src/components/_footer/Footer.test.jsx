@@ -11,7 +11,7 @@ describe("Componente Footer", () => {
     const nomeMarca = screen.getByText("Costs");
     expect(nomeMarca).toBeInTheDocument();
 
-    const textoCopyright = screen.getByText(/2021/);
+    const textoCopyright = screen.getByText(/2026/);
     expect(textoCopyright).toBeInTheDocument();
   });
 

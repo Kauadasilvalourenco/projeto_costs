@@ -1,0 +1,39 @@
+.page_edit_project {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.page_edit_project hr {
+    border: 1px solid black;
+    margin: 20px 0px 20px 0px;
+    width: 100%;
+}
+
+.conteiner_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.icons {
+    font-size: 1.5rem;
+}
+
+.conteiner_card {
+    margin-bottom: 20px;
+}

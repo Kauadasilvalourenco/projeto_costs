@@ -18,7 +18,7 @@ test.describe('Fluxo da Página Home', () => {
     await botaoCriar.click();
 
     // Valida se a URL mudou para /criarProjeto
-    await expect(page).toHaveURL(/\/criarProjeto/);
+    await expect(page).toHaveURL(/\/criar-projeto/);
 
     // ✅ CORREÇÃO: Evita locator('div') genérico que também pode falhar por strict mode futuros
     await expect(page.locator('h1')).toContainText('Criar Projeto');
