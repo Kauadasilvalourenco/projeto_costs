@@ -21,7 +21,7 @@ describe("getCategories()", () => {
         const result = await getCategories();
 
         expect(result).toEqual(mockData);
-        expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/categories", {
+        expect(fetchMock).toHaveBeenCalledWith("https://projeto-costs-back-end.onrender.com/categories", {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -36,7 +36,7 @@ describe("getCategories()", () => {
         vi.stubGlobal("fetch", fetchMock);
 
         await expect(getCategories()).rejects.toThrow("Erro na API: 404");
-        expect(fetchMock).toHaveBeenCalledWith("http://localhost:5000/categories", {
+        expect(fetchMock).toHaveBeenCalledWith("https://projeto-costs-back-end.onrender.com/categories", {
             headers: {
                 "Content-Type": "application/json"
             }
