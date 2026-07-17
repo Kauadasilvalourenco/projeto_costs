@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:5000";
+const baseURL = "https://projeto-costs-back-end.onrender.com";
 
 async function request(endpoint, options = {}) {
     const response = await fetch(`${baseURL}${endpoint}`, {
