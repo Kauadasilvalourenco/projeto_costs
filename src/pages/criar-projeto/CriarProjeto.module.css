@@ -1,0 +1,15 @@
+.CriarProjeto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.CriarProjeto h1 {
+   margin-bottom: 30px;
+}
+
+.CriarProjeto p {
+    margin-bottom: 50px;
+    text-align: center;
+}
