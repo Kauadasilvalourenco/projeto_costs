@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:5000";
+const baseURL = "921fd46https://my-json-server.typicode.com/Kauadasilvalourenco/projeto_costs_back-end";
 
 async function request(endpoint, options = {}) {
     const response = await fetch(`${baseURL}${endpoint}`, {
