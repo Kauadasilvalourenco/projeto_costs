@@ -1,4 +1,4 @@
-const baseURL = "https://my-json-server.typicode.com/Kauadasilvalourenco/projeto_costs_back-end";
+const baseURL = "https://projeto-costs-back-end-n9bu.onrender.com";
 
 async function request(endpoint, options = {}) {
     const response = await fetch(`${baseURL}${endpoint}`, {

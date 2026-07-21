@@ -32,9 +32,10 @@ function Projects() {
             if (servicesProject.length > 0) {
                 const serviceOfProject = servicesProject.filter((service) => service.projectID === id);
 
-                const deletePromiseService = serviceOfProject.map((service) => deleteService(service.id));
+                for (const service of serviceOfProject) {
+                    await deleteService(service.id);
+                }
 
-                await Promise.all(deletePromiseService);
                 console.log("Serviço deletado com sucesso!");
             };
 
