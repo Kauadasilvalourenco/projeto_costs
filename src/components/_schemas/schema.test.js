@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { formSchema } from "./formSchema";
 
-describe("Função Schema", () => {
+describe("Função formSchema", () => {
     it("deve estruturar um formulário utilizando componentes anatomicos e passar seus atributos via props", () => {
         const ID = ":r0:!"
         
