@@ -10,7 +10,7 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 * **Gerenciamento de Formulários:** React Hook Form
 * **Validação de Dados:** Zod
 * **Comunicação HTTP:** Fetch API
-* **Backend Simulado:** JSON-Server (executado na porta 5000)
+* **Backend Simulado:** JSON-Server (executado no render)
 
 ## 3. Estrutura do Projeto (Diretórios)
 - `src/assets`: Armazenamento de imagens (ex: `loading.svg`), logótipos e fontes estáticas.
