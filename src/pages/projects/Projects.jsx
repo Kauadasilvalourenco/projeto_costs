@@ -30,9 +30,7 @@ function Projects() {
             const servicesProject = await getServices(id);
 
             if (servicesProject.length > 0) {
-                const serviceOfProject = servicesProject.filter((service) => service.projectID === id);
-
-                for (const service of serviceOfProject) {
+                for (const service of servicesProject) {
                     await deleteService(service.id);
                 }
 
