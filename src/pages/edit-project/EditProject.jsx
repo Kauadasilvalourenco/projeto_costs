@@ -4,19 +4,17 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import router;
 
-import z from "zod/v3";
-// import zod;
-
 import Typography from "../../components/_typography/Typography";
 import Button from "../../components/_button/Button";
 import Form from "../../components/_form/Form";
-import Input from "../../components/_input/Input";
-import Select from "../../components/_select/Select";
 import Card from "../../components/_card/Card";
 // import components;
 
+import { editProjectForm, validationEditProjectForm, createServiceForm, validationCreateServiceForm } from "../../components/_schemas/schema";
+// import schemas;
+
 import { getCategories, getProject, editProject, getServices, createService, editStatusService } from "../../services/api";
-// import js;
+// import api;
 
 import styleEditProject from "./EditProject.module.css";
 import styleTypography from "../../components/_typography/Typography.module.css";
@@ -138,111 +136,6 @@ function EditProject() {
         setServiceVisible(!serviceVisible);
     };
 
-    const editProjectForm = [
-        {
-            label: {
-                props: {
-                    children: "Nome do Projeto:"
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "nome_projeto", type: "text", placeholder: "EX: Criação Landing-Page"
-                }
-            }
-        },
-
-        {
-            label: {
-                props: {
-                    children: "Orçamento do Projeto:"
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "orcamento_projeto", type: "number", placeholder: "EX: R$5000,00"
-                }
-            }
-        },
-
-        {
-            label: {
-                props: {
-                    children: "Selecione uma Categoria"
-                }
-            },
-            field: {
-                component: {
-                    type: Select
-                },
-                props: {
-                    name: "categoria_projeto"
-                }
-            }
-        }
-    ];
-
-    const editFormValidation = z.object({
-        nome_projeto: z.string()
-        .min(1, "O campo não pode ser nulo!")
-        .regex(/^(?!\d+$).+$/, "O nome do projeto não pode ser composto somente por números"),
-
-        orcamento_projeto: z.coerce.number()
-        .min(1, "O campo não pode ser nulo!"),
-
-        categoria_projeto: z.string()
-        .min(1, "É preciso selecionar uma categoria!")
-    });
-
-    const createServiceForm = [
-        {
-            label: {
-                props: {
-                    children: "Nome do Serviço:"
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "nome_servico", type: "text", placeholder: "EX: Contratar Dev Front-End"
-                }
-            }
-        },
-
-        {
-            label: {
-                props: {
-                    children: "Custo do Serviço:"
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "custo_servico", type: "number", placeholder: "EX: R$3500,00"
-                }
-            }
-        }
-    ];
-
-    const createServiceValidation = z.object({
-        nome_servico: z.string()
-        .min(1, "O campo não pode ser nulo!")
-        .regex(/^(?!\d+$).+$/, "O nome do serviço não pode ser composto somente por números"),
-
-        custo_servico: z.coerce.number()
-        .min(1, "O campo não pode ser nulo!")
-    });
-
     return(
         <div className={styleEditProject.page_edit_project}>
 
@@ -288,8 +181,8 @@ function EditProject() {
                 ) : (
                     <Form
                         onCategories={categories}
-                        fieldsConfig={editProjectForm}
-                        schemaZod={editFormValidation}
+                        fieldsConfig={editProjectForm()}
+                        schemaZod={validationEditProjectForm()}
                         formData={project}
                         btnText={"Salvar"}
                         onSubmit={handleEditProject}
@@ -317,8 +210,8 @@ function EditProject() {
                     </div>
                 ) : (
                     <Form 
-                        fieldsConfig={createServiceForm}
-                        schemaZod={createServiceValidation}
+                        fieldsConfig={createServiceForm()}
+                        schemaZod={validationCreateServiceForm()}
                         btnText={"Salvar"}
                         onSubmit={handleCreateService}
                     />
