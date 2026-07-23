@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import Zod;
 
-import { formSchema } from "./_schema/formSchema";
-// import js;
+import { formSchema } from "../_schemas/schema";
+// import schemas;
 
 import Button from "../_button/Button";
 // import components;

@@ -5,16 +5,14 @@ import { useNavigate } from "react-router-dom";
 // import router;
 
 import Typography from "../../components/_typography/Typography";
-import Input from "../../components/_input/Input";
-import Select from "../../components/_select/Select";
 import Form from "../../components/_form/Form";
 // import components;
 
-import z from "zod/v3";
-// import zod;
+import { projectForm, validationProjectForm } from "../../components/_schemas/schema";
+// import schemas;
 
 import { getCategories, createProject } from "../../services/api";
-// import js;
+// import api;
 
 import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
@@ -36,66 +34,6 @@ function CriarProjeto() {
         fetchData();
 
     }, []);
-
-    const validationProject = z.object({
-        nome_projeto: z.string()
-        .min(1, "O campo não pode ser nulo!")
-        .regex(/^(?!\d+$).+$/, "O nome do projeto não pode ser composto somente por números"),
-
-        orcamento_projeto: z.coerce.number()
-        .min(1, "O campo não pode ser nulo!"),
-
-        categoria_projeto: z.string()
-        .min(1, "É preciso selecionar uma categoria!")
-    });
-
-    const projectForm = [
-        {
-            label: {
-                props: {
-                    children: "Nome do Projeto: "
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "nome_projeto", type: "text", placeholder: "EX: Criação Landing Page"
-                }
-            }
-        },
-        {
-            label: {
-                props: {
-                    children: "Orçamento do Projeto: "
-                }
-            },
-            field: {
-                component: {
-                    type: Input
-                },
-                props: {
-                    name: "orcamento_projeto", type: "number", placeholder: "EX: R$5000,00"
-                }
-            }
-        },
-        {
-            label: {
-                props: {
-                    children: "Selecione uma Categoria: "
-                }
-            },
-            field: {
-                component: {
-                    type: Select
-                },
-                props: {
-                    name: "categoria_projeto",
-                }
-            }
-        }
-    ]
 
     async function handleCreateProject(project) {
         try {
@@ -124,9 +62,9 @@ function CriarProjeto() {
             </Typography>
 
             <Form 
-                fieldsConfig={projectForm}
+                fieldsConfig={projectForm()}
                 btnText={"Criar Projeto"}
-                schemaZod={validationProject}
+                schemaZod={validationProjectForm()}
                 onSubmit={handleCreateProject}
                 onCategories={categories}
             />
