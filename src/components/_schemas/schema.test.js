@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { formSchema } from "./formSchema";
+import { formSchema } from "./schema";
 
 describe("Função formSchema", () => {
     it("deve estruturar um formulário utilizando componentes anatomicos e passar seus atributos via props", () => {
-        const ID = ":r0:!"
+        const ID = ":r0:!";
         
         const formMock = [
             {
@@ -21,16 +21,16 @@ describe("Função formSchema", () => {
                     }
                 }
             }
-        ]
+        ];
 
-        const expectedID = `${ID}-${"nome_input"}`
-        const schemaMock = formSchema(formMock, ID)
+        const expectedID = `${ID}-${"nome_input"}`;
+        const schemaMock = formSchema(formMock, ID);
         
         expect(schemaMock).toHaveLength(1);
         expect(schemaMock[0].field.props.name).toBe("nome_input");
         expect(schemaMock[0].field.props.placeholder).toBe("digite um texto");
         expect(schemaMock[0].field.props.id).toBe(expectedID);
         expect(schemaMock[0].label.props.htmlFor).toBe(expectedID);
-        expect(schemaMock[0].label.props.children).toBe("Texto Label")
+        expect(schemaMock[0].label.props.children).toBe("Texto Label");
     });
 });
