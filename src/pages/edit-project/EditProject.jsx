@@ -41,7 +41,7 @@ function EditProject() {
                 const data = await getProject(id);
                 setProject(data);
             } catch (error) {
-                console.error(`Erro ao acessar o projeto: ${error}`);
+                console.error(`Erro ao acessar o projeto:`, error);
             }
         };
 
@@ -54,7 +54,7 @@ function EditProject() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                console.error(`Erro ao acessar as categorias: ${error}`);
+                console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
@@ -73,7 +73,7 @@ function EditProject() {
                 }, 0)
                 setTotalServiceCost(totalCost);
             } catch (error) {
-                console.error(`Erro ao acessar os serviços: ${error} `);
+                console.error(`Erro ao acessar os serviços:`, error);
             }
         };
 
@@ -92,7 +92,7 @@ function EditProject() {
                 console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços");
             }
         } catch (error) {
-            console.error(`Erro ao editar o projeto: ${error}`);
+            console.error(`Erro ao editar o projeto:`, error);
         }
     };
 
@@ -108,7 +108,7 @@ function EditProject() {
                 console.error("O custo do serviço ou o custo total dos serviços não pode ser maior ou igual ao orçamento do projeto!");
             }
         } catch (error) {
-            console.error(`Erro ao criar o serviço: ${error}`);
+            console.error(`Erro ao criar o serviço:`, error);
         }
     };
 
@@ -118,9 +118,9 @@ function EditProject() {
             setServices((prevServices) => {
                 return prevServices.map((service) => service.id === serviceID ? status : service )
             })
-            console.log("Serviço editado com sucesso!");
+            console.log("Status editado com sucesso!");
         } catch (error) {
-            console.error(`Erro ao editar o status do serviço: ${error}`);
+            console.error(`Erro ao editar o status do serviço:`, error);
         }
     }
 

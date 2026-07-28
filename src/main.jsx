@@ -1,13 +1,16 @@
-import { StrictMode } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { MessageProvider } from "./context/MessageContext.jsx";
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
-      <App />
+      <MessageProvider>
+        <App />
+      </MessageProvider>
     </Router>
   </StrictMode>,
 )

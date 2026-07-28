@@ -27,7 +27,7 @@ function CriarProjeto() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                console.error(error);
+                console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
@@ -40,9 +40,8 @@ function CriarProjeto() {
             await createProject(project);
             navigate("/projetos")
             console.log("Projeto criado com sucesso!");
-            navigate("/projetos")
         } catch (error) {
-            console.error(`Erro ao criar projeto: ${error}`);
+            console.error(`Erro ao criar projeto:`, error);
         }
     }
 

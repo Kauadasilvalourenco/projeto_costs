@@ -16,9 +16,12 @@ function Projects() {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getProjects();
-            setProjects(data)
-            console.log(`Projetos acessados com sucesso: ${data}`);
+            try {
+                const data = await getProjects();
+                setProjects(data)
+            } catch (error) {
+                console.error("Não foi possível acessar os projetos", error);
+            }
         };
 
         fetchData();
@@ -32,16 +35,14 @@ function Projects() {
             if (servicesProject.length > 0) {
                 for (const service of servicesProject) {
                     await deleteService(service.id);
-                }
-
-                console.log("Serviço deletado com sucesso!");
+                };
             };
 
             await deleteProject(id);
             setProjects(projects.filter((project) => project.id !== id))
             console.log("Projeto deletado com sucesso!");
         } catch (error) {
-            console.error(`Erro ao deletar projeto: ${error}`);
+            console.error(`Erro ao deletar projeto:`, error);
         }
     }
 
