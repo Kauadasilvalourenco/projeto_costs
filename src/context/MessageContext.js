@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import { createContext, useContext } from "react";
 // import react;
 
-import MessageContext from "./MessageContext";
-// import context;
+export const MessageContext = createContext();
 
 export function useMessage() {
     const context = useContext(MessageContext);

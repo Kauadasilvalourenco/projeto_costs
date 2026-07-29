@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { MessageProvider } from "./context/MessageContext.jsx";
+import { MessageProvider } from "./context/MessageProvider.jsx";
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';

@@ -1,7 +1,7 @@
-import { useState, createContext } from "react";
+import { useState } from "react";
 // import react;
 
-const MessageContext = createContext();
+import { MessageContext } from "./MessageContext";
 
 export function MessageProvider({ children }) {
     const [message, setMessage] = useState(null);
