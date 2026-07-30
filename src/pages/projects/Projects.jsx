@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useMessage } from "../../context/MessageContext";
 // import context;
 
-import { getProjects, getServices, deleteProject, deleteService } from "../../services/api";
+import { getProjects, getServices, deleteProject, deleteService, getErrorAPI } from "../../services/api";
 // import api;
 
 import Card from "../../components/_card/Card";
@@ -25,7 +25,9 @@ function Projects() {
                 const data = await getProjects();
                 setProjects(data)
             } catch (error) {
-                showMessage("Não foi possível acessar os projetos, Tente novamente!", "error")
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
                 console.error("Não foi possível acessar os projetos", error);
             }
         };
@@ -49,7 +51,9 @@ function Projects() {
             showMessage("Projeto deletado com sucesso!", "success");
             console.log("Projeto deletado com sucesso!");
         } catch (error) {
-            showMessage(`Erro ao deletar projeto, Tente novamente!`, "error")
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao deletar projeto: ${messageError} Tente novamente mais tarde!`, "error");
             console.error(`Erro ao deletar projeto:`, error);
         }
     }

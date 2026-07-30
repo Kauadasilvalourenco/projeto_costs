@@ -14,7 +14,7 @@ import Form from "../../components/_form/Form";
 import { projectForm, validationProjectForm } from "../../components/_schemas/schema";
 // import schemas;
 
-import { getCategories, createProject } from "../../services/api";
+import { getCategories, createProject, getErrorAPI } from "../../services/api";
 // import api;
 
 import styleCriarProjeto from "./CreateProject.module.css";
@@ -33,7 +33,9 @@ function CriarProjeto() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                showMessage(`Erro ao acessar as categorias. Tente novamente!`, "error");
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
                 console.error(`Erro ao acessar as categorias:`, error);
             }
         };
@@ -49,7 +51,9 @@ function CriarProjeto() {
             showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
         } catch (error) {
-            showMessage(`Erro ao criar projeto, Tente novamente!`, "error");
+            const messageError = getErrorAPI(error)
+
+            showMessage(`Erro ao criar projeto: ${messageError}. Tente novamente mais tarde!`, "error");
             console.error(`Erro ao criar projeto:`, error);
         }
     }

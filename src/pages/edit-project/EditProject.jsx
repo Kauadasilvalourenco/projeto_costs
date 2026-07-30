@@ -16,7 +16,7 @@ import Card from "../../components/_card/Card";
 import { editProjectForm, validationEditProjectForm, createServiceForm, validationCreateServiceForm } from "../../components/_schemas/schema";
 // import schemas;
 
-import { getCategories, getProject, editProject, getServices, createService, editStatusService } from "../../services/api";
+import { getCategories, getProject, editProject, getServices, createService, editStatusService, getErrorAPI } from "../../services/api";
 // import api;
 
 import styleEditProject from "./EditProject.module.css";
@@ -46,7 +46,9 @@ function EditProject() {
                 const data = await getProject(id);
                 setProject(data);
             } catch (error) {
-                showMessage(`Erro ao acessar o projeto, Tente novamente!`, "error");
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
                 console.error(`Erro ao acessar o projeto:`, error);
             }
         };
@@ -60,7 +62,9 @@ function EditProject() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                showMessage(`Erro ao acessar as categorias, Tente novamente!`, "error");
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
                 console.error(`Erro ao acessar as categorias:`, error);
             }
         };
@@ -81,7 +85,9 @@ function EditProject() {
 
                 setTotalServiceCost(totalCost);
             } catch (error) {
-                showMessage(`Erro ao acessar os serviços, Tente novamente!`, "error");
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar os serviços: ${messageError}. Tente novamente mais tarde!`, "error");
                 console.error(`Erro ao acessar os serviços:`, error);
             }
         };
@@ -103,7 +109,9 @@ function EditProject() {
                 console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
             }
         } catch (error) {
-            showMessage(`Erro ao editar o projeto, Tente novamente!`, "error");
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao editar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
             console.error(`Erro ao editar o projeto:`, error);
         }
     };
@@ -122,7 +130,9 @@ function EditProject() {
                 console.error("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!");
             }
         } catch (error) {
-            showMessage(`Erro ao criar o serviço, Tente novamente!`, "error");
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao criar o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
             console.error(`Erro ao criar o serviço:`, error);
         }
     };
@@ -133,10 +143,12 @@ function EditProject() {
             setServices((prevServices) => {
                 return prevServices.map((service) => service.id === serviceID ? status : service )
             });
-            showMessage("Status editado com sucesso!", "success");
-            console.log("Status editado com sucesso!");
+            showMessage("Serviço concluído com sucesso!", "success");
+            console.log("Serviço concluído com sucesso!");
         } catch (error) {
-            showMessage(`Erro ao editar o status do serviço, Tente novamente`, "error");
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao concluir o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
             console.error(`Erro ao editar o status do serviço:`, error);
         }
     }

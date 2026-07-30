@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 // import react;
 
 import { MessageContext } from "./MessageContext";
@@ -7,7 +7,7 @@ export function MessageProvider({ children }) {
     const [message, setMessage] = useState(null);
     const [typeMessage, setTypeMessage] = useState("");
 
-    function showMessage(msg, msgType = "success") {
+    const showMessage = useCallback((msg, msgType = "success") => {
         setMessage(msg);
         setTypeMessage(msgType);
 
@@ -15,7 +15,7 @@ export function MessageProvider({ children }) {
             setMessage(null);
             setTypeMessage("");
         }, 4000);
-    };
+    }, []);
 
     function closeMessage() {
         setMessage(null);

@@ -11,10 +11,43 @@ async function request(endpoint, options = {}) {
     });
 
     if (!response.ok) {
-        throw new Error(`Erro na API: ${response.status}`);
+        const errorAPI = new Error(`Erro na API: ${response.status}`);
+        errorAPI.status = response.status;
+        throw errorAPI;
     };
 
     return await response.json();
+};
+
+export function getErrorAPI(errorApi) {
+    let messageError;
+
+    if (!errorApi || !errorApi.status) {
+        messageError = "Servidor indisponível ou falha na conexão de internet!";
+
+        return messageError;
+    };
+
+    switch (errorApi.status) {
+        case 400:
+            messageError = "Dados enviados são inválidos!";
+            break;
+        case 404:
+            messageError = "Recurso não encontrado no servidor!";
+            break;
+        case 500:
+            messageError = "Falha interna no servidor!";
+            break;
+        case 503:
+            messageError = "Servidor indisponível no momento!";
+            break;
+
+        default:
+            messageError = `Ocorreu um erro inesperado: ${errorApi.status}`;
+            break;
+    };
+
+    return messageError;
 };
 
 //GET
