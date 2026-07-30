@@ -28,6 +28,7 @@
 .custo_servico,
 .status_servico {
     color: #000000;
+    text-align: center;
 }
 
 .conteiner_button {

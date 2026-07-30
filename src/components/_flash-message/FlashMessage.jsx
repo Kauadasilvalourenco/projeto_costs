@@ -13,9 +13,10 @@ function FlashMessage() {
 
     return (
         <div
-            className={styleFlashMessage[typeMessage]}
+            className={`${styleFlashMessage[typeMessage]} ${styleFlashMessage.conteiner_message}`}
         >
             <p>{message}</p>
+            
             <button
                 onClick={closeMessage}
                 className={styleFlashMessage.btn_close}

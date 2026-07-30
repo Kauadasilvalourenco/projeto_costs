@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import router;
 
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
 import Typography from "../../components/_typography/Typography";
 import Form from "../../components/_form/Form";
 // import components;
@@ -19,7 +22,10 @@ import styleCriarProjeto from "./CreateProject.module.css";
 
 function CriarProjeto() {
     const [categories, setCategories] = useState([]);
+
     const navigate = useNavigate();
+
+    const { showMessage } = useMessage();
 
     useEffect(() => {
         async function fetchData() {
@@ -27,20 +33,23 @@ function CriarProjeto() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
+                showMessage(`Erro ao acessar as categorias. Tente novamente!`, "error");
                 console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     async function handleCreateProject(project) {
         try {
             await createProject(project);
-            navigate("/projetos")
+            navigate("/projetos");
+            showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
         } catch (error) {
+            showMessage(`Erro ao criar projeto, Tente novamente!`, "error");
             console.error(`Erro ao criar projeto:`, error);
         }
     }

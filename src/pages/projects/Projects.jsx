@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 // import hooks;
 
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
 import { getProjects, getServices, deleteProject, deleteService } from "../../services/api";
-// import js;
+// import api;
 
 import Card from "../../components/_card/Card";
 import Typography from "../../components/_typography/Typography";
@@ -14,19 +17,22 @@ import styleProjects from "./Projects.module.css";
 function Projects() {
     const [projects, setProjects] = useState([]);
 
+    const { showMessage } = useMessage();
+
     useEffect(() => {
         async function fetchData() {
             try {
                 const data = await getProjects();
                 setProjects(data)
             } catch (error) {
+                showMessage("Não foi possível acessar os projetos, Tente novamente!", "error")
                 console.error("Não foi possível acessar os projetos", error);
             }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     async function handleDeleteProject(id) {
         try {
@@ -39,9 +45,11 @@ function Projects() {
             };
 
             await deleteProject(id);
-            setProjects(projects.filter((project) => project.id !== id))
+            setProjects(projects.filter((project) => project.id !== id));
+            showMessage("Projeto deletado com sucesso!", "success");
             console.log("Projeto deletado com sucesso!");
         } catch (error) {
+            showMessage(`Erro ao deletar projeto, Tente novamente!`, "error")
             console.error(`Erro ao deletar projeto:`, error);
         }
     }

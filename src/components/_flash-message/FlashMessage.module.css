@@ -1,0 +1,42 @@
+.conteiner_message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 5px;
+
+    position: fixed;
+    z-index: 9999;
+    bottom: 120px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+.btn_close {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+}
+
+.success {
+    background-color: var(--cor_sucesso);
+    color: #ffffff;
+    font-family: var(--fonte_padrao);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.error {
+    background-color: var(--cor_erro-fechar);
+    color: #ffffff;
+    padding: 10px;
+    font-family: var(--fonte_padrao);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+    .conteiner_message {
+        right: 15px;
+    }
+}

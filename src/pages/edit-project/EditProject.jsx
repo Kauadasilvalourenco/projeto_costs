@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import router;
 
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
 import Typography from "../../components/_typography/Typography";
 import Button from "../../components/_button/Button";
 import Form from "../../components/_form/Form";
@@ -32,6 +35,8 @@ function EditProject() {
 
     const { id } = useParams();
 
+    const { showMessage } = useMessage();
+
     const [projectVisible, setProjectVisible] = useState(true);
     const [serviceVisible, setServiceVisible] = useState(false);
 
@@ -41,12 +46,13 @@ function EditProject() {
                 const data = await getProject(id);
                 setProject(data);
             } catch (error) {
+                showMessage(`Erro ao acessar o projeto, Tente novamente!`, "error");
                 console.error(`Erro ao acessar o projeto:`, error);
             }
         };
 
         fetchData();
-    }, [id]);
+    }, [id, showMessage]);
 
     useEffect(() => {
         async function fetchData() {
@@ -54,13 +60,14 @@ function EditProject() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
+                showMessage(`Erro ao acessar as categorias, Tente novamente!`, "error");
                 console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     useEffect(() => {
         async function fetchData() {
@@ -70,16 +77,18 @@ function EditProject() {
 
                 const totalCost = data.reduce((acc, service) => {
                     return acc + Number(service.custo_servico || 0);
-                }, 0)
+                }, 0);
+
                 setTotalServiceCost(totalCost);
             } catch (error) {
+                showMessage(`Erro ao acessar os serviços, Tente novamente!`, "error");
                 console.error(`Erro ao acessar os serviços:`, error);
             }
         };
 
         fetchData();
 
-    }, [id]);
+    }, [id, showMessage]);
 
     async function handleEditProject(updateProject) {
         try {
@@ -87,11 +96,14 @@ function EditProject() {
                 await editProject(id, updateProject);
                 setProject(updateProject);
                 setProjectVisible(!projectVisible);
+                showMessage("Projeto editado com sucesso!", "success");
                 console.log("Projeto editado com sucesso!");
             } else {
-                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços");
+                showMessage("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
+                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
             }
         } catch (error) {
+            showMessage(`Erro ao editar o projeto, Tente novamente!`, "error");
             console.error(`Erro ao editar o projeto:`, error);
         }
     };
@@ -103,11 +115,14 @@ function EditProject() {
                 setServices((prevService) => [...prevService, newService]);
                 setTotalServiceCost((prevServiceCost) => prevServiceCost + data.custo_servico);
                 setServiceVisible(!serviceVisible);
+                showMessage("Serviço criado com sucesso!", "success");
                 console.log("Serviço criado com sucesso!");
             } else {
-                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior ou igual ao orçamento do projeto!");
+                showMessage("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!", "error");
+                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!");
             }
         } catch (error) {
+            showMessage(`Erro ao criar o serviço, Tente novamente!`, "error");
             console.error(`Erro ao criar o serviço:`, error);
         }
     };
@@ -117,9 +132,11 @@ function EditProject() {
             const status = await editStatusService(serviceID);
             setServices((prevServices) => {
                 return prevServices.map((service) => service.id === serviceID ? status : service )
-            })
+            });
+            showMessage("Status editado com sucesso!", "success");
             console.log("Status editado com sucesso!");
         } catch (error) {
+            showMessage(`Erro ao editar o status do serviço, Tente novamente`, "error");
             console.error(`Erro ao editar o status do serviço:`, error);
         }
     }
