@@ -13,12 +13,14 @@ function FlashMessage() {
 
     return (
         <div
+            data-testid = "flash-message"
             className={`${styleFlashMessage[typeMessage]} ${styleFlashMessage.conteiner_message}`}
         >
             <p>{message}</p>
             
             <button
                 onClick={closeMessage}
+                aria-label="Fechar Mensagem"
                 className={styleFlashMessage.btn_close}
             >
                 &times;
