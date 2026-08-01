@@ -5,6 +5,7 @@ import CreateProject from './CreateProject';
 import { createProject } from '../../services/api';
 import { getCategories } from '../../services/api';
 import { MemoryRouter } from 'react-router-dom';
+import { MessageProvider } from "../../context/MessageProvider";
 
 // Mock do serviço de API
 vi.mock('../../services/api');
@@ -34,7 +35,9 @@ describe('Página Criar Projeto - Teste de Integração', () => {
   it('deve integrar corretamente todos os componentes da página', () => {
     render(
       <MemoryRouter>
-        <CreateProject />
+        <MessageProvider>
+          <CreateProject />
+        </MessageProvider>
       </MemoryRouter>
     );
 
@@ -57,7 +60,9 @@ describe('Página Criar Projeto - Teste de Integração', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <CreateProject />
+        <MessageProvider>
+          <CreateProject />
+        </MessageProvider>
       </MemoryRouter>
     );
 
