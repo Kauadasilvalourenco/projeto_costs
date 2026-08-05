@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MessageProvider } from "../../context/MessageProvider";
 
 import EditProject from "./EditProject";
 import {
@@ -65,14 +66,13 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
   });
 
   it("deve renderizar corretamente e exibir os dados iniciais do projeto", async () => {
-    // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-    // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
     render(
       <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <Routes>
-          <Route path="/editar-projeto/:id" element={<EditProject />} />
-        </Routes>
+        <MessageProvider>
+          <Routes>
+            <Route path="/editar-projeto/:id" element={<EditProject />} />
+          </Routes>
+        </MessageProvider>
       </MemoryRouter>,
     );
 
@@ -110,9 +110,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
     render(
       <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <Routes>
-          <Route path="/editar-projeto/:id" element={<EditProject />} />
-        </Routes>
+        <MessageProvider>
+          <Routes>
+            <Route path="/editar-projeto/:id" element={<EditProject />} />
+          </Routes>
+        </MessageProvider>
       </MemoryRouter>,
     );
 
@@ -126,9 +128,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
     render(
       <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <Routes>
+        <MessageProvider>
+            <Routes>
           <Route path="/editar-projeto/:id" element={<EditProject />} />
-        </Routes>
+          </Routes>
+        </MessageProvider>
       </MemoryRouter>,
     );
 
@@ -153,9 +157,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
     render(
       <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <Routes>
+        <MessageProvider>
+            <Routes>
           <Route path="/editar-projeto/:id" element={<EditProject />} />
-        </Routes>
+          </Routes>
+        </MessageProvider>
       </MemoryRouter>,
     );
 
@@ -174,9 +180,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
     render(
       <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <Routes>
+        <MessageProvider>
+            <Routes>
           <Route path="/editar-projeto/:id" element={<EditProject />} />
-        </Routes>
+          </Routes>
+        </MessageProvider>
       </MemoryRouter>,
     );
 
@@ -192,9 +200,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     it("deve chamar editProject com sucesso quando o novo orçamento for maior que o custo total", async () => {
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -224,9 +234,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     it("não deve chamar editProject quando o novo orçamento for menor que o custo total", async () => {
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -248,7 +260,7 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
       // Verifica se o erro de negócio foi registrado
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços",
+        "Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error"
       );
     });
 
@@ -256,14 +268,13 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       const mockError = new Error("Erro na API: 500");
       editProject.mockRejectedValue(mockError);
 
-      // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-      // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -282,7 +293,7 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       // Verifica se o erro de API foi tratado
       await waitFor(() => {
         expect(consoleErrorSpy).toHaveBeenCalledWith(
-          `Erro ao editar o projeto: ${mockError}`,
+          "Erro ao editar o projeto:" ,mockError,
         );
       });
     });
@@ -304,9 +315,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -343,14 +356,13 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     });
 
     it("não deve criar serviço quando o custo for inválido", async () => {
-      // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-      // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -375,7 +387,7 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
       // Verifica se o erro de negócio foi registrado
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "O custo do serviço ou o custo total dos serviços não pode ser maior ou igual ao orçamento do projeto!",
+        "O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!"
       );
     });
 
@@ -388,9 +400,11 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -413,7 +427,7 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       // Verifica se o erro de API foi tratado
       await waitFor(() => {
         expect(consoleErrorSpy).toHaveBeenCalledWith(
-          `Erro ao criar o serviço: ${mockError}`,
+          "Erro ao criar o serviço:", mockError
         );
       });
     });
@@ -430,14 +444,13 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       };
       editStatusService.mockResolvedValue(mockUpdatedService);
 
-      // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-      // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -469,14 +482,13 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       const mockError = new Error("Erro na API: 500");
       editStatusService.mockRejectedValue(mockError);
 
-      // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-      // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
       render(
         <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
         </MemoryRouter>,
       );
 
@@ -492,7 +504,7 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       // Verifica se o erro de API foi tratado
       await waitFor(() => {
         expect(consoleErrorSpy).toHaveBeenCalledWith(
-          `Erro ao editar o status do serviço: ${mockError}`,
+          "Erro ao editar o status do serviço:", mockError
         );
       });
     });

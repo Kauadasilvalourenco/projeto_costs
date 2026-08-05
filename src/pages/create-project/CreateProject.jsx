@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import router;
 
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
 import Typography from "../../components/_typography/Typography";
 import Form from "../../components/_form/Form";
 // import components;
@@ -11,7 +14,7 @@ import Form from "../../components/_form/Form";
 import { projectForm, validationProjectForm } from "../../components/_schemas/schema";
 // import schemas;
 
-import { getCategories, createProject } from "../../services/api";
+import { getCategories, createProject, getErrorAPI } from "../../services/api";
 // import api;
 
 import styleCriarProjeto from "./CreateProject.module.css";
@@ -19,7 +22,10 @@ import styleCriarProjeto from "./CreateProject.module.css";
 
 function CriarProjeto() {
     const [categories, setCategories] = useState([]);
+
     const navigate = useNavigate();
+
+    const { showMessage } = useMessage();
 
     useEffect(() => {
         async function fetchData() {
@@ -27,22 +33,28 @@ function CriarProjeto() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                console.error(error);
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+                console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     async function handleCreateProject(project) {
         try {
             await createProject(project);
-            navigate("/projetos")
+            navigate("/projetos");
+            showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
-            navigate("/projetos")
         } catch (error) {
-            console.error(`Erro ao criar projeto: ${error}`);
+            const messageError = getErrorAPI(error)
+
+            showMessage(`Erro ao criar projeto: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao criar projeto:`, error);
         }
     }
 

@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
+import { MessageProvider } from "../../context/MessageProvider";
 import Projects from "./Projects";
 import {
   getProjects,
@@ -33,7 +34,9 @@ describe("Página Projetos - Teste de Integração", () => {
     it("deve renderizar corretamente quando não há projetos", async () => {
         render(
             <MemoryRouter initialEntries={["/projetos"]}>
-            <Projects />
+                <MessageProvider>
+                    <Projects />
+                </MessageProvider>
             </MemoryRouter>,
         );
 
@@ -51,16 +54,16 @@ describe("Página Projetos - Teste de Integração", () => {
     it("deve renderizar os cards dos projetos quando existem projetos", async () => {
         const mockProjects = [
             {
-            id: 1,
-            nome_projeto: "Projeto Teste 1",
-            orcamento_projeto: 1000,
-            categoria_projeto: "Desenvolvimento",
+                id: 1,
+                nome_projeto: "Projeto Teste 1",
+                orcamento_projeto: 1000,
+                categoria_projeto: "Desenvolvimento",
             },
             {
-            id: 2,
-            nome_projeto: "Projeto Teste 2",
-            orcamento_projeto: 2000,
-            categoria_projeto: "Design",
+                id: 2,
+                nome_projeto: "Projeto Teste 2",
+                orcamento_projeto: 2000,
+                categoria_projeto: "Design",
             },
         ];
 
@@ -69,7 +72,9 @@ describe("Página Projetos - Teste de Integração", () => {
 
         render(
             <MemoryRouter initialEntries={["/projetos"]}>
-            <Projects />
+                <MessageProvider>
+                    <Projects />
+                </MessageProvider>
             </MemoryRouter>,
         );
 
@@ -91,27 +96,27 @@ describe("Página Projetos - Teste de Integração", () => {
     it("deve deletar um projeto com serviços associados com sucesso", async () => {
         const mockProjects = [
             {
-            id: 1,
-            nome_projeto: "Projeto Teste",
-            orcamento_projeto: 1000,
-            categoria_projeto: "Desenvolvimento",
+                id: 1,
+                nome_projeto: "Projeto Teste",
+                orcamento_projeto: 1000,
+                categoria_projeto: "Desenvolvimento",
             },
         ];
 
         const mockServices = [
             {
-            id: 101,
-            projectID: 1,
-            nome_servico: "Serviço 1",
-            custo_servico: 500,
-            status: "Pendente",
+                id: 101,
+                projectID: 1,
+                nome_servico: "Serviço 1",
+                custo_servico: 500,
+                status: "Pendente",
             },
             {
-            id: 102,
-            projectID: 1,
-            nome_servico: "Serviço 2",
-            custo_servico: 300,
-            status: "Pendente",
+                id: 102,
+                projectID: 1,
+                nome_servico: "Serviço 2",
+                custo_servico: 300,
+                status: "Pendente",
             },
         ];
 
@@ -123,7 +128,9 @@ describe("Página Projetos - Teste de Integração", () => {
 
         render(
             <MemoryRouter initialEntries={["/projetos"]}>
-            <Projects />
+                <MessageProvider>
+                    <Projects />
+                </MessageProvider>
             </MemoryRouter>,
         );
 
@@ -156,21 +163,25 @@ describe("Página Projetos - Teste de Integração", () => {
     it("deve tratar erro na deleção de projeto e manter o card na tela", async () => {
         const mockProjects = [
             {
-            id: 1,
-            nome_projeto: "Projeto Teste",
-            orcamento_projeto: 1000,
-            categoria_projeto: "Desenvolvimento",
+                id: 1,
+                nome_projeto: "Projeto Teste",
+                orcamento_projeto: 1000,
+                categoria_projeto: "Desenvolvimento",
             },
         ];
+
+        const mockError = new Error("Erro na API: 500");
 
         // Mock das funções
         getProjects.mockResolvedValue(mockProjects);
         getServices.mockResolvedValue([]);
-        deleteProject.mockRejectedValue(new Error("Erro na API"));
+        deleteProject.mockRejectedValue(mockError);
 
         render(
             <MemoryRouter initialEntries={["/projetos"]}>
-            <Projects />
+                <MessageProvider>
+                    <Projects />
+                </MessageProvider>
             </MemoryRouter>,
         );
 
@@ -186,7 +197,7 @@ describe("Página Projetos - Teste de Integração", () => {
         // Verificar que o erro foi tratado
         await waitFor(() => {
             expect(consoleErrorSpy).toHaveBeenCalledWith(
-            expect.stringContaining("Erro ao deletar projeto"),
+                "Erro ao deletar projeto:", mockError
             );
         });
 
