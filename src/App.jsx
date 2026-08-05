@@ -8,6 +8,7 @@ import EditProject from "./pages/edit-project/EditProject";
 // import pages;
 
 import Navbar from "./components/_navbar/Navbar";
+import FlashMessage from "./components/_flash-message/FlashMessage";
 import Footer from "./components/_footer/Footer";
 // import components;
 
@@ -45,11 +46,6 @@ function App() {
           />
 
           <Route 
-            path="/editar-projeto/:id"
-            element={<EditProject />}
-          />
-
-          <Route 
             path="/contato"
           />
 
@@ -60,6 +56,8 @@ function App() {
         </Routes>
 
       </main>
+
+      <FlashMessage />
 
       <Footer />
 

@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import router;
 
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
 import Typography from "../../components/_typography/Typography";
 import Button from "../../components/_button/Button";
 import Form from "../../components/_form/Form";
@@ -13,7 +16,7 @@ import Card from "../../components/_card/Card";
 import { editProjectForm, validationEditProjectForm, createServiceForm, validationCreateServiceForm } from "../../components/_schemas/schema";
 // import schemas;
 
-import { getCategories, getProject, editProject, getServices, createService, editStatusService } from "../../services/api";
+import { getCategories, getProject, editProject, getServices, createService, editStatusService, getErrorAPI } from "../../services/api";
 // import api;
 
 import styleEditProject from "./EditProject.module.css";
@@ -32,6 +35,8 @@ function EditProject() {
 
     const { id } = useParams();
 
+    const { showMessage } = useMessage();
+
     const [projectVisible, setProjectVisible] = useState(true);
     const [serviceVisible, setServiceVisible] = useState(false);
 
@@ -41,12 +46,15 @@ function EditProject() {
                 const data = await getProject(id);
                 setProject(data);
             } catch (error) {
-                console.error(`Erro ao acessar o projeto: ${error}`);
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
+                console.error(`Erro ao acessar o projeto:`, error);
             }
         };
 
         fetchData();
-    }, [id]);
+    }, [id, showMessage]);
 
     useEffect(() => {
         async function fetchData() {
@@ -54,13 +62,16 @@ function EditProject() {
                 const data = await getCategories();
                 setCategories(data);
             } catch (error) {
-                console.error(`Erro ao acessar as categorias: ${error}`);
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+                console.error(`Erro ao acessar as categorias:`, error);
             }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     useEffect(() => {
         async function fetchData() {
@@ -70,16 +81,20 @@ function EditProject() {
 
                 const totalCost = data.reduce((acc, service) => {
                     return acc + Number(service.custo_servico || 0);
-                }, 0)
+                }, 0);
+
                 setTotalServiceCost(totalCost);
             } catch (error) {
-                console.error(`Erro ao acessar os serviços: ${error} `);
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Erro ao acessar os serviços: ${messageError}. Tente novamente mais tarde!`, "error");
+                console.error(`Erro ao acessar os serviços:`, error);
             }
         };
 
         fetchData();
 
-    }, [id]);
+    }, [id, showMessage]);
 
     async function handleEditProject(updateProject) {
         try {
@@ -87,12 +102,17 @@ function EditProject() {
                 await editProject(id, updateProject);
                 setProject(updateProject);
                 setProjectVisible(!projectVisible);
+                showMessage("Projeto editado com sucesso!", "success");
                 console.log("Projeto editado com sucesso!");
             } else {
-                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços");
+                showMessage("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
+                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
             }
         } catch (error) {
-            console.error(`Erro ao editar o projeto: ${error}`);
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao editar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao editar o projeto:`, error);
         }
     };
 
@@ -103,12 +123,17 @@ function EditProject() {
                 setServices((prevService) => [...prevService, newService]);
                 setTotalServiceCost((prevServiceCost) => prevServiceCost + data.custo_servico);
                 setServiceVisible(!serviceVisible);
+                showMessage("Serviço criado com sucesso!", "success");
                 console.log("Serviço criado com sucesso!");
             } else {
-                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior ou igual ao orçamento do projeto!");
+                showMessage("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!", "error");
+                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!");
             }
         } catch (error) {
-            console.error(`Erro ao criar o serviço: ${error}`);
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao criar o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao criar o serviço:`, error);
         }
     };
 
@@ -117,10 +142,14 @@ function EditProject() {
             const status = await editStatusService(serviceID);
             setServices((prevServices) => {
                 return prevServices.map((service) => service.id === serviceID ? status : service )
-            })
-            console.log("Serviço editado com sucesso!");
+            });
+            showMessage("Serviço concluído com sucesso!", "success");
+            console.log("Serviço concluído com sucesso!");
         } catch (error) {
-            console.error(`Erro ao editar o status do serviço: ${error}`);
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao concluir o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao editar o status do serviço:`, error);
         }
     }
 

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 // import hooks;
 
-import { getProjects, getServices, deleteProject, deleteService } from "../../services/api";
-// import js;
+import { useMessage } from "../../context/MessageContext";
+// import context;
+
+import { getProjects, getServices, deleteProject, deleteService, getErrorAPI } from "../../services/api";
+// import api;
 
 import Card from "../../components/_card/Card";
 import Typography from "../../components/_typography/Typography";
@@ -14,16 +17,24 @@ import styleProjects from "./Projects.module.css";
 function Projects() {
     const [projects, setProjects] = useState([]);
 
+    const { showMessage } = useMessage();
+
     useEffect(() => {
         async function fetchData() {
-            const data = await getProjects();
-            setProjects(data)
-            console.log(`Projetos acessados com sucesso: ${data}`);
+            try {
+                const data = await getProjects();
+                setProjects(data)
+            } catch (error) {
+                const messageError = getErrorAPI(error);
+
+                showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
+                console.error("Não foi possível acessar os projetos", error);
+            }
         };
 
         fetchData();
 
-    }, []);
+    }, [showMessage]);
 
     async function handleDeleteProject(id) {
         try {
@@ -32,16 +43,18 @@ function Projects() {
             if (servicesProject.length > 0) {
                 for (const service of servicesProject) {
                     await deleteService(service.id);
-                }
-
-                console.log("Serviço deletado com sucesso!");
+                };
             };
 
             await deleteProject(id);
-            setProjects(projects.filter((project) => project.id !== id))
+            setProjects(projects.filter((project) => project.id !== id));
+            showMessage("Projeto deletado com sucesso!", "success");
             console.log("Projeto deletado com sucesso!");
         } catch (error) {
-            console.error(`Erro ao deletar projeto: ${error}`);
+            const messageError = getErrorAPI(error);
+
+            showMessage(`Erro ao deletar projeto: ${messageError} Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao deletar projeto:`, error);
         }
     }
 
