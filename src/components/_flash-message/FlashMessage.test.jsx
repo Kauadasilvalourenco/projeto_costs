@@ -11,11 +11,15 @@ describe("FlashMessage", () => {
     })
 
     it("deve retornar um erro referente ao componente estar fora do provider", () => {
+        const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
         expect(() => {
             render(
                 <FlashMessage />
-            )
-        }).toThrow("useMessage só pode ser usado em um MessageProvider")
+            );
+        }).toThrow("useMessage só pode ser usado em um MessageProvider");
+
+        consoleSpy.mockRestore();
     });
 
     it("não deve renderizar a mensagem quando seu valor for null", () => {
