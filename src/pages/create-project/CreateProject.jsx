@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 // import hooks;
 
 import { useNavigate } from "react-router-dom";
@@ -21,28 +22,31 @@ import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
 
 function CriarProjeto() {
-    const [categories, setCategories] = useState([]);
+    const {
+        data: categories = [],
+        isLoading,
+        isError,
+        error
+    } = useQuery({
+        queryKey: ["categories"],
+        queryFn: getCategories,
+        retry: 3,
+        retryDelay: 1500,
+        
+    });
 
     const navigate = useNavigate();
 
     const { showMessage } = useMessage();
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getCategories();
-                setCategories(data);
-            } catch (error) {
-                const messageError = getErrorAPI(error);
+        if (isError === true) {
+            const messageError = getErrorAPI(error);
 
-                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error(`Erro ao acessar as categorias:`, error);
-            }
+            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar as categorias:`, error);
         };
-
-        fetchData();
-
-    }, [showMessage]);
+    }, [isError, error, showMessage]);
 
     async function handleCreateProject(project) {
         try {
@@ -79,6 +83,7 @@ function CriarProjeto() {
                 schemaZod={validationProjectForm()}
                 onSubmit={handleCreateProject}
                 onCategories={categories}
+                isLoadingCategories={isLoading}
             />
 
         </div>
