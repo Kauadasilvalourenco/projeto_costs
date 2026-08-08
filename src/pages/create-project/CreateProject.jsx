@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 // import hooks;
 
 import { useNavigate } from "react-router-dom";
@@ -22,45 +22,54 @@ import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
 
 function CriarProjeto() {
+    const navigate = useNavigate();
+
+    const { showMessage } = useMessage();
+
     const {
         data: categories = [],
-        isLoading,
-        isError,
-        error
+        isLoading: isLoadingCategories,
+        isError: isErrorCategories,
+        error: errorCategories
     } = useQuery({
         queryKey: ["categories"],
         queryFn: getCategories,
         retry: 3,
         retryDelay: 1500,
-        
     });
 
-    const navigate = useNavigate();
+    const {
+        mutate: createProjectMutation,
+        isPending: isLoadingCreateProject,
+        error: errorCreateProject
+    } = useMutation({
+        mutationKey: ["projects"],
+        mutationFn: createProject,
+        retry: 3,
+        retryDelay: 1500,
 
-    const { showMessage } = useMessage();
-
-    useEffect(() => {
-        if (isError === true) {
-            const messageError = getErrorAPI(error);
-
-            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao acessar as categorias:`, error);
-        };
-    }, [isError, error, showMessage]);
-
-    async function handleCreateProject(project) {
-        try {
-            await createProject(project);
+        onSuccess: () => {
             navigate("/projetos");
             showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
-        } catch (error) {
-            const messageError = getErrorAPI(error)
+        },
+
+        onError: () => {
+            const messageError = getErrorAPI(errorCreateProject)
 
             showMessage(`Erro ao criar projeto: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao criar projeto:`, error);
+            console.error(`Erro ao criar projeto:`, errorCreateProject);
         }
-    }
+    });
+
+    useEffect(() => {
+        if (isErrorCategories === true) {
+            const messageError = getErrorAPI(errorCategories);
+
+            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar as categorias:`, errorCategories);
+        };
+    }, [isErrorCategories, errorCategories, showMessage]);
 
     return(
         <div className={styleCriarProjeto.CriarProjeto}>
@@ -81,9 +90,10 @@ function CriarProjeto() {
                 fieldsConfig={projectForm()}
                 btnText={"Criar Projeto"}
                 schemaZod={validationProjectForm()}
-                onSubmit={handleCreateProject}
+                onSubmit={createProjectMutation}
                 onCategories={categories}
-                isLoadingCategories={isLoading}
+                isLoadingCategories={isLoadingCategories}
+                isLoadingSugmit={isLoadingCreateProject}
             />
 
         </div>
