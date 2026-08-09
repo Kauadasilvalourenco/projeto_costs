@@ -55,10 +55,14 @@ function Projects() {
         retry: 3,
         retryDelay: 1500,
 
-        onSuccess: () => {
+        onSuccess: (id) => {
+            queryClient.removeQueries({
+                queryKey: ["services", id]
+            })
+
             queryClient.invalidateQueries({
                 queryKey: ["projects"]
-            })
+            });
 
             showMessage("Projeto deletado com sucesso!", "success");
             console.log("Projeto deletado com sucesso!");

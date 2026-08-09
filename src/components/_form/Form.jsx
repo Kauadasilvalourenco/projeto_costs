@@ -26,7 +26,7 @@ import { FaSave } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 // import icons;
 
-function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData, isLoadingCategories, isLoadingSugmit}) {
+function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData, isLoadingCategories, isLoadingSubmit}) {
     const ID = useId();
     const location = useLocation();
 
@@ -93,7 +93,7 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                             <Button
                                 type={"submit"}
                                 style={styleForm.button}
-                                disable={isLoadingSugmit}
+                                disable={isLoadingSubmit}
                             >
                                 <IoMdAddCircleOutline className={styleForm.create_icon}/>
                                 {btnText}
@@ -102,6 +102,7 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                             <Button
                                 type={"submit"}
                                 style={styleForm.button}
+                                disable={isLoadingSubmit}
                             >
                                 <FaSave className={styleForm.save_icon}/>
                                 {btnText}

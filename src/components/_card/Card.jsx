@@ -13,7 +13,7 @@ import { FaCheck } from "react-icons/fa";
 // import icons;
 
 
-function Card({project, onDeleteProject, service, finishService, isLoadingDeleteProjects}) {
+function Card({project, onDeleteProject, service, finishService, isLoadingDeleteProjects, isLoadingStatusService}) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -103,6 +103,7 @@ function Card({project, onDeleteProject, service, finishService, isLoadingDelete
                         <Button
                             onClick={() => finishService(service.id)}
                             style={styleCard.button}
+                            disable={isLoadingStatusService}
                         >
                             <FaCheck className={styleCard.button_icons}/>
                             Concluir Serviço

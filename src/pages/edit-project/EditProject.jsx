@@ -24,6 +24,9 @@ import styleEditProject from "./EditProject.module.css";
 import styleTypography from "../../components/_typography/Typography.module.css";
 // import css;
 
+import imgLoading from "../../assets/loading.svg";
+// import img;
+
 import { MdEdit } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 // import icons;
@@ -40,7 +43,6 @@ function EditProject() {
 
     const {
         data: categories = [],
-        //isLoading: isLoadingCategories,
         isError: isErrorCategories,
         error: errorCategories
     } = useQuery({
@@ -54,7 +56,7 @@ function EditProject() {
 
     const {
         data: project = [],
-        //isLoading: isLoadingProject,
+        isLoading: isLoadingProject,
         isError: isErrorProject,
         error: errorProject
     } = useQuery({
@@ -68,7 +70,7 @@ function EditProject() {
 
     const {
         data: services = [],
-        //isLoading: isLoadingServices,
+        isLoading: isLoadingServices,
         isError: isErrorServices,
         error: errorServices
     } = useQuery({
@@ -117,7 +119,7 @@ function EditProject() {
 
     const {
         mutate: editProjectMutation,
-        //isPending: isLoadingEditProject,
+        isPending: isLoadingEditProject,
         error: errorEditProject
     } = useMutation({
         mutationKey: ["editProject", id],
@@ -145,7 +147,7 @@ function EditProject() {
 
     const {
         mutate: createServiceMutation,
-        //isPending: isLoadingCreateService,
+        isPending: isLoadingCreateService,
         error: errorCreateService
     } = useMutation({
         mutationKey: ["services"],
@@ -173,7 +175,7 @@ function EditProject() {
 
     const {
         mutate: editStatusServiceMutation,
-        //isPending: isLoadingStatusService,
+        isPending: isLoadingStatusService,
         error: errorStatusService
     } = useMutation({
         mutationKey: ["statusService"],
@@ -240,47 +242,56 @@ function EditProject() {
                 className="section_project"
             >
                 {
-                    projectVisible === true ? (
-                        <div>
-                            <Typography
-                                tag={"h2"}
-                            >
-                                Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
-                            </Typography>
-                            <Typography
-                                tag={"h2"}
-                            >
-                                Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
-                            </Typography>
-                            <Typography
-                                tag={"h2"}
-                            >
-                                Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
-                            </Typography>
-                            <Typography
-                                tag={"h2"}
-                            >
-                                Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
-                            </Typography>
-                            <div className={styleEditProject.conteiner_button}>
-                                <Button
-                                    onClick={toogleEditForm}
-                                    style={styleEditProject.button}
-                                >
-                                    <MdEdit />
-                                    Editar
-                                </Button>
-                            </div>
-                        </div>
-                    ) : (
-                        <Form
-                            onCategories={categories}
-                            fieldsConfig={editProjectForm()}
-                            schemaZod={validationEditProjectForm()}
-                            formData={project}
-                            btnText={"Salvar"}
-                            onSubmit={handleEditProject}
+                    isLoadingProject === true ? (
+                        <img 
+                            src={imgLoading} 
+                            alt="imagem_loading" 
+                            className={styleEditProject.img_loading}
                         />
+                    ) : (
+                        projectVisible === true ? (
+                            <div>
+                                <Typography
+                                    tag={"h2"}
+                                >
+                                    Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
+                                </Typography>
+                                <Typography
+                                    tag={"h2"}
+                                >
+                                    Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
+                                </Typography>
+                                <Typography
+                                    tag={"h2"}
+                                >
+                                    Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
+                                </Typography>
+                                <Typography
+                                    tag={"h2"}
+                                >
+                                    Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
+                                </Typography>
+                                <div className={styleEditProject.conteiner_button}>
+                                    <Button
+                                        onClick={toogleEditForm}
+                                        style={styleEditProject.button}
+                                    >
+                                        <MdEdit />
+                                        Editar
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <Form
+                                onCategories={categories}
+                                fieldsConfig={editProjectForm()}
+                                schemaZod={validationEditProjectForm()}
+                                formData={project}
+                                btnText={"Salvar"}
+                                onSubmit={handleEditProject}
+                                isLoadingSubmit={isLoadingEditProject}
+                            />
+                        )
                     )
                 }
             </section>
@@ -312,6 +323,7 @@ function EditProject() {
                             schemaZod={validationCreateServiceForm()}
                             btnText={"Salvar"}
                             onSubmit={handleCreateService}
+                            isLoadingSubmit={isLoadingCreateService}
                         />
                     )
                 }
@@ -323,24 +335,33 @@ function EditProject() {
                 className="section_services"
             >
                 {
-                    services.length === 0 ? (
-                        <Typography
-                            tag={"p"}
-                        >
-                            Não existem serviços criados!
-                        </Typography>
+                    isLoadingServices === true ? (
+                        <img 
+                            src={imgLoading} 
+                            alt="imagem_loading" 
+                            className={styleEditProject.img_loading}
+                        />
                     ) : (
-                        services.map((service) => (
-                            <div
-                                key={service.id}
-                                className={styleEditProject.conteiner_card}
+                        services.length === 0 ? (
+                            <Typography
+                                tag={"p"}
                             >
-                                <Card
-                                    service={service}
-                                    finishService={finishService}
-                                />
-                            </div>
-                        ))
+                                Não existem serviços criados!
+                            </Typography>
+                        ) : (
+                            services.map((service) => (
+                                <div
+                                    key={service.id}
+                                    className={styleEditProject.conteiner_card}
+                                >
+                                    <Card
+                                        service={service}
+                                        finishService={finishService}
+                                        isLoadingStatusService={isLoadingStatusService}
+                                    />
+                                </div>
+                            ))
+                        )
                     )
                 }
             </section>
