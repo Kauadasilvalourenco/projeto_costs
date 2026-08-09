@@ -13,7 +13,7 @@ import { FaCheck } from "react-icons/fa";
 // import icons;
 
 
-function Card({project, onDeleteProject, service, finishService}) {
+function Card({project, onDeleteProject, service, finishService, isLoadingDeleteProjects}) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -91,6 +91,7 @@ function Card({project, onDeleteProject, service, finishService}) {
                         <Button
                             style={styleCard.button}
                             onClick={() => onDeleteProject(project.id)}
+                            disable={isLoadingDeleteProjects}
                         >
                             <MdDelete className={styleCard.button_icons}/>
                             Deletar
