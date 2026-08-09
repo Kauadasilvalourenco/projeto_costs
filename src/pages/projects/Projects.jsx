@@ -31,7 +31,8 @@ function Projects() {
         queryKey: ["projects"],
         queryFn: getProjects,
         retry: 3,
-        retryDelay: 1500
+        retryDelay: 1500,
+        staleTime: 300000
     });
 
     const {

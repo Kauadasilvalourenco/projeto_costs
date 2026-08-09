@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // import hooks;
 
 import { useParams } from "react-router-dom";
@@ -28,10 +29,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 // import icons;
 
 function EditProject() {
-    const [project, setProject] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const [services, setServices] = useState([]);
-    const [totalServiceCost, setTotalServiceCost] = useState(0);
+    const queryClient = useQueryClient();
 
     const { id } = useParams();
 
@@ -40,117 +38,187 @@ function EditProject() {
     const [projectVisible, setProjectVisible] = useState(true);
     const [serviceVisible, setServiceVisible] = useState(false);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getProject(id);
-                setProject(data);
-            } catch (error) {
-                const messageError = getErrorAPI(error);
+    const {
+        data: categories = [],
+        //isLoading: isLoadingCategories,
+        isError: isErrorCategories,
+        error: errorCategories
+    } = useQuery({
+        queryKey: ["categories"],
+        queryFn: getCategories,
+        retry: 3,
+        retryDelay: 1500,
+        staleTime: 300000
+    });
+    // query categories;
 
-                showMessage(`Erro ao acessar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error(`Erro ao acessar o projeto:`, error);
-            }
+    const {
+        data: project = [],
+        //isLoading: isLoadingProject,
+        isError: isErrorProject,
+        error: errorProject
+    } = useQuery({
+        queryKey: ["projects", id],
+        queryFn: () => getProject(id),
+        retry: 3,
+        retryDelay: 1500,
+        staleTime: 300000
+    });
+    // query project;
+
+    const {
+        data: services = [],
+        //isLoading: isLoadingServices,
+        isError: isErrorServices,
+        error: errorServices
+    } = useQuery({
+        queryKey: ["services", id],
+        queryFn: () => getServices(id),
+        retry: 3,
+        retryDelay: 1500,
+        staleTime: 300000
+    });
+    // query services;
+
+    const totalServiceCost = services.reduce((acc, service) => {
+        return acc + Number(service.custo_servico || 0);
+    }, 0);
+
+    useEffect(() => {
+        if (isErrorCategories === true) {
+            const messageError = getErrorAPI(errorCategories);
+
+            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar as categorias:`, errorCategories);
+        }
+    }, [errorCategories, isErrorCategories, showMessage]);
+    // trata erro da query categories;
+
+    useEffect(() => {
+        if (isErrorProject === true) {
+            const messageError = getErrorAPI(errorProject);
+
+            showMessage(`Erro ao acessar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar o projeto:`, errorProject);
+        }
+    }, [errorProject, isErrorProject, showMessage]);
+    // trata erro da query project;
+
+    useEffect(() => {
+        if (isErrorServices === true) {
+            const messageError = getErrorAPI(errorServices);
+
+            showMessage(`Erro ao acessar os serviços: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar os serviços:`, errorServices);
         };
 
-        fetchData();
-    }, [id, showMessage]);
+    }, [errorServices, isErrorServices, showMessage]);
+    // trata erro da query services;
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getCategories();
-                setCategories(data);
-            } catch (error) {
-                const messageError = getErrorAPI(error);
+    const {
+        mutate: editProjectMutation,
+        //isPending: isLoadingEditProject,
+        error: errorEditProject
+    } = useMutation({
+        mutationKey: ["editProject", id],
+        mutationFn: (updateProject) => editProject(id, updateProject),
+        retry: 3,
+        retryDelay: 1500,
 
-                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error(`Erro ao acessar as categorias:`, error);
-            }
-        };
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["projects", id]
+            });
 
-        fetchData();
+            setProjectVisible(!projectVisible);
+            showMessage("Projeto editado com sucesso!", "success");
+            console.log("Projeto editado com sucesso!");
+        },
 
-    }, [showMessage]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getServices(id);
-                setServices(data);
-
-                const totalCost = data.reduce((acc, service) => {
-                    return acc + Number(service.custo_servico || 0);
-                }, 0);
-
-                setTotalServiceCost(totalCost);
-            } catch (error) {
-                const messageError = getErrorAPI(error);
-
-                showMessage(`Erro ao acessar os serviços: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error(`Erro ao acessar os serviços:`, error);
-            }
-        };
-
-        fetchData();
-
-    }, [id, showMessage]);
-
-    async function handleEditProject(updateProject) {
-        try {
-            if (totalServiceCost <= updateProject.orcamento_projeto) {
-                await editProject(id, updateProject);
-                setProject(updateProject);
-                setProjectVisible(!projectVisible);
-                showMessage("Projeto editado com sucesso!", "success");
-                console.log("Projeto editado com sucesso!");
-            } else {
-                showMessage("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
-                console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
-            }
-        } catch (error) {
-            const messageError = getErrorAPI(error);
+        onError: () => {
+            const messageError = getErrorAPI(errorEditProject);
 
             showMessage(`Erro ao editar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao editar o projeto:`, error);
+            console.error(`Erro ao editar o projeto:`, errorEditProject);
         }
-    };
+    });
 
-    async function handleCreateService(data) {
-        try {
-            if (totalServiceCost + data.custo_servico <= project.orcamento_projeto && data.custo_servico <= project.orcamento_projeto) {
-                const newService = await createService(id, data);
-                setServices((prevService) => [...prevService, newService]);
-                setTotalServiceCost((prevServiceCost) => prevServiceCost + data.custo_servico);
-                setServiceVisible(!serviceVisible);
-                showMessage("Serviço criado com sucesso!", "success");
-                console.log("Serviço criado com sucesso!");
-            } else {
-                showMessage("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!", "error");
-                console.error("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!");
-            }
-        } catch (error) {
-            const messageError = getErrorAPI(error);
+    const {
+        mutate: createServiceMutation,
+        //isPending: isLoadingCreateService,
+        error: errorCreateService
+    } = useMutation({
+        mutationKey: ["services"],
+        mutationFn: (data) => createService(id, data),
+        retry: 3,
+        retryDelay: 1500,
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["services", id]
+            });
+
+            setServiceVisible(!serviceVisible);
+            showMessage("Serviço criado com sucesso!", "success");
+            console.log("Serviço criado com sucesso!");
+        },
+
+        onError: () => {
+            const messageError = getErrorAPI(errorCreateService);
 
             showMessage(`Erro ao criar o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao criar o serviço:`, error);
+            console.error(`Erro ao criar o serviço:`, errorCreateService);
+        }
+    });
+
+    const {
+        mutate: editStatusServiceMutation,
+        //isPending: isLoadingStatusService,
+        error: errorStatusService
+    } = useMutation({
+        mutationKey: ["statusService"],
+        mutationFn: editStatusService,
+        retry: 3,
+        retryDelay: 1500,
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["services", id]
+            })
+
+            showMessage("Serviço concluído com sucesso!", "success");
+            console.log("Serviço concluído com sucesso!");
+        },
+
+        onError: () => {
+            const messageError = getErrorAPI(errorStatusService);
+
+            showMessage(`Erro ao concluir o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao editar o status do serviço:`, errorStatusService);
+        }
+    });
+
+    function handleEditProject(updateProject) {
+        if (totalServiceCost <= updateProject.orcamento_projeto) {
+            editProjectMutation(updateProject);
+        } else {
+            showMessage("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
+            console.error("Erro: O novo valor de orçamento é menor que o valor total utilizado pelos serviços", "error");
         }
     };
 
-    async function finishService(serviceID) {
-        try {
-            const status = await editStatusService(serviceID);
-            setServices((prevServices) => {
-                return prevServices.map((service) => service.id === serviceID ? status : service )
-            });
-            showMessage("Serviço concluído com sucesso!", "success");
-            console.log("Serviço concluído com sucesso!");
-        } catch (error) {
-            const messageError = getErrorAPI(error);
-
-            showMessage(`Erro ao concluir o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao editar o status do serviço:`, error);
+    function handleCreateService(data) {
+        if (totalServiceCost + data.custo_servico <= project.orcamento_projeto && data.custo_servico <= project.orcamento_projeto) {
+            createServiceMutation(data);
+            
+        } else {
+            showMessage("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!", "error");
+            console.error("O custo do serviço ou o custo total dos serviços não pode ser maior que o orçamento do projeto!");
         }
+    };
+
+    function finishService(serviceID) {
+        editStatusServiceMutation(serviceID);
     }
 
     if (project === null) {
@@ -168,108 +236,114 @@ function EditProject() {
     return(
         <div className={styleEditProject.page_edit_project}>
 
-            {
-                projectVisible === true ? (
-                    <section>
+            <section
+                className="section_project"
+            >
+                {
+                    projectVisible === true ? (
+                        <div>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
+                            </Typography>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
+                            </Typography>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
+                            </Typography>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
+                            </Typography>
+                            <div className={styleEditProject.conteiner_button}>
+                                <Button
+                                    onClick={toogleEditForm}
+                                    style={styleEditProject.button}
+                                >
+                                    <MdEdit />
+                                    Editar
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <Form
+                            onCategories={categories}
+                            fieldsConfig={editProjectForm()}
+                            schemaZod={validationEditProjectForm()}
+                            formData={project}
+                            btnText={"Salvar"}
+                            onSubmit={handleEditProject}
+                        />
+                    )
+                }
+            </section>
 
-                        <Typography
-                            tag={"h2"}
-                        >
-                            Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
-                        </Typography>
+            <hr />
 
-                        <Typography
-                            tag={"h2"}
-                        >
-                            Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
-                        </Typography>
-
-                        <Typography
-                            tag={"h2"}
-                        >
-                            Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
-                        </Typography>
-
-                        <Typography
-                            tag={"h2"}
-                        >
-                            Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
-                        </Typography>
-
+            <section
+                className="section_add_service"
+            >
+                {
+                    serviceVisible === false ? (
                         <div className={styleEditProject.conteiner_button}>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Adicionar Serviço:
+                            </Typography>
                             <Button
-                                onClick={toogleEditForm}
+                                onClick={toogleServiceForm}
                                 style={styleEditProject.button}
                             >
-                                <MdEdit />
-                                Editar
+                                <IoMdAddCircleOutline className={styleEditProject.icons}/>
+                                Adicionar
                             </Button>
                         </div>
-
-                    </section>
-                ) : (
-                    <Form
-                        onCategories={categories}
-                        fieldsConfig={editProjectForm()}
-                        schemaZod={validationEditProjectForm()}
-                        formData={project}
-                        btnText={"Salvar"}
-                        onSubmit={handleEditProject}
-                    />
-                )
-            }
+                    ) : (
+                        <Form
+                            fieldsConfig={createServiceForm()}
+                            schemaZod={validationCreateServiceForm()}
+                            btnText={"Salvar"}
+                            onSubmit={handleCreateService}
+                        />
+                    )
+                }
+            </section>
 
             <hr />
 
-            {
-                serviceVisible === false ? (
-                    <div className={styleEditProject.conteiner_button}>
+            <section
+                className="section_services"
+            >
+                {
+                    services.length === 0 ? (
                         <Typography
-                            tag={"h2"}
+                            tag={"p"}
                         >
-                            Adicionar Serviço:
+                            Não existem serviços criados!
                         </Typography>
-                        <Button
-                            onClick={toogleServiceForm}
-                            style={styleEditProject.button}
-                        >
-                            <IoMdAddCircleOutline className={styleEditProject.icons}/>
-                            Adicionar
-                        </Button>
-                    </div>
-                ) : (
-                    <Form 
-                        fieldsConfig={createServiceForm()}
-                        schemaZod={validationCreateServiceForm()}
-                        btnText={"Salvar"}
-                        onSubmit={handleCreateService}
-                    />
-                )
-            }
-
-            <hr />
-
-            {
-                services.length === 0 ? (
-                    <Typography
-                        tag={"p"}
-                    >
-                        Não existem serviços criados!
-                    </Typography>
-                ) : (
-                    services.map((service) => (
-                        <div 
-                            key={service.id}
-                            className={styleEditProject.conteiner_card}
-                        >
-                            <Card 
-                                service={service}
-                                finishService={finishService}
-                            />
-                        </div>
-                    ))
-                )
-            }
+                    ) : (
+                        services.map((service) => (
+                            <div
+                                key={service.id}
+                                className={styleEditProject.conteiner_card}
+                            >
+                                <Card
+                                    service={service}
+                                    finishService={finishService}
+                                />
+                            </div>
+                        ))
+                    )
+                }
+            </section>
 
         </div>
     )

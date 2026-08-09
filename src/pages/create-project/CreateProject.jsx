@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import hooks;
 
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ import styleCriarProjeto from "./CreateProject.module.css";
 
 function CriarProjeto() {
     const navigate = useNavigate();
-
+    const queryClient = useQueryClient();
     const { showMessage } = useMessage();
 
     const {
@@ -36,6 +36,7 @@ function CriarProjeto() {
         queryFn: getCategories,
         retry: 3,
         retryDelay: 1500,
+        staleTime: 300000
     });
 
     const {
@@ -49,6 +50,10 @@ function CriarProjeto() {
         retryDelay: 1500,
 
         onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["projects"]
+            })
+
             navigate("/projetos");
             showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
