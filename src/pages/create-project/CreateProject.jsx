@@ -46,8 +46,6 @@ function CriarProjeto() {
     } = useMutation({
         mutationKey: ["projects"],
         mutationFn: createProject,
-        retry: 3,
-        retryDelay: 1500,
 
         onSuccess: () => {
             queryClient.invalidateQueries({

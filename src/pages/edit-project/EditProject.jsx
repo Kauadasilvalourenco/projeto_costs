@@ -124,8 +124,6 @@ function EditProject() {
     } = useMutation({
         mutationKey: ["editProject", id],
         mutationFn: (updateProject) => editProject(id, updateProject),
-        retry: 3,
-        retryDelay: 1500,
 
         onSuccess: () => {
             queryClient.invalidateQueries({
@@ -152,8 +150,6 @@ function EditProject() {
     } = useMutation({
         mutationKey: ["services"],
         mutationFn: (data) => createService(id, data),
-        retry: 3,
-        retryDelay: 1500,
 
         onSuccess: () => {
             queryClient.invalidateQueries({
@@ -180,8 +176,6 @@ function EditProject() {
     } = useMutation({
         mutationKey: ["statusService"],
         mutationFn: editStatusService,
-        retry: 3,
-        retryDelay: 1500,
 
         onSuccess: () => {
             queryClient.invalidateQueries({
@@ -238,133 +232,123 @@ function EditProject() {
     return(
         <div className={styleEditProject.page_edit_project}>
 
-            <section
-                className="section_project"
-            >
-                {
-                    isLoadingProject === true ? (
-                        <img 
-                            src={imgLoading} 
-                            alt="imagem_loading" 
-                            className={styleEditProject.img_loading}
-                        />
-                    ) : (
-                        projectVisible === true ? (
-                            <div>
-                                <Typography
-                                    tag={"h2"}
-                                >
-                                    Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
-                                </Typography>
-                                <Typography
-                                    tag={"h2"}
-                                >
-                                    Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
-                                </Typography>
-                                <Typography
-                                    tag={"h2"}
-                                >
-                                    Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
-                                </Typography>
-                                <Typography
-                                    tag={"h2"}
-                                >
-                                    Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
-                                </Typography>
-                                <div className={styleEditProject.conteiner_button}>
-                                    <Button
-                                        onClick={toogleEditForm}
-                                        style={styleEditProject.button}
-                                    >
-                                        <MdEdit />
-                                        Editar
-                                    </Button>
-                                </div>
-                            </div>
-                        ) : (
-                            <Form
-                                onCategories={categories}
-                                fieldsConfig={editProjectForm()}
-                                schemaZod={validationEditProjectForm()}
-                                formData={project}
-                                btnText={"Salvar"}
-                                onSubmit={handleEditProject}
-                                isLoadingSubmit={isLoadingEditProject}
-                            />
-                        )
-                    )
-                }
-            </section>
-
-            <hr />
-
-            <section
-                className="section_add_service"
-            >
-                {
-                    serviceVisible === false ? (
-                        <div className={styleEditProject.conteiner_button}>
+            {
+                isLoadingProject === true ? (
+                    <img 
+                        src={imgLoading} 
+                        alt="imagem_loading" 
+                        className={styleEditProject.img_loading}
+                    />
+                ) : (
+                    projectVisible === true ? (
+                        <section
+                            className={styleEditProject.section_project}
+                        >
                             <Typography
                                 tag={"h2"}
                             >
-                                Adicionar Serviço:
+                                Projeto: <span className={styleTypography.span_destaque}>{project.nome_projeto}</span>
                             </Typography>
-                            <Button
-                                onClick={toogleServiceForm}
-                                style={styleEditProject.button}
+                            <Typography
+                                tag={"h2"}
                             >
-                                <IoMdAddCircleOutline className={styleEditProject.icons}/>
-                                Adicionar
-                            </Button>
-                        </div>
+                                Categoria: <span className={styleTypography.span_destaque}>{project.categoria_projeto}</span>
+                            </Typography>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Orçamento: <span className={styleTypography.span_destaque}>R${Number(project.orcamento_projeto).toFixed(2).replace(".", ",")}</span>
+                            </Typography>
+                            <Typography
+                                tag={"h2"}
+                            >
+                                Total Utilizado: <span className={styleTypography.span_destaque}>R${Number(totalServiceCost).toFixed(2).replace(".", ",")}</span>
+                            </Typography>
+                            <div className={styleEditProject.conteiner_button}>
+                                <Button
+                                    onClick={toogleEditForm}
+                                    style={styleEditProject.button}
+                                >
+                                    <MdEdit />
+                                    Editar
+                                </Button>
+                            </div>
+                        </section>
                     ) : (
                         <Form
-                            fieldsConfig={createServiceForm()}
-                            schemaZod={validationCreateServiceForm()}
+                            onCategories={categories}
+                            fieldsConfig={editProjectForm()}
+                            schemaZod={validationEditProjectForm()}
+                            formData={project}
                             btnText={"Salvar"}
-                            onSubmit={handleCreateService}
-                            isLoadingSubmit={isLoadingCreateService}
+                            onSubmit={handleEditProject}
+                            isLoadingSubmit={isLoadingEditProject}
                         />
                     )
-                }
-            </section>
+                )
+            }
 
             <hr />
 
-            <section
-                className="section_services"
-            >
-                {
-                    isLoadingServices === true ? (
-                        <img 
-                            src={imgLoading} 
-                            alt="imagem_loading" 
-                            className={styleEditProject.img_loading}
-                        />
+            {
+                serviceVisible === false ? (
+                    <section className={styleEditProject.section_add_service}>
+                        <Typography
+                            tag={"h2"}
+                        >
+                            Adicionar Serviço:
+                        </Typography>
+                        <Button
+                            onClick={toogleServiceForm}
+                            style={styleEditProject.button}
+                        >
+                            <IoMdAddCircleOutline className={styleEditProject.icons}/>
+                            Adicionar
+                        </Button>
+                    </section>
+                ) : (
+                    <Form
+                        fieldsConfig={createServiceForm()}
+                        schemaZod={validationCreateServiceForm()}
+                        btnText={"Salvar"}
+                        onSubmit={handleCreateService}
+                        isLoadingSubmit={isLoadingCreateService}
+                    />
+                )
+            }
+
+            <hr />
+
+            {
+                isLoadingServices === true ? (
+                    <img 
+                        src={imgLoading} 
+                        alt="imagem_loading" 
+                        className={styleEditProject.img_loading}
+                    />
+                ) : (
+                    services.length === 0 ? (
+                        <Typography
+                            tag={"p"}
+                        >
+                            Não existem serviços criados!
+                        </Typography>
                     ) : (
-                        services.length === 0 ? (
-                            <Typography
-                                tag={"p"}
+                        services.map((service) => (
+                            <div
+                                key={service.id}
+                                className={styleEditProject.conteiner_card}
                             >
-                                Não existem serviços criados!
-                            </Typography>
-                        ) : (
-                            services.map((service) => (
-                                <div
-                                    key={service.id}
-                                    className={styleEditProject.conteiner_card}
-                                >
-                                    <Card
-                                        service={service}
-                                        finishService={finishService}
-                                        isLoadingStatusService={isLoadingStatusService}
-                                    />
-                                </div>
-                            ))
-                        )
+                                <Card
+                                    service={service}
+                                    finishService={finishService}
+                                    isLoadingStatusService={isLoadingStatusService}
+                                />
+                            </div>
+                        ))
                     )
-                }
-            </section>
+                )
+            }
 
         </div>
     )
