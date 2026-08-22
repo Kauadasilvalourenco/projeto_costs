@@ -1,4 +1,4 @@
-const baseURL = "https://projeto-costs-back-end-n9bu.onrender.com";
+export const baseURL = "https://projeto-costs-back-end-n9bu.onrender.com";
 
 async function request(endpoint, options = {}) {
     let timeout;
