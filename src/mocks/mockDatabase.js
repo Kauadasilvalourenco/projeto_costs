@@ -8,6 +8,12 @@ export const database = {
     services: [...services]
 };
 
+export function restoreInitialState() {
+    database.categories = [...categories];
+    database.projects = [...projects];
+    database.services = [...services];
+};
+
 export function mockGetCategories() {
     const categories = database.categories;
 
@@ -80,6 +86,12 @@ export function mockCreateProject(data) {
         id: id
     };
 
+    if (newProject.nome_projeto === undefined) {
+        return {
+            status: 400
+        };
+    };
+
     database.projects.push(newProject);
 
     return {
@@ -99,6 +111,12 @@ export function mockCreateService(projectID, data) {
         projectID: projectID,
         status: "Pendente",
         ...data
+    };
+
+    if (projectID === undefined) {
+        return {
+            status: 400
+        };
     };
 
     database.services.push(newService);
@@ -152,7 +170,9 @@ export function mockDeleteProject(projectID) {
         };
     };
 
-    const deleteProject = database.projects.splice(index, 1);
+    database.projects.splice(index, 1);
+
+    const deleteProject = database.projects;
 
     return {
         data: deleteProject,
@@ -169,7 +189,9 @@ export function mockDeleteService(serviceID) {
         };
     };
 
-    const deleteService = database.services.splice(index, 1);
+    database.services.splice(index, 1);
+
+    const deleteService = database.services;
 
     return {
         data: deleteService,

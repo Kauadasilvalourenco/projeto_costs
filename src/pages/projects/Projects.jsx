@@ -35,10 +35,18 @@ function Projects() {
         staleTime: 300000
     });
 
+    useEffect(() => {
+        if (isErrorProjects === true) {
+            const messageError = getErrorAPI(errorProjects);
+
+            showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error("Não foi possível acessar os projetos", errorProjects);
+        }
+    }, [isErrorProjects, errorProjects, showMessage]);
+
     const {
         mutate: deleteProjectMutation,
         isPending: isLoadingDeleteProject,
-        error: errorDeleteProject
     } = useMutation({
         mutationKey: ["projects"],
         mutationFn: async(id) => {
@@ -52,8 +60,6 @@ function Projects() {
 
             await deleteProject(id);
         },
-        retry: 3,
-        retryDelay: 1500,
 
         onSuccess: (id) => {
             queryClient.removeQueries({
@@ -68,22 +74,13 @@ function Projects() {
             console.log("Projeto deletado com sucesso!");
         }, 
 
-        onError: () => {
-            const messageError = getErrorAPI(errorDeleteProject);
+        onError: (error) => {
+            const messageError = getErrorAPI(error);
 
             showMessage(`Erro ao deletar projeto: ${messageError} Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao deletar projeto:`, errorDeleteProject);
+            console.error(`Erro ao deletar projeto:`, error);
         }
     });
-
-    useEffect(() => {
-        if (isErrorProjects === true) {
-            const messageError = getErrorAPI(errorProjects);
-
-            showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error("Não foi possível acessar os projetos", errorProjects);
-        }
-    }, [isErrorProjects, errorProjects, showMessage]);
 
     return(
         <div className={styleProjects.page_projects}>

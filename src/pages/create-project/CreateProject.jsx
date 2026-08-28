@@ -39,10 +39,18 @@ function CriarProjeto() {
         staleTime: 300000
     });
 
+    useEffect(() => {
+        if (isErrorCategories === true) {
+            const messageError = getErrorAPI(errorCategories);
+
+            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar as categorias:`, errorCategories);
+        };
+    }, [isErrorCategories, errorCategories, showMessage]);
+
     const {
         mutate: createProjectMutation,
         isPending: isLoadingCreateProject,
-        error: errorCreateProject
     } = useMutation({
         mutationKey: ["projects"],
         mutationFn: createProject,
@@ -57,22 +65,13 @@ function CriarProjeto() {
             console.log("Projeto criado com sucesso!");
         },
 
-        onError: () => {
-            const messageError = getErrorAPI(errorCreateProject)
+        onError: (error) => {
+            const messageError = getErrorAPI(error)
 
             showMessage(`Erro ao criar projeto: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao criar projeto:`, errorCreateProject);
+            console.error(`Erro ao criar projeto:`, error);
         }
     });
-
-    useEffect(() => {
-        if (isErrorCategories === true) {
-            const messageError = getErrorAPI(errorCategories);
-
-            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao acessar as categorias:`, errorCategories);
-        };
-    }, [isErrorCategories, errorCategories, showMessage]);
 
     return(
         <div className={styleCriarProjeto.CriarProjeto}>

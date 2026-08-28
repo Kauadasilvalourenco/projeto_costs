@@ -11,15 +11,7 @@ export const handlersProjects = [
     http.get(`${baseURL}/projects`, () => {
         const projects = mockGetProjects();
 
-        if (projects.status !== 200) {
-            return HttpResponse.json("error", {
-                status: projects.status
-            });
-        };
-
-        return HttpResponse.json(projects, {
-            status: projects.status
-        });
+        return HttpResponse.json(projects);
     }),
 
     http.get(`${baseURL}/projects/:id`, ({ params }) => {
@@ -27,15 +19,7 @@ export const handlersProjects = [
 
         const project = mockGetProject(projectID);
 
-        if (project.status !== 200) {
-            return HttpResponse.json("error", {
-                status: project.status
-            });
-        };
-
-        return HttpResponse.json(project, {
-            status: project.status
-        });
+        return HttpResponse.json(project);
     }),
 
     http.post(`${baseURL}/projects`, async({ request }) => {
@@ -43,15 +27,7 @@ export const handlersProjects = [
 
         const newProject = mockCreateProject(data);
 
-        if (newProject.status !== 201) {
-            return HttpResponse.json("error", {
-                status: newProject.status
-            });
-        };
-
-        return HttpResponse.json(newProject, {
-            status: newProject.status
-        });
+        return HttpResponse.json(newProject);
     }),
 
     http.put(`${baseURL}/projects/:id`, async({ params, request }) => {
@@ -60,15 +36,7 @@ export const handlersProjects = [
 
         const editedProject = mockEditProject(projectID, data);
 
-        if (editedProject.status !== 200) {
-            return HttpResponse.json("error", {
-                status: editedProject.status
-            });
-        };
-
-        return HttpResponse.json(editedProject, {
-            status: editedProject.status
-        });
+        return HttpResponse.json(editedProject);
     }),
 
     http.delete(`${baseURL}/projects/:id`, ({ params }) => {
@@ -76,14 +44,6 @@ export const handlersProjects = [
 
         const deletedProject = mockDeleteProject(projectID);
 
-        if (deletedProject.status !== 200) {
-            return HttpResponse.json("error", {
-                status: deletedProject.status
-            });
-        };
-
-        return HttpResponse.json(deletedProject, {
-            status: deletedProject.status
-        });
+        return HttpResponse.json(deletedProject);
     })
 ];

@@ -120,7 +120,6 @@ function EditProject() {
     const {
         mutate: editProjectMutation,
         isPending: isLoadingEditProject,
-        error: errorEditProject
     } = useMutation({
         mutationKey: ["editProject", id],
         mutationFn: (updateProject) => editProject(id, updateProject),
@@ -135,18 +134,17 @@ function EditProject() {
             console.log("Projeto editado com sucesso!");
         },
 
-        onError: () => {
-            const messageError = getErrorAPI(errorEditProject);
+        onError: (error) => {
+            const messageError = getErrorAPI(error);
 
             showMessage(`Erro ao editar o projeto: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao editar o projeto:`, errorEditProject);
+            console.error(`Erro ao editar o projeto:`, error);
         }
     });
 
     const {
         mutate: createServiceMutation,
         isPending: isLoadingCreateService,
-        error: errorCreateService
     } = useMutation({
         mutationKey: ["services"],
         mutationFn: (data) => createService(id, data),
@@ -161,18 +159,17 @@ function EditProject() {
             console.log("Serviço criado com sucesso!");
         },
 
-        onError: () => {
-            const messageError = getErrorAPI(errorCreateService);
+        onError: (error) => {
+            const messageError = getErrorAPI(error);
 
             showMessage(`Erro ao criar o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao criar o serviço:`, errorCreateService);
+            console.error(`Erro ao criar o serviço:`, error);
         }
     });
 
     const {
         mutate: editStatusServiceMutation,
         isPending: isLoadingStatusService,
-        error: errorStatusService
     } = useMutation({
         mutationKey: ["statusService"],
         mutationFn: editStatusService,
@@ -186,11 +183,11 @@ function EditProject() {
             console.log("Serviço concluído com sucesso!");
         },
 
-        onError: () => {
-            const messageError = getErrorAPI(errorStatusService);
+        onError: (error) => {
+            const messageError = getErrorAPI(error);
 
             showMessage(`Erro ao concluir o serviço: ${messageError}. Tente novamente mais tarde!`, "error");
-            console.error(`Erro ao editar o status do serviço:`, errorStatusService);
+            console.error(`Erro ao editar o status do serviço:`, error);
         }
     });
 

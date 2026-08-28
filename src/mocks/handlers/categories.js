@@ -6,14 +6,6 @@ export const handlersCategories = [
     http.get(`${baseURL}/categories`, () => {
         const categories = mockGetCategories();
 
-        if (categories.status === 404) {
-            return HttpResponse.json("error", {
-                status: categories.status
-            })
-        }
-
-        return HttpResponse.json(categories, {
-            status: categories.status
-        });
+        return HttpResponse.json(categories);
     })
 ];

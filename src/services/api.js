@@ -41,7 +41,7 @@ export function getErrorAPI(errorApi) {
 
     switch (errorApi.status) {
         case 400:
-            messageError = "Dados enviados são inválidos!";
+            messageError = "Dados imcompletos!";
             break;
         case 404:
             messageError = "Recurso não encontrado no servidor!";

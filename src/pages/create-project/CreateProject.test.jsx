@@ -6,6 +6,7 @@ import { createProject } from '../../services/api';
 import { getCategories } from '../../services/api';
 import { MemoryRouter } from 'react-router-dom';
 import { MessageProvider } from "../../context/MessageProvider";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock do serviço de API
 vi.mock('../../services/api');
@@ -21,7 +22,17 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Página Criar Projeto - Teste de Integração', () => {
+  let queryClient
+
   beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false
+        }
+      }
+    });
+
     // Resetar mocks antes de cada teste
     vi.clearAllMocks();
     
@@ -34,11 +45,15 @@ describe('Página Criar Projeto - Teste de Integração', () => {
 
   it('deve integrar corretamente todos os componentes da página', () => {
     render(
-      <MemoryRouter>
-        <MessageProvider>
-          <CreateProject />
-        </MessageProvider>
-      </MemoryRouter>
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter>
+          <MessageProvider>
+            <CreateProject />
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Verificar se o título principal é renderizado
@@ -59,11 +74,15 @@ describe('Página Criar Projeto - Teste de Integração', () => {
   it('deve chamar createProject e navegar após submissão válida', async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter>
-        <MessageProvider>
-          <CreateProject />
-        </MessageProvider>
-      </MemoryRouter>
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter>
+          <MessageProvider>
+            <CreateProject />
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Preencher o formulário com dados válidos
@@ -80,11 +99,14 @@ describe('Página Criar Projeto - Teste de Integração', () => {
 
     // Verificar se a função createProject foi chamada com os dados corretos
     await waitFor(() => {
-      expect(createProject).toHaveBeenCalledWith({
-        nome_projeto: 'Projeto Teste',
-        orcamento_projeto: 5000,
-        categoria_projeto: 'Desenvolvimento'
-      });
+      expect(createProject).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nome_projeto: 'Projeto Teste',
+          orcamento_projeto: 5000,
+          categoria_projeto: 'Desenvolvimento'
+        }),
+        expect.any(Object)
+      );
     });
 
     // Verificar se a navegação foi chamada para a página de projetos

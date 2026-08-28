@@ -3,7 +3,7 @@ export const services = [
         projectID: 1,
         status: "Pendente",
         nome_servico: "TesteServico01",
-        custo_servico: 4000,
+        custo_servico: 2000,
         id: 1
     },
 

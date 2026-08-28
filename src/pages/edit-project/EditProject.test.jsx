@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { MessageProvider } from "../../context/MessageProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import EditProject from "./EditProject";
 import {
@@ -21,6 +22,8 @@ vi.mock("../../services/api");
 const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
 describe("Página de Edição de Projeto - Teste de Integração", () => {
+  let queryClient
+
   const user = userEvent.setup();
 
   const mockProject = {
@@ -53,6 +56,14 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
   ];
 
   beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false
+        }
+      }
+    });
+
     // Resetar mocks antes de cada teste
     vi.clearAllMocks();
 
@@ -67,13 +78,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
   it("deve renderizar corretamente e exibir os dados iniciais do projeto", async () => {
     render(
-      <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <MessageProvider>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
-        </MessageProvider>
-      </MemoryRouter>,
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Verificar se as funções de API foram chamadas
@@ -109,13 +124,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     // import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
     render(
-      <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <MessageProvider>
-          <Routes>
-            <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
-        </MessageProvider>
-      </MemoryRouter>,
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+          <MessageProvider>
+            <Routes>
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Verificar se o total de serviços é calculado corretamente
@@ -127,13 +146,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     // import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
     render(
-      <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <MessageProvider>
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+          <MessageProvider>
             <Routes>
-          <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
-        </MessageProvider>
-      </MemoryRouter>,
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Verificar se os dados do projeto estão visíveis inicialmente
@@ -156,13 +179,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     // import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
     render(
-      <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <MessageProvider>
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+          <MessageProvider>
             <Routes>
-          <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
-        </MessageProvider>
-      </MemoryRouter>,
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Clicar no botão de adicionar serviço
@@ -179,13 +206,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
     // import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
     render(
-      <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-        <MessageProvider>
+      <QueryClientProvider
+        client={queryClient}
+      >
+        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+          <MessageProvider>
             <Routes>
-          <Route path="/editar-projeto/:id" element={<EditProject />} />
-          </Routes>
-        </MessageProvider>
-      </MemoryRouter>,
+              <Route path="/editar-projeto/:id" element={<EditProject />} />
+            </Routes>
+          </MessageProvider>
+        </MemoryRouter>
+      </QueryClientProvider>
     );
 
     // Verificar se os ícones estão presentes nos botões
@@ -199,13 +230,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
   describe("handleEditProject", () => {
     it("deve chamar editProject com sucesso quando o novo orçamento for maior que o custo total", async () => {
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de edição
@@ -233,13 +268,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
 
     it("não deve chamar editProject quando o novo orçamento for menor que o custo total", async () => {
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de edição
@@ -269,13 +308,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       editProject.mockRejectedValue(mockError);
 
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de edição
@@ -308,19 +351,21 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
         status: "Pendente",
         projectID: "1",
       };
+
       createService.mockResolvedValue(mockNewService);
 
-      // Certifique-se de importar Routes e Route no topo do arquivo se necessário:
-      // import { MemoryRouter, Routes, Route } from 'react-router-dom';
-
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de criação de serviço
@@ -328,6 +373,8 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
         name: /Adicionar/i,
       });
       await user.click(addButton);
+
+      getServices.mockResolvedValueOnce([...mockServices, mockNewService]);
 
       // Preenche o formulário
       const nameInput = screen.getByLabelText("Nome do Serviço:");
@@ -348,22 +395,26 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       });
 
       // Verifica se o novo serviço aparece na lista
-      expect(screen.getByText("Novo Serviço")).toBeInTheDocument();
+      expect(await screen.findByText("Novo Serviço")).toBeInTheDocument();
 
       // Verifica se o total utilizado foi atualizado
       // Busca diretamente pelo valor dentro do span de destaque
-      expect(screen.getByText(/4500,00/)).toBeInTheDocument();
+      expect(await screen.findByText(/4500,00/)).toBeInTheDocument();
     });
 
     it("não deve criar serviço quando o custo for inválido", async () => {
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de criação de serviço
@@ -399,13 +450,17 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       // import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider
+          client={queryClient}
+        >
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Alterna para o formulário de criação de serviço
@@ -442,39 +497,77 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
         status: "Concluído",
         projectID: "1",
       };
-      editStatusService.mockResolvedValue(mockUpdatedService);
+
+      const mockUpdatedService2 = {
+        id: "2",
+        nome_servico: "Serviço 2",
+        custo_servico: 1000,
+        status: "Concluído",
+        projectID: "1",
+      };
+
+      editStatusService
+        .mockResolvedValueOnce(mockUpdatedService)
+        .mockResolvedValueOnce(mockUpdatedService2);
 
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
-      // Aguarda renderização dos serviços
+      // Aguarda renderização inicial dos serviços
       await screen.findByText("Serviço 1");
 
-      // Clica no botão de concluir serviço
+      // Mock para a busca de serviços após a primeira conclusão
+      getServices.mockResolvedValueOnce([
+        mockUpdatedService,
+        mockServices[1],
+      ]);
+
+      // 1. Clica no primeiro botão de concluir
       const finishButtons = screen.getAllByRole("button", {
         name: /Concluir Serviço/i,
       });
       await user.click(finishButtons[0]);
-      await user.click(finishButtons[1]);
 
-      // Verifica se editStatusService foi chamado
+      // Aguarda a chamada da API do primeiro serviço
       await waitFor(() => {
-        expect(editStatusService).toHaveBeenCalledWith("1");
+        expect(editStatusService).toHaveBeenCalledWith("1", expect.anything());
       });
 
-      // Verifica se o status foi atualizado
-      expect((await screen.findAllByText(/Status:\s*Concluído/i)).length).toBeGreaterThan(0);
+      // Mock para a busca de serviços após a segunda conclusão
+      getServices.mockResolvedValueOnce([
+        mockUpdatedService,
+        mockUpdatedService2,
+      ]);
 
-      // Verifica se o botão de concluir desapareceu
+      // 2. Busca novamente o botão restante no DOM atualizado e clica nele
+      const remainingFinishButton = await screen.findByRole("button", {
+        name: /Concluir Serviço/i,
+      });
+      await user.click(remainingFinishButton);
+
+      // Aguarda a chamada da API do segundo serviço
+      await waitFor(() => {
+        expect(editStatusService).toHaveBeenCalledWith("2", expect.anything());
+      });
+
+      // 3. Verifica se os status foram atualizados para Concluído
+      await waitFor(() => {
+        const statusBadges = screen.getAllByText(/Status:\s*Concluído/i);
+        expect(statusBadges).toHaveLength(2);
+      });
+
+      // 4. Verifica se nenhum botão de concluir serviço sobrou no DOM
       expect(
-        screen.queryByRole("button", { name: /Concluir Serviço/i }),
+        screen.queryByRole("button", { name: /Concluir Serviço/i })
       ).not.toBeInTheDocument();
     });
 
@@ -483,13 +576,15 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       editStatusService.mockRejectedValue(mockError);
 
       render(
-        <MemoryRouter initialEntries={["/editar-projeto/1"]}>
-          <MessageProvider>
-            <Routes>
-              <Route path="/editar-projeto/:id" element={<EditProject />} />
-            </Routes>
-          </MessageProvider>
-        </MemoryRouter>,
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter initialEntries={["/editar-projeto/1"]}>
+            <MessageProvider>
+              <Routes>
+                <Route path="/editar-projeto/:id" element={<EditProject />} />
+              </Routes>
+            </MessageProvider>
+          </MemoryRouter>
+        </QueryClientProvider>
       );
 
       // Aguarda renderização dos serviços
@@ -504,7 +599,8 @@ describe("Página de Edição de Projeto - Teste de Integração", () => {
       // Verifica se o erro de API foi tratado
       await waitFor(() => {
         expect(consoleErrorSpy).toHaveBeenCalledWith(
-          "Erro ao editar o status do serviço:", mockError
+          "Erro ao editar o status do serviço:",
+          mockError
         );
       });
     });
