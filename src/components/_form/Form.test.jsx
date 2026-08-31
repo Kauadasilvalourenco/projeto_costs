@@ -18,7 +18,7 @@ const mockOnSubmit = vi.fn();
 
 describe("Componente Form", () => {
     it("deve renderizar o form na tela, verificar se as validações do zod estão funcionando corretamente e verificar se com os dados corretos o form é enviado", async() => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({ delay: null });
 
         const mockSchema = [
             {
@@ -65,16 +65,16 @@ describe("Componente Form", () => {
 
         await user.click(buttonElement);
 
-        await waitFor(() => {
-            expect(screen.getByText("O campo não pode estar vazio")).toBeInTheDocument();
-        });
+        expect(await screen.findByText("O campo não pode estar vazio")).toBeInTheDocument();
 
         await user.type(inputElement, "Alguma Coisa");
         await user.click(buttonElement);
 
         await waitFor(() => {
-            expect(screen.queryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
             expect(mockOnSubmit).toHaveBeenCalled();
         });
+
+        expect(screen.queryByText("O campo não pode estar vazio")).not.toBeInTheDocument();
+
     });
 });

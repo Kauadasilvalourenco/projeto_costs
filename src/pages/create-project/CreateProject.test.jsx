@@ -72,7 +72,7 @@ describe('Página Criar Projeto - Teste de Integração', () => {
   });
 
   it('deve chamar createProject e navegar após submissão válida', async () => {
-    const user = userEvent.setup();
+    const user = userEvent.setup({ delay: null });
     render(
       <QueryClientProvider
         client={queryClient}
