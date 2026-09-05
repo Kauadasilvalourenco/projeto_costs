@@ -61,7 +61,7 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 
 ### 6.1. Ciclo de Chamadas e Resiliência
 O TanStack Query atua como o motor de gerenciamento de estado assíncrono, seguindo as regras:
-* **Timeout do Servidor:** O sistema utiliza uma janela de **7 segundos** para definir falha de resposta. Caso excedido, exibir mensagem: "O servidor não respondeu à requisição".
+* **Timeout do Servidor:** O sistema utiliza uma janela de **5 segundos** para definir falha de resposta. Caso excedido, exibir mensagem: "O servidor não respondeu à requisição".
 * **Retentativas (Retry):** Para erros de conexão ou erro 500, o sistema realizará **3 retentativas** automáticas antes de disparar o estado de erro final.
 
 ### 6.2. Interoperabilidade e Feedback

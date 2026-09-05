@@ -9,13 +9,26 @@
     min-height: 100dvh;
 }
 
+.img_loading {
+    height: 60px;
+    width: 60px;
+}
+
+.section_project {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .page_edit_project hr {
     border: 1px solid black;
     margin: 20px 0px 20px 0px;
     width: 100%;
 }
 
-.conteiner_button {
+.section_add_service {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,7 +40,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    margin-top: 20px;
+    margin: 10px 0px 10px 0px;
 }
 
 .icons {

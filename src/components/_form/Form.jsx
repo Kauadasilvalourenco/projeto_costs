@@ -19,11 +19,14 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
+import imgLoading from "../../assets/loading.svg";
+// import img;
+
 import { FaSave } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 // import icons;
 
-function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData}) {
+function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formData, isLoadingCategories, isLoadingSubmit}) {
     const ID = useId();
     const location = useLocation();
 
@@ -53,10 +56,25 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                                 <TagLabel 
                                     {...item.label.props}
                                 />
-                                <TagField 
-                                    {...item.field.props}
-                                    {...register(fieldName)}
-                                />
+
+                                <div
+                                    className={styleForm.conteiner_field}
+                                >
+
+                                    <TagField
+                                        {...item.field.props}
+                                        {...register(fieldName)}
+                                    />
+
+                                    {
+                                        isLoadingCategories === true && fieldName === "categoria_projeto" ? (
+                                            <img src={imgLoading} alt="imagem_loading" className={styleForm.img_loading}/>
+                                        ) : (
+                                            <p></p>
+                                        )
+                                    }
+
+                                </div>
                                 
                                 {errors[fieldName] && (
                                     <span className={styleForm.error_message}>
@@ -75,6 +93,7 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                             <Button
                                 type={"submit"}
                                 style={styleForm.button}
+                                disable={isLoadingSubmit}
                             >
                                 <IoMdAddCircleOutline className={styleForm.create_icon}/>
                                 {btnText}
@@ -83,6 +102,7 @@ function Form({fieldsConfig, btnText, schemaZod, onSubmit, onCategories, formDat
                             <Button
                                 type={"submit"}
                                 style={styleForm.button}
+                                disable={isLoadingSubmit}
                             >
                                 <FaSave className={styleForm.save_icon}/>
                                 {btnText}

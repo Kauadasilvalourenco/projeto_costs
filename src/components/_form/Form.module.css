@@ -10,6 +10,18 @@
     text-align: center;
 }
 
+.conteiner_field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.img_loading {
+    width: 30px;
+    height: 30px;
+}
+
 .error_message {
     text-align: center;
     color: var(--cor_erro-fechar);

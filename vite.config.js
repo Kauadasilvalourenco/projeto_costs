@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.js',
+    setupFiles: './src/mocks/setupTest.js',
     // Evita que o Vitest tente rodar os arquivos de teste do Playwright
     exclude: ['**/node_modules/**', '**/dist/**', '**/tests/**'], 
   },

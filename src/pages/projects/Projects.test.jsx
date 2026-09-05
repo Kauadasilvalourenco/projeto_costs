@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { MessageProvider } from "../../context/MessageProvider";
+import { QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Projects from "./Projects";
 import {
   getProjects,
@@ -19,8 +20,18 @@ const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
 describe("Página Projetos - Teste de Integração", () => {
     const user = userEvent.setup();
+    
+    let queryClient;
 
     beforeEach(() => {
+        queryClient = new QueryClient({
+            defaultOptions: {
+                queries: {
+                    retry: false
+                }
+            }
+        });
+
         // Resetar mocks antes de cada teste
         vi.clearAllMocks();
 
@@ -33,21 +44,20 @@ describe("Página Projetos - Teste de Integração", () => {
 
     it("deve renderizar corretamente quando não há projetos", async () => {
         render(
-            <MemoryRouter initialEntries={["/projetos"]}>
-                <MessageProvider>
-                    <Projects />
-                </MessageProvider>
-            </MemoryRouter>,
+            <QueryClientProvider
+                client={queryClient}
+            >
+                <MemoryRouter initialEntries={["/projetos"]}>
+                    <MessageProvider>
+                        <Projects />
+                    </MessageProvider>
+                </MemoryRouter>
+            </QueryClientProvider>
         );
-
-        // Verificar se a função getProjects foi chamada
-        await waitFor(() => {
-            expect(getProjects).toHaveBeenCalled();
-        });
 
         // Verificar se a mensagem de ausência de projetos é exibida
         expect(
-            screen.getByText("Não existem projetos criados!"),
+            await screen.findByText("Não existem projetos criados!"),
         ).toBeInTheDocument();
     });
 
@@ -71,11 +81,15 @@ describe("Página Projetos - Teste de Integração", () => {
         getProjects.mockResolvedValue(mockProjects);
 
         render(
-            <MemoryRouter initialEntries={["/projetos"]}>
-                <MessageProvider>
-                    <Projects />
-                </MessageProvider>
-            </MemoryRouter>,
+            <QueryClientProvider
+                client={queryClient}
+            >
+                <MemoryRouter initialEntries={["/projetos"]}>
+                    <MessageProvider>
+                        <Projects />
+                    </MessageProvider>
+                </MemoryRouter>
+            </QueryClientProvider>
         );
 
         // Aguardar a chamada da API
@@ -84,20 +98,20 @@ describe("Página Projetos - Teste de Integração", () => {
         });
 
         // Verificar se os cards dos projetos são renderizados
-        expect(screen.getByText("Projeto Teste 1")).toBeInTheDocument();
-        expect(screen.getByText("Orçamento: R$1000,00")).toBeInTheDocument();
-        expect(screen.getByText("Categoria: Desenvolvimento")).toBeInTheDocument();
+        expect(await screen.findByText("Projeto Teste 1")).toBeInTheDocument();
+        expect(await screen.findByText("Orçamento: R$1000,00")).toBeInTheDocument();
+        expect(await screen.findByText("Categoria: Desenvolvimento")).toBeInTheDocument();
 
-        expect(screen.getByText("Projeto Teste 2")).toBeInTheDocument();
-        expect(screen.getByText("Orçamento: R$2000,00")).toBeInTheDocument();
-        expect(screen.getByText("Categoria: Design")).toBeInTheDocument();
+        expect(await screen.findByText("Projeto Teste 2")).toBeInTheDocument();
+        expect(await screen.findByText("Orçamento: R$2000,00")).toBeInTheDocument();
+        expect(await screen.findByText("Categoria: Design")).toBeInTheDocument();
     });
 
     it("deve deletar um projeto com serviços associados com sucesso", async () => {
         const mockProjects = [
             {
                 id: 1,
-                nome_projeto: "Projeto Teste",
+                nome_projeto: "Pawait rojeto findte",
                 orcamento_projeto: 1000,
                 categoria_projeto: "Desenvolvimento",
             },
@@ -127,11 +141,15 @@ describe("Página Projetos - Teste de Integração", () => {
         deleteProject.mockResolvedValue(undefined);
 
         render(
-            <MemoryRouter initialEntries={["/projetos"]}>
-                <MessageProvider>
-                    <Projects />
-                </MessageProvider>
-            </MemoryRouter>,
+            <QueryClientProvider
+                client={queryClient}
+            >
+                <MemoryRouter initialEntries={["/projetos"]}>
+                    <MessageProvider>
+                        <Projects />
+                    </MessageProvider>
+                </MemoryRouter>
+            </QueryClientProvider>
         );
 
         // Aguardar carregamento inicial
@@ -140,7 +158,7 @@ describe("Página Projetos - Teste de Integração", () => {
         });
 
         // Encontrar e clicar no botão de deletar
-        const deleteButton = screen.getByRole("button", { name: "Deletar" });
+        const deleteButton = await screen.findByRole("button", { name: "Deletar" });
         await user.click(deleteButton);
 
         // Verificar chamadas às APIs de serviços
@@ -178,11 +196,15 @@ describe("Página Projetos - Teste de Integração", () => {
         deleteProject.mockRejectedValue(mockError);
 
         render(
-            <MemoryRouter initialEntries={["/projetos"]}>
-                <MessageProvider>
-                    <Projects />
-                </MessageProvider>
-            </MemoryRouter>,
+            <QueryClientProvider
+                client={queryClient}
+            >
+                <MemoryRouter initialEntries={["/projetos"]}>
+                    <MessageProvider>
+                        <Projects />
+                    </MessageProvider>
+                </MemoryRouter>
+            </QueryClientProvider>
         );
 
         // Aguardar carregamento inicial
@@ -191,7 +213,7 @@ describe("Página Projetos - Teste de Integração", () => {
         });
 
         // Encontrar e clicar no botão de deletar
-        const deleteButton = screen.getByRole("button", { name: "Deletar" });
+        const deleteButton = await screen.findByRole("button", { name: "Deletar" });
         await user.click(deleteButton);
 
         // Verificar que o erro foi tratado

@@ -1,0 +1,21 @@
+export const categories = [
+    {
+        id: 1,
+        name: "Infraestrutura"
+    },
+
+    {
+        id: 2,
+        name: "Desenvolvimento"
+    },
+
+    {
+        id: 3,
+        name: "Planejamento"
+    },
+
+    {
+        id: 4,
+        name: "Design"
+    }
+];

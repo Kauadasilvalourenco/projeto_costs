@@ -22,7 +22,7 @@ describe("Componente Input", () => {
     });
 
     it("deve renderizar o input na tela e verificar se o value é igual ao texto digitado pelo usuário", async() => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({ delay: null });
 
         render(
             <Input 
