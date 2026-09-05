@@ -33,6 +33,14 @@ jobs:
       - name: Executar Testes End-to-End (Playwright)
         run: npx playwright test
 
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
       - name: Conclusão da Automação de QA
         run: |
           echo "✅ Validação automatizada concluída com sucesso!"

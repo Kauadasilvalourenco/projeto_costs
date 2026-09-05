@@ -20,7 +20,10 @@ function Card({project, onDeleteProject, service, finishService, isLoadingDelete
     const pageProject = location.pathname === "/projetos";
 
     return(
-        <div className={styleCard.Card}>
+        <div 
+            className={styleCard.Card}
+            data-testid="project-card"
+        >
 
             {
                 pageProject === true ? (
