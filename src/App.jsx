@@ -45,14 +45,6 @@ function App() {
             element={<EditProject />}
           />
 
-          <Route 
-            path="/contato"
-          />
-
-          <Route 
-            path="/empresa"
-          />
-
         </Routes>
 
       </main>

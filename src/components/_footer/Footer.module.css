@@ -43,10 +43,7 @@
 
     .icones {
         font-size: 1.7rem;
-    }
-
-    .Footer p {
-        font-size: 1.5rem;
+        margin-bottom: 5px;
     }
 
     .destaque {
