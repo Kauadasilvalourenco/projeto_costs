@@ -39,8 +39,6 @@ function CriarProjeto() {
         staleTime: 300000
     });
 
-    const { showMessage } = useMessage();
-
     useEffect(() => {
         if (isErrorCategories === true) {
             const messageError = getErrorAPI(errorCategories);
