@@ -13,14 +13,17 @@ import { FaCheck } from "react-icons/fa";
 // import icons;
 
 
-function Card({project, onDeleteProject, service, finishService}) {
+function Card({project, onDeleteProject, service, finishService, isLoadingDeleteProjects, isLoadingStatusService}) {
     const navigate = useNavigate();
     const location = useLocation();
 
     const pageProject = location.pathname === "/projetos";
 
     return(
-        <div className={styleCard.Card}>
+        <div 
+            className={styleCard.Card}
+            data-testid="project-card"
+        >
 
             {
                 pageProject === true ? (
@@ -91,6 +94,7 @@ function Card({project, onDeleteProject, service, finishService}) {
                         <Button
                             style={styleCard.button}
                             onClick={() => onDeleteProject(project.id)}
+                            disable={isLoadingDeleteProjects}
                         >
                             <MdDelete className={styleCard.button_icons}/>
                             Deletar
@@ -102,6 +106,7 @@ function Card({project, onDeleteProject, service, finishService}) {
                         <Button
                             onClick={() => finishService(service.id)}
                             style={styleCard.button}
+                            disable={isLoadingStatusService}
                         >
                             <FaCheck className={styleCard.button_icons}/>
                             Concluir Serviço

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import hooks;
 
 import { useNavigate } from "react-router-dom";
@@ -21,42 +22,56 @@ import styleCriarProjeto from "./CreateProject.module.css";
 // import css;
 
 function CriarProjeto() {
-    const [categories, setCategories] = useState([]);
-
     const navigate = useNavigate();
-
+    const queryClient = useQueryClient();
     const { showMessage } = useMessage();
 
+    const {
+        data: categories = [],
+        isLoading: isLoadingCategories,
+        isError: isErrorCategories,
+        error: errorCategories
+    } = useQuery({
+        queryKey: ["categories"],
+        queryFn: getCategories,
+        retry: 3,
+        retryDelay: 1500,
+        staleTime: 300000
+    });
+
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getCategories();
-                setCategories(data);
-            } catch (error) {
-                const messageError = getErrorAPI(error);
+        if (isErrorCategories === true) {
+            const messageError = getErrorAPI(errorCategories);
 
-                showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error(`Erro ao acessar as categorias:`, error);
-            }
+            showMessage(`Erro ao acessar as categorias: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error(`Erro ao acessar as categorias:`, errorCategories);
         };
+    }, [isErrorCategories, errorCategories, showMessage]);
 
-        fetchData();
+    const {
+        mutate: createProjectMutation,
+        isPending: isLoadingCreateProject,
+    } = useMutation({
+        mutationKey: ["projects"],
+        mutationFn: createProject,
 
-    }, [showMessage]);
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["projects"]
+            })
 
-    async function handleCreateProject(project) {
-        try {
-            await createProject(project);
             navigate("/projetos");
             showMessage("Projeto criado com sucesso!", "success");
             console.log("Projeto criado com sucesso!");
-        } catch (error) {
+        },
+
+        onError: (error) => {
             const messageError = getErrorAPI(error)
 
             showMessage(`Erro ao criar projeto: ${messageError}. Tente novamente mais tarde!`, "error");
             console.error(`Erro ao criar projeto:`, error);
         }
-    }
+    });
 
     return(
         <div className={styleCriarProjeto.CriarProjeto}>
@@ -77,8 +92,10 @@ function CriarProjeto() {
                 fieldsConfig={projectForm()}
                 btnText={"Criar Projeto"}
                 schemaZod={validationProjectForm()}
-                onSubmit={handleCreateProject}
+                onSubmit={createProjectMutation}
                 onCategories={categories}
+                isLoadingCategories={isLoadingCategories}
+                isLoadingSugmit={isLoadingCreateProject}
             />
 
         </div>

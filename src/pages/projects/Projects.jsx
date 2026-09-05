@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // import hooks;
 
 import { useMessage } from "../../context/MessageContext";
@@ -14,30 +15,41 @@ import Typography from "../../components/_typography/Typography";
 import styleProjects from "./Projects.module.css";
 // import css;
 
-function Projects() {
-    const [projects, setProjects] = useState([]);
+import imgLoading from "../../assets/loading.svg";
+// import img;
 
+function Projects() {
+    const queryClient = useQueryClient();
     const { showMessage } = useMessage();
 
+    const {
+        data: projects = [],
+        isLoading: isLoadingProjects,
+        isError: isErrorProjects,
+        error: errorProjects
+    } = useQuery({
+        queryKey: ["projects"],
+        queryFn: getProjects,
+        retry: 3,
+        retryDelay: 1500,
+        staleTime: 300000
+    });
+
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getProjects();
-                setProjects(data)
-            } catch (error) {
-                const messageError = getErrorAPI(error);
+        if (isErrorProjects === true) {
+            const messageError = getErrorAPI(errorProjects);
 
-                showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
-                console.error("Não foi possível acessar os projetos", error);
-            }
-        };
+            showMessage(`Não foi possível acessar os projetos: ${messageError}. Tente novamente mais tarde!`, "error");
+            console.error("Não foi possível acessar os projetos", errorProjects);
+        }
+    }, [isErrorProjects, errorProjects, showMessage]);
 
-        fetchData();
-
-    }, [showMessage]);
-
-    async function handleDeleteProject(id) {
-        try {
+    const {
+        mutate: deleteProjectMutation,
+        isPending: isLoadingDeleteProject,
+    } = useMutation({
+        mutationKey: ["projects"],
+        mutationFn: async(id) => {
             const servicesProject = await getServices(id);
 
             if (servicesProject.length > 0) {
@@ -47,26 +59,48 @@ function Projects() {
             };
 
             await deleteProject(id);
-            setProjects(projects.filter((project) => project.id !== id));
+        },
+
+        onSuccess: (id) => {
+            queryClient.removeQueries({
+                queryKey: ["services", id]
+            })
+
+            queryClient.invalidateQueries({
+                queryKey: ["projects"]
+            });
+
             showMessage("Projeto deletado com sucesso!", "success");
             console.log("Projeto deletado com sucesso!");
-        } catch (error) {
+        }, 
+
+        onError: (error) => {
             const messageError = getErrorAPI(error);
 
             showMessage(`Erro ao deletar projeto: ${messageError} Tente novamente mais tarde!`, "error");
             console.error(`Erro ao deletar projeto:`, error);
         }
-    }
+    });
 
     return(
         <div className={styleProjects.page_projects}>
+
             {
+
                 projects.length === 0 ? (
-                    <Typography
-                        tag={"p"}
-                    >
-                        Não existem projetos criados!
-                    </Typography>
+                    isLoadingProjects === true ? (
+                        <img 
+                            src={imgLoading} 
+                            alt="imagem_loading"
+                            className={styleProjects.img_loading} 
+                        />
+                    ) : (
+                        <Typography
+                            tag={"p"}
+                        >
+                            Não existem projetos criados!
+                        </Typography>
+                    )
                 ): (
                     projects.map((project) => (
                         <div
@@ -75,7 +109,8 @@ function Projects() {
                         >
                             <Card 
                                 project={project}
-                                onDeleteProject={handleDeleteProject}
+                                onDeleteProject={deleteProjectMutation}
+                                isLoadingDeleteProjects={isLoadingDeleteProject}
                             />
                         </div>
                     ))
