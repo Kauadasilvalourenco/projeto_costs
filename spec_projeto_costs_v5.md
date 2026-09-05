@@ -10,12 +10,14 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 * **Gerenciamento de Formulários:** React Hook Form
 * **Validação de Dados:** Zod
 * **Comunicação HTTP:** Fetch API
-* **Backend Simulado:** JSON-Server (executado no render)
+* **Backend Simulado:** JSON-Server (executado na render)
+* **Testes Unitários/Integração:** Vitest
+* **Testes E2E:** Playwright
 
 ## 3. Estrutura do Projeto (Diretórios)
 - `src/assets`: Armazenamento de imagens (ex: `loading.svg`), logótipos e fontes estáticas.
 - `src/components`: Componentes de UI reutilizáveis (Input, Select, Button, Navbar, Footer).
-- `src/pages`: Componentes de página (Home, Projetos, Novo Projeto, Projeto [Edição], Empresa, Contacto).
+- `src/pages`: Componentes de página (Home, Projeto, Criar-Projeto, Editar-Projeto).
 - `src/services`: Lógica de comunicação com a API externa (funções de fetch e métodos HTTP).
 - `src/context`: Implementação da Context API para gestão global de estados (ex: FlashMessages).
 
@@ -29,15 +31,15 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
     * **Exclusão:** A remoção de um projeto deve eliminar todos os dados associados, incluindo a lista de serviços.
 
 ### 4.2. Serviços (Sub-recursos)
-* **Campos:** Nome do serviço, Custo do serviço
+* **Campos:** Nome do serviço, Custo do serviço, Status do Serviço
 * **Validação de Orçamento:**
     * O sistema deve calcular a soma dos custos de todos os serviços já adicionados.
     * Um novo serviço só é aceite se: `Custo do Serviço + Custo Total Atual <= Orçamento do Projeto`.
-    * **Visualização:** Exibição dinâmica do "Custo Total" vs "Orçamento" na página de detalhes do projeto.
+    * **Visualização:** Cálculo dinâmico do "Custo Total" exibido abaixo do orçamento para facilitar análise.
 
 ### 4.3. Feedback e Estados de Interface
 * **Loading:** Exibição do `loading.svg` durante o processamento de pedidos assíncronos.
-* **FlashMessages:** Notificações flutuantes para sucesso ou erro em operações incluindo API (ex: erro de conexão ou orçamento excedido).
+* **FlashMessages:** Notificações flutuantes para sucesso ou erro em operações.
 
 ## 5. Arquitetura de Dados e API
 
@@ -49,7 +51,7 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 
 ### 5.2. Formulários Dinâmicos
 * Componentes de formulário construídos a partir de um **Schema** via props.
-* A escolha de qual componente será utilizado no formulário será informada via **schema via props**, assim como os atributos de cada componente.
+* A escolha de qual componente será utilizado no formulário será informada via **schema**, assim como os atributos de cada componente.
 * Os componentes atómicos (Label, Input, Select, etc) são puramente visuais e recebem atributos (id, placeholder, name, etc) dinamicamente.
 * Integração obrigatória entre React Hook Form e Zod para garantir integridade dos dados antes do envio.
 
@@ -62,7 +64,7 @@ O **Costs** é uma aplicação web de gestão de projetos concebida para ajudar 
 ### 6.1. Ciclo de Chamadas e Resiliência
 O TanStack Query atua como o motor de gerenciamento de estado assíncrono, seguindo as regras:
 * **Timeout do Servidor:** O sistema utiliza uma janela de **5 segundos** para definir falha de resposta. Caso excedido, exibir mensagem: "O servidor não respondeu à requisição".
-* **Retentativas (Retry):** Para erros de conexão ou erro 500, o sistema realizará **3 retentativas** automáticas antes de disparar o estado de erro final.
+* **Retentativas (Retry):** Para erros de conexão ou erros do servidor, o sistema realizará **3 retentativas** automáticas antes de disparar o estado de erro final.
 
 ### 6.2. Interoperabilidade e Feedback
 * **Integração:** Os dados validados pelo React Hook Form (Tópico 5.2) são disparados via `useMutation`.
@@ -79,7 +81,6 @@ O TanStack Query atua como o motor de gerenciamento de estado assíncrono, segui
 Qualquer código de teste gerado para este projeto deve ser **integralmente baseado nas funcionalidades descritas nesta especificação**, seguindo os critérios de consistência abaixo:
 
 * **Foco no Domínio:** Os testes não devem ser genéricos. Devem validar especificamente as regras de negócio do Costs, como o bloqueio de serviços que excedem o orçamento (Tópico 4.2).
-* **Validação de Resiliência:** Scripts de teste devem incluir cenários de falha (Timeout de 7s) para verificar se o comportamento do TanStack Query condiz com o Tópico 6.1.
 * **Cobertura de Formulários:** Testar a renderização dinâmica baseada no Schema (Tópico 5.2), garantindo que inputs e selects reagem corretamente às validações do Zod.
 * **Testes Unitários e de Integração (Vitest):** Devem focar estritamente na validação e no funcionamento de cada componente de forma isolada ou integrada em pequenos blocos. Toda a simulação de estados, contextos e chamadas de API deve utilizar mocks concisos, simples e fáceis de compreender, isolando o escopo do componente do restante da aplicação.
 * **Testes de Ponta a Ponta / E2E (Playwright):** Devem validar as jornadas completas do usuário no sistema através de funcionalidades separadas e fluxos críticos do projeto. O script deve interagir com a interface simulando com precisão as ações de um usuário real no navegador (como preencher formulários, clicar em botões de navegação e aguardar transições de tela).
