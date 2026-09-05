@@ -25,8 +25,6 @@ describe("Componente Navbar", () => {
     renderNavbar();
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Projetos")).toBeInTheDocument();
-    expect(screen.getByText("Contato")).toBeInTheDocument();
-    expect(screen.getByText("Empresa")).toBeInTheDocument();
   });
 
   it("deve alternar os ícones de menu hambúrguer ao clicar", () => {

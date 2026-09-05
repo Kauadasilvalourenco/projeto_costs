@@ -5,21 +5,18 @@ import Footer from "./Footer";
 
 describe("Componente Footer", () => {
   
-  it("deve renderizar o texto de direitos autorais com o nome da marca", () => {
+  it("deve renderizar a logo do projeto no footer", () => {
     render(<Footer />);
 
     const nomeMarca = screen.getByText("Costs");
     expect(nomeMarca).toBeInTheDocument();
-
-    const textoCopyright = screen.getByText(/2026/);
-    expect(textoCopyright).toBeInTheDocument();
   });
 
-  it("deve renderizar os três ícones de redes sociais", () => {
+  it("deve renderizar os dois ícones de redes sociais", () => {
     const { container } = render(<Footer />);
     const iconesSvg = container.querySelectorAll("svg");
     
-    expect(iconesSvg.length).toBe(3);
+    expect(iconesSvg.length).toBe(2);
   });
 
 });

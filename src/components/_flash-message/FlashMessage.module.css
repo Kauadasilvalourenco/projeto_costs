@@ -10,6 +10,8 @@
     bottom: 120px;
     width: 300px;
     border-radius: 5px;
+
+    animation: in-out-message-mobile 4s ease-in-out forwards;
 }
 
 .btn_close {
@@ -38,5 +40,41 @@
 @media screen and (min-width: 768px) {
     .conteiner_message {
         right: 15px;
+
+        animation: in-out-message-desktop 4s ease-in-out forwards;
     }
 }
+
+@keyframes in-out-message-mobile {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    10%, 90% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@keyframes in-out-message-desktop {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            10%, 90% {
+                opacity: 1;
+                transform: translateX(0%);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }

@@ -1,14 +1,7 @@
 export const baseURL = "https://projeto-costs-back-end-n9bu.onrender.com";
 
 async function request(endpoint, options = {}) {
-    let timeout;
-    const method = options.method || "GET".toUpperCase();
-
-    if (method === "GET") {
-        timeout = 90000;
-    } else {
-        timeout = 5000;
-    }
+    const timeout = 5000;
 
     const response = await fetch(`${baseURL}${endpoint}`, {
         ...options,
