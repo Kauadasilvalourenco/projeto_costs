@@ -29,17 +29,7 @@ Contudo, toda a arquitetura de código, regras de negócio, lógica de estados a
 
 A aplicação foi auditada utilizando o motor oficial do Google Lighthouse, atingindo índices de excelência em performance, acessibilidade e SEO tanto em dispositivos móveis quanto em computadores:
 
-### 💻 Computador (Desktop)
-![Performance](https://shields.io)
-![Acessibilidade](https://shields.io)
-![Melhores Práticas](https://shields.io)
-![SEO](https://shields.io)
-
-### 📱 Celular (Mobile)
-![Performance](https://shields.io)
-![Acessibilidade](https://shields.io)
-![Melhores Práticas](https://shields.io)
-![SEO](https://shields.io)
+👉 **[Acessar Lighthouse](https://pagespeed.web.dev/analysis/https-projeto-costs-ochre-vercel-app/drqpivtsaz?hl=pt-BR&form_factor=mobile)**
 
 ---
 
@@ -52,7 +42,7 @@ Para detalhes aprofundados sobre arquitetura de dados, esquemas de validação, 
 
 ## 🌐 Demonstração & Aplicação Online
 A aplicação está hospedada e disponível para acesso através da Vercel:
-🔗 **[Acessar a Aplicação no Vercel](https://projeto-costs-ochre.vercel.app/)**
+👉 **[Acessar a Aplicação no Vercel](https://projeto-costs-ochre.vercel.app/)**
 
 ---
 
