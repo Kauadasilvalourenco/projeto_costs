@@ -19,7 +19,7 @@ import Button from "../_button/Button";
 import styleForm from "./Form.module.css";
 // import css;
 
-import imgLoading from "../../assets/loading.svg";
+import imgLoading from "../../assets/images/loading.svg";
 // import img;
 
 import { FaSave } from "react-icons/fa";

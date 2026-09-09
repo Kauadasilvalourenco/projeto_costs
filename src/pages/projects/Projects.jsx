@@ -15,7 +15,7 @@ import Typography from "../../components/_typography/Typography";
 import styleProjects from "./Projects.module.css";
 // import css;
 
-import imgLoading from "../../assets/loading.svg";
+import imgLoading from "../../assets/images/loading.svg";
 // import img;
 
 function Projects() {
