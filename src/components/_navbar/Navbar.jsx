@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 // import router;
 
-import logo from "../../assets/costs_logo.png";
+import logo from "../../assets/images/costs_logo.png";
 // import assets;
 
 import { MdMenu, MdClose, MdHome, MdAssignment} from "react-icons/md";

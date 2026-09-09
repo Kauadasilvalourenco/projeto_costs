@@ -24,7 +24,7 @@ import styleEditProject from "./EditProject.module.css";
 import styleTypography from "../../components/_typography/Typography.module.css";
 // import css;
 
-import imgLoading from "../../assets/loading.svg";
+import imgLoading from "../../assets/images/loading.svg";
 // import img;
 
 import { MdEdit } from "react-icons/md";

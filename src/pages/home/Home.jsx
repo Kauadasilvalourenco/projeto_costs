@@ -5,9 +5,9 @@ import Button from "../../components/_button/Button";
 import Typography from "../../components/_typography/Typography";
 // import components;
 
-import imagem_fundo_pq from "../../assets/imagem_fundo_pq.png";
-import imagem_fundo_md from "../../assets/imagem_fundo_md.png";
-import imagem_fundo from "../../assets/imagem_fundo.png";
+import imagem_fundo_pq from "../../assets/images/imagem_fundo_pq.png";
+import imagem_fundo_md from "../../assets/images/imagem_fundo_md.png";
+import imagem_fundo from "../../assets/images/imagem_fundo.png";
 // import assets;
 
 import styleHome from "./Home.module.css";
